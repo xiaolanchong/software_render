@@ -126,7 +126,6 @@ void	RenderEngine::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 void	RenderEngine::SetWireFrame( bool bWire )
 {
 	m_pRasterizer = std::unique_ptr<IRasterizer>
-		( bWire? (IRasterizer*)new WireFrameRasterizer : 
-				 (IRasterizer*)GetPreferredRasterizer()  );
+		( bWire? new WireFrameRasterizer : GetPreferredRasterizer()  );
 	 SetCull( !bWire );
 }

@@ -1,13 +1,11 @@
-// RenderView.cpp : implementation of the CRenderView class
+
+// RenderView.cpp : implementation of the CChildView class
 //
 
 #include "stdafx.h"
-#include "Render.h"
-
-#include "RenderDoc.h"
-#include "RenderView.h"
+#include "SoftwareRender.h"
 #include "MemDC.h"
-#include ".\renderview.h"
+#include "RenderView.h"
 
 #include "settings\proppage\GeometryPage.h"
 #include "settings\proppage\LightPage.h"
@@ -20,130 +18,92 @@
 
 // CRenderView
 
-IMPLEMENT_DYNCREATE(CRenderView, CView)
-
-BEGIN_MESSAGE_MAP(CRenderView, CView)
-	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
-	ON_WM_ERASEBKGND()
-	ON_WM_TIMER()
-	ON_WM_DESTROY()
-	ON_MESSAGE( WM_SHOW_SETTINGS, OnShowSettings )
-END_MESSAGE_MAP()
-
-// CRenderView construction/destruction
-
 CRenderView::CRenderView()
 {
-	// TODO: add construction code here
-
 }
 
 CRenderView::~CRenderView()
 {
 }
 
+
+BEGIN_MESSAGE_MAP(CRenderView, CWnd)
+	ON_WM_CREATE()
+	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
+	ON_WM_TIMER()
+	ON_WM_DESTROY()
+	ON_MESSAGE( WM_SHOW_SETTINGS, OnShowSettings )
+END_MESSAGE_MAP()
+
+
+
+// CChildView message handlers
+
 BOOL CRenderView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
+	if (!CWnd::PreCreateWindow(cs))
+		return FALSE;
 
-	return CView::PreCreateWindow(cs);
+	cs.dwExStyle |= WS_EX_CLIENTEDGE;
+	cs.style &= ~WS_BORDER;
+	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS, 
+		::LoadCursor(nullptr, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW+1), nullptr);
+
+	return TRUE;
 }
 
-// CRenderView drawing
-
-void CRenderView::OnDraw(CDC* pDC)
+void CRenderView::OnPaint()
 {
-	CRenderDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
-	// TODO: add draw code for native data here
-	CMemDC memDC(pDC);
+	CPaintDC dc(this); // device context for painting
+	
+	// TODO: Add your message handler code here
+	// Do not call CWnd::OnPaint() for painting messages
+	
+	CMemDC memDC(&dc);
 	CRect rc;
-	GetClientRect(rc);
-	GetDocument()->Draw( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()) );
+	GetClientRect(&rc);
+	m_sr.Render( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()) );
 }
-
-
-// CRenderView printing
-
-BOOL CRenderView::OnPreparePrinting(CPrintInfo* pInfo)
-{
-	// default preparation
-	return DoPreparePrinting(pInfo);
-}
-
-void CRenderView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: add extra initialization before printing
-}
-
-void CRenderView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: add cleanup after printing
-}
-
-
-// CRenderView diagnostics
-
-#ifdef _DEBUG
-void CRenderView::AssertValid() const
-{
-	CView::AssertValid();
-}
-
-void CRenderView::Dump(CDumpContext& dc) const
-{
-	CView::Dump(dc);
-}
-
-CRenderDoc* CRenderView::GetDocument() const // non-debug version is inline
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CRenderDoc)));
-	return (CRenderDoc*)m_pDocument;
-}
-#endif //_DEBUG
-
-
-// CRenderView message handlers
 
 BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	// TODO: Add your message handler code here and/or call default
-
-	return TRUE;//CView::OnEraseBkgnd(pDC);
+	return TRUE;
 }
 
-UINT_PTR Timer_Draw		= 0xff;
-UINT	 Period_Draw	= 100; 
+const UINT_PTR c_transformEvent		= 0xff;
+const UINT	 c_transformPeriodMSec	= 100;
+const float  c_transformPeriodSec   = c_transformPeriodMSec / 1000.f;
 
 void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
-	GetDocument()->Tick( Period_Draw );
+	//GetDocument()->Tick( Period_Draw );
+	
+	m_sr.Tick(c_transformPeriodSec);
+	//m_secSinceStart += tick;
+	InvalidateRect(nullptr);
 }
 
-void	CRenderView::OnInitialUpdate()
+int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	CView::OnInitialUpdate();
+	if (CWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
 
+	// TODO:  Add your specialized creation code here
 	CreateSettingsWnd();
 
-	SetTimer( Timer_Draw, Period_Draw, NULL );
+	SetTimer(c_transformEvent, c_transformPeriodMSec, NULL);
+
+	return 0;
 }
+
 void CRenderView::OnDestroy()
 {
-	CView::OnDestroy();
+	CWnd::OnDestroy();
 
 	// TODO: Add your message handler code here
-	for ( size_t i =0; i < m_Pages.size() ; ++i )
-	{
-		delete m_Pages[i];
-	}
+	m_Pages.clear();
 	m_pSheet.reset();
 }
 
@@ -152,15 +112,15 @@ void CRenderView::OnDestroy()
 void CRenderView::CreateSettingsWnd()
 {
 	m_pSheet	= std::unique_ptr<CPropertySheet>( new CPropertySheet(IDS_SETTINGS ) );
-	m_Pages.push_back( new CGeometryPage( ) ) ;
-	m_Pages.push_back( new CLightPage(  ) ) ;
-	m_Pages.push_back( new CRotateScalePage(  ) ) ;
+	m_Pages.push_back( std::make_unique<CGeometryPage>( ) ) ;
+	m_Pages.push_back(std::make_unique < CLightPage>(  ) ) ;
+	m_Pages.push_back(std::make_unique < CRotateScalePage>(  ) ) ;
 
 	m_pSheet->m_psh.dwFlags |= PSH_MODELESS|PSH_NOAPPLYNOW;
 
 	for ( size_t i =0 ; i < m_Pages.size(); ++i )
 	{
-		m_pSheet->AddPage( m_Pages[i] );
+		m_pSheet->AddPage( m_Pages[i].get() );
 	}
 
 	m_pSheet->Create(	NULL, 
@@ -170,9 +130,9 @@ void CRenderView::CreateSettingsWnd()
 
 	for ( size_t i =0 ; i < m_Pages.size(); ++i )
 	{
-		m_pSheet->SetActivePage( m_Pages[i] );
+		m_pSheet->SetActivePage( m_Pages[i].get() );
 	}
-	m_pSheet->SetActivePage( m_Pages[0] );
+	m_pSheet->SetActivePage( m_Pages[0].get() );
 #ifdef SHOW_PROP_WINDOW
 	m_pSheet->ShowWindow( SW_SHOW );
 #endif

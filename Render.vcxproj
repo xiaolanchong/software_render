@@ -173,6 +173,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="RenderView.cpp" />
     <ClCompile Include="geometry\SolidCylinder.cpp" />
     <ClCompile Include="geometry\SolidDodecahedron.cpp" />
     <ClCompile Include="geometry\SolidSphere.cpp" />
@@ -193,8 +194,6 @@
     <ClCompile Include="pipeline\RenderEngine.cpp" />
     <ClCompile Include="pipeline\texture\TextureFileSource.cpp" />
     <ClCompile Include="Render.cpp" />
-    <ClCompile Include="RenderDoc.cpp" />
-    <ClCompile Include="RenderView.cpp" />
     <ClCompile Include="scene\SceneRender.cpp" />
     <ClCompile Include="scene\SceneSolid.cpp" />
     <ClCompile Include="settings\ColorStatic.cpp" />
@@ -211,6 +210,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RenderView.h" />
     <ClInclude Include="geometry\IGeoSolid.h" />
     <ClInclude Include="geometry\SolidCylinder.h" />
     <ClInclude Include="geometry\SolidDodecahedron.h" />
@@ -238,8 +238,6 @@
     <ClInclude Include="pipeline\texture\ITextureSource.h" />
     <ClInclude Include="pipeline\texture\TextureFileSource.h" />
     <ClInclude Include="Render.h" />
-    <ClInclude Include="RenderDoc.h" />
-    <ClInclude Include="RenderView.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="scene\SceneRender.h" />
     <ClInclude Include="scene\SceneSolid.h" />

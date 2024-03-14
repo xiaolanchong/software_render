@@ -1,60 +1,50 @@
-// RenderView.h : interface of the CRenderView class
-//
 
+// RenderView.h : interface of the CChildView class
+//
 
 #pragma once
 
+#include "scene/SceneRender.h"
 
-class CRenderView : public CView
+// CRenderView window
+
+class CRenderView : public CWnd
 {
-protected: // create from serialization only
+// Construction
+public:
 	CRenderView();
-	DECLARE_DYNCREATE(CRenderView)
 
 // Attributes
-public:
-	CRenderDoc* GetDocument() const;
+private:
+	using CPropertyPagePtr = std::unique_ptr<CPropertyPage>;
+
+	std::unique_ptr<CPropertySheet>		m_pSheet;
+	std::vector<CPropertyPagePtr>			m_Pages;
+	SceneRender m_sr;
 
 // Operations
 public:
 
 // Overrides
-	public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
+	//virtual void	OnInitialUpdate() override;
+	void			CreateSettingsWnd();
 // Implementation
 public:
 	virtual ~CRenderView();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
 
+	// Generated message map functions
 protected:
-	std::unique_ptr<CPropertySheet>		m_pSheet;
-	std::vector<CPropertyPage*>			m_Pages;
-
-// Generated message map functions
-	virtual void	OnInitialUpdate();
-	void			CreateSettingsWnd();
-protected:
-	DECLARE_MESSAGE_MAP()
-public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnTimer( UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
 	afx_msg LRESULT OnShowSettings(WPARAM w, LPARAM l);
+	DECLARE_MESSAGE_MAP()
 };
-
-#ifndef _DEBUG  // debug version in RenderView.cpp
-inline CRenderDoc* CRenderView::GetDocument() const
-   { return reinterpret_cast<CRenderDoc*>(m_pDocument); }
-#endif
 
