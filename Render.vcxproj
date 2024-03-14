@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{FB9120AC-9ABF-40DF-9328-8AF5E1DC8E9F}</ProjectGuid>
+    <RootNamespace>Render</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.34322.80</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>__$(Configuration)\</OutDir>
+    <IntDir>__$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>__$(Configuration)\</OutDir>
+    <IntDir>__$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="geometry\SolidCylinder.cpp" />
+    <ClCompile Include="geometry\SolidDodecahedron.cpp" />
+    <ClCompile Include="geometry\SolidSphere.cpp" />
+    <ClCompile Include="geometry\SolidTorus.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="math\Matrix.cpp" />
+    <ClCompile Include="math\MatrixUtil.cpp" />
+    <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="pipeline\light\GouraudLight.cpp" />
+    <ClCompile Include="pipeline\light\ILightDirection.cpp" />
+    <ClCompile Include="pipeline\light\LambertLight.cpp" />
+    <ClCompile Include="pipeline\light\PhongLight.cpp" />
+    <ClCompile Include="pipeline\rasterizer\DrawTriangle.cpp" />
+    <ClCompile Include="pipeline\rasterizer\GradientRasterizer.cpp" />
+    <ClCompile Include="pipeline\rasterizer\InterpolationRender.cpp" />
+    <ClCompile Include="pipeline\rasterizer\PixelRasterizer.cpp" />
+    <ClCompile Include="pipeline\rasterizer\WireFrameRasterizer.cpp" />
+    <ClCompile Include="pipeline\RenderEngine.cpp" />
+    <ClCompile Include="pipeline\texture\TextureFileSource.cpp" />
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="RenderDoc.cpp" />
+    <ClCompile Include="RenderView.cpp" />
+    <ClCompile Include="scene\SceneRender.cpp" />
+    <ClCompile Include="scene\SceneSolid.cpp" />
+    <ClCompile Include="settings\ColorStatic.cpp" />
+    <ClCompile Include="settings\GuiPropertyBag.cpp" />
+    <ClCompile Include="settings\IPropertyMap.cpp" />
+    <ClCompile Include="settings\proppage\GeometryPage.cpp" />
+    <ClCompile Include="settings\proppage\LightPage.cpp" />
+    <ClCompile Include="settings\proppage\RotateScalePage.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="geometry\IGeoSolid.h" />
+    <ClInclude Include="geometry\SolidCylinder.h" />
+    <ClInclude Include="geometry\SolidDodecahedron.h" />
+    <ClInclude Include="geometry\SolidSphere.h" />
+    <ClInclude Include="geometry\SolidTorus.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="math\Face.h" />
+    <ClInclude Include="math\Matrix.h" />
+    <ClInclude Include="math\MatrixUtil.h" />
+    <ClInclude Include="math\Vector.h" />
+    <ClInclude Include="MemDC.h" />
+    <ClInclude Include="pipeline\light\GouraudLight.h" />
+    <ClInclude Include="pipeline\light\ILightDirection.h" />
+    <ClInclude Include="pipeline\light\ILightEngine.h" />
+    <ClInclude Include="pipeline\light\LambertLight.h" />
+    <ClInclude Include="pipeline\light\PhongLight.h" />
+    <ClInclude Include="pipeline\rasterizer\DrawTriangle.h" />
+    <ClInclude Include="pipeline\rasterizer\GradientRasterizer.h" />
+    <ClInclude Include="pipeline\rasterizer\InterpolationRender.h" />
+    <ClInclude Include="pipeline\rasterizer\IRasterizer.h" />
+    <ClInclude Include="pipeline\rasterizer\PixelRasterizer.h" />
+    <ClInclude Include="pipeline\rasterizer\WireFrameRasterizer.h" />
+    <ClInclude Include="pipeline\RenderEngine.h" />
+    <ClInclude Include="pipeline\texture\Array2D.h" />
+    <ClInclude Include="pipeline\texture\ITextureSource.h" />
+    <ClInclude Include="pipeline\texture\TextureFileSource.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="RenderDoc.h" />
+    <ClInclude Include="RenderView.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="scene\SceneRender.h" />
+    <ClInclude Include="scene\SceneSolid.h" />
+    <ClInclude Include="settings\ColorStatic.h" />
+    <ClInclude Include="settings\GuiPropertyBag.h" />
+    <ClInclude Include="settings\IPropertyMap.h" />
+    <ClInclude Include="settings\proppage\GeometryPage.h" />
+    <ClInclude Include="settings\proppage\LightPage.h" />
+    <ClInclude Include="settings\proppage\RotateScalePage.h" />
+    <ClInclude Include="settings\proppage\SliderToText.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Render.ico" />
+    <Image Include="res\RenderDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="res\Render.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Render.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Render.rc2" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="Render.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

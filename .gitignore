@@ -1,0 +1,7 @@
+/__Debug
+/.vs
+/__Release/*
+/x64/*
+/Render.aps
+/Render.vcxproj.user
+/Render.suo
