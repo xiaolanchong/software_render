@@ -42,8 +42,8 @@ void	CLightPage::SetTextValue( int nStaticID, CSliderCtrl* pSlider, double MinVa
 	pSlider->GetRange(nMin, nMax);
 	int nPos = pSlider->GetPos();	
 	double Value = ( nPos - nMin ) * (MaxValue - MinValue)/(nMax - nMin) + MinValue;
-	TCHAR buf[20];
-	_sntprintf( buf, 20, _T("%2.1f"), Value );
+	TCHAR buf[20] = {};
+	_sntprintf_s( buf, 20, _T("%2.1f"), Value );
 	SetDlgItemText( nStaticID, buf );
 }
 
@@ -88,7 +88,7 @@ BOOL	CLightPage::OnInitDialog()
 }
 
 //HACK
-void CLightPage::OnPosChange( NMHDR* pHdr, LRESULT* pRes)
+void CLightPage::OnPosChange( NMHDR* /*pHdr*/, LRESULT* pRes)
 {
 	SetTextValue( IDC_EDIT_LIGHT_POS_X, &m_sldLightPosX, -5.0, 5.0 );
 	SetTextValue( IDC_EDIT_LIGHT_POS_Y, &m_sldLightPosY, -5.0, 5.0 );

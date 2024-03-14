@@ -8,4 +8,6 @@ struct ITextureSource
 	virtual ~ITextureSource() {};
 };
 
+using ITextureSourcePtr = std::unique_ptr<ITextureSource>;
+
 #endif // _I_TEXTURE_SOURCE_8577321150828403_

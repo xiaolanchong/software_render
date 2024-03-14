@@ -14,7 +14,7 @@
 class ILightEngine
 {
 protected:
-	std::auto_ptr<ILightType>	m_pLightDirection;
+	ILightTypePtr	m_pLightDirection;
 	
 	Vector	ClampLight( const Vector& cl )
 	{
@@ -23,8 +23,8 @@ protected:
 						clamp(cl.z, 0.0f, 1.0f));
 	}
 public:
-	ILightEngine( std::auto_ptr<ILightType> dir ) :
-		m_pLightDirection(dir)
+	ILightEngine( ILightTypePtr dir ) :
+		m_pLightDirection(std::move(dir))
 	{
 
 	}
@@ -33,6 +33,8 @@ public:
 							Vector& cl1, Vector& cl2, Vector& cl3 ) = 0;
 };
 
+using ILightEnginePtr = std::unique_ptr<ILightEngine>;
+
 struct ILightEngineAdvance : ILightEngine
 {
 protected:
@@ -40,11 +42,11 @@ protected:
 	Vector	m_clAmbient;
 	Vector	m_clDiffuse;
 
-	ILightEngineAdvance(	std::auto_ptr<ILightType> dir,
+	ILightEngineAdvance(ILightTypePtr dir,
 					const Vector& clLight,
 					const Vector& clDiffuse,
 					const Vector& clAmbient) :
-		ILightEngine(dir),
+		ILightEngine(std::move(dir)),
 		m_clAmbient(clAmbient) ,
 		m_clDiffuse(clDiffuse),
 		m_clLight(clLight)

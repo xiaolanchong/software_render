@@ -208,8 +208,8 @@ Matrix	Scale ( const Vector& v )
 Matrix	RotateX ( float Angle )
 {
 	Matrix	res ( 1 );
-	float  Cosine = cos ( Angle );
-	float  Sine   = sin ( Angle );
+	float  Cosine = cosf ( Angle );
+	float  Sine   = sinf ( Angle );
 
 	res.x [1][1] = Cosine;
 	res.x [2][1] = -Sine;
@@ -222,8 +222,8 @@ Matrix	RotateX ( float Angle )
 Matrix	RotateY ( float Angle )
 {
 	Matrix	res ( 1 );
-	float  Cosine = cos ( Angle );
-	float  Sine   = sin ( Angle );
+	float  Cosine = cosf ( Angle );
+	float  Sine   = sinf ( Angle );
 
 	res.x [0][0] = Cosine;
 	res.x [2][0] = -Sine;
@@ -236,8 +236,8 @@ Matrix	RotateY ( float Angle )
 Matrix	RotateZ ( float Angle )
 {
 	Matrix	res ( 1 );
-	float  Cosine = cos ( Angle );
-	float  Sine   = sin ( Angle );
+	float  Cosine = cosf ( Angle );
+	float  Sine   = sinf ( Angle );
 
 	res.x [0][0] = Cosine;
 	res.x [1][0] = -Sine;
@@ -250,8 +250,8 @@ Matrix	RotateZ ( float Angle )
 Matrix	Rotation ( const Vector& axis, float angle )
 {
 	Matrix	res ( 1 );
-	float  Cosine = cos ( angle );
-	float  Sine   = sin ( angle );
+	float  Cosine = cosf ( angle );
+	float  Sine   = sinf ( angle );
 
 	res.x [0][0] = axis.x * axis.x + ( 1 - axis.x * axis.x ) * Cosine;
 	res.x [0][1] = axis.x * axis.y * ( 1 - Cosine ) + axis.z * Sine;

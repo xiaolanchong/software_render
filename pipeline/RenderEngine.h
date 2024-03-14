@@ -22,8 +22,8 @@ class RenderEngine
 	Matrix		m_MatProj;
 	bool		m_bEnableCull;
 
-	std::auto_ptr<ILightEngine>		m_pLightEngine;
-	std::auto_ptr<IRasterizer>		m_pRasterizer;
+	ILightEnginePtr					   m_pLightEngine;
+	std::unique_ptr<IRasterizer>		m_pRasterizer;
 
 	
 	void		Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h );
@@ -46,9 +46,9 @@ public:
 
 	void		SetCull( bool bEnable = true ) { m_bEnableCull = bEnable; }
 	void		SetWireFrame( bool bWire = true ); 
-	void		SetLight( std::auto_ptr<ILightEngine> LightEng )
+	void		SetLight( ILightEnginePtr LightEng )
 	{
-		m_pLightEngine = LightEng;
+		m_pLightEngine = std::move(LightEng);
 	}
 
 	void		AddPrimitive(const IGeoSolid::Solid_t& s);

@@ -9,7 +9,7 @@
 // CGeometryPage dialog
 
 IMPLEMENT_DYNAMIC(CGeometryPage, CPropertyPage)
-CGeometryPage::CGeometryPage(CWnd* pParent /*=NULL*/)
+CGeometryPage::CGeometryPage(CWnd* /*pParent*/ /*=NULL*/)
 	: CPropertyPage(CGeometryPage::IDD, IDS_GEOMETRY)
 {
 }
@@ -77,7 +77,7 @@ BOOL	CGeometryPage::OnInitDialog()
 
 // IPropertyHandler
 
-void	CGeometryPage::Notify( DWORD dwID )	
+void	CGeometryPage::Notify( DWORD /*dwID*/ )	
 {
 
 }

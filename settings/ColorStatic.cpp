@@ -99,8 +99,7 @@ void CColorStatic::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if( rcArea.PtInRect( point ) && dlg.DoModal() == IDOK )
 	{
-		COLORREF	clRgb = dlg.GetColor();
-		m_clCurrent = clRgb;
+		m_clCurrent = dlg.GetColor();
 		Invalidate();
 	}
 #else

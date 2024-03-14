@@ -16,7 +16,7 @@
 class GouraudLight : public ILightEngineAdvance
 {
 public:
-	GouraudLight(	std::auto_ptr<ILightType> dir,
+	GouraudLight(ILightTypePtr dir,
 					const Vector& clLight,
 					const Vector& clDiffuse,
 					const Vector& clAmbient);

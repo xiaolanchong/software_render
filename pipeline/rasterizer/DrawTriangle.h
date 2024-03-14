@@ -66,7 +66,7 @@ inline void	BresenhamDraw( int x0, int y0, int x1, int y1, int * pArr  )
 	}
 }
 
-const c_nMaxResolution = 10000;
+const size_t c_nMaxResolution = 10000;
 
 template <class ScreenPlotter, typename DrawValue>
 void	DrawAlignTriangle(	ScreenPlotter& dc, 

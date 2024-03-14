@@ -22,11 +22,6 @@ void SolidSphere::GetFaces( Solid_t& s )
 	{
 		float Theta1 = Deg2Rad( 180.0f * i / m_Rings );
 		float Theta2 = Deg2Rad( 180.0f * (i + 1) / m_Rings );
-		float x1 = m_Radius * cos(Theta1);
-		float z1 = m_Radius * sin(Theta1);
-
-		float x2 = m_Radius * cos(Theta2);
-		float z2 = m_Radius * sin(Theta2);
 
 		for ( size_t j = 0; j < m_Segments; ++j )
 		{
@@ -35,10 +30,10 @@ void SolidSphere::GetFaces( Solid_t& s )
 
 
 			// normalization is not required
-			Vector n0 ( cos(Phi1) * sin(Theta1) , cos(Theta1), sin(Phi1) * sin(Theta1) );
-			Vector n1 ( cos(Phi2) * sin(Theta1) , cos(Theta1), sin(Phi2) * sin(Theta1) );
-			Vector n2 ( cos(Phi1) * sin(Theta2) , cos(Theta2), sin(Phi1) * sin(Theta2) );
-			Vector n3 ( cos(Phi2) * sin(Theta2) , cos(Theta2), sin(Phi2) * sin(Theta2) );
+			Vector n0 ( cosf(Phi1) * sinf(Theta1) , cosf(Theta1), sinf(Phi1) * sinf(Theta1) );
+			Vector n1 ( cosf(Phi2) * sinf(Theta1) , cosf(Theta1), sinf(Phi2) * sinf(Theta1) );
+			Vector n2 ( cosf(Phi1) * sinf(Theta2) , cosf(Theta2), sinf(Phi1) * sinf(Theta2) );
+			Vector n3 ( cosf(Phi2) * sinf(Theta2) , cosf(Theta2), sinf(Phi2) * sinf(Theta2) );
 
 			Vector v0 = m_Radius * n0;
 			Vector v1 = m_Radius * n1;

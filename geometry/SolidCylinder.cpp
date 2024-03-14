@@ -24,15 +24,15 @@ void SolidCylinder::GetFaces( Solid_t& s )
 	{
 		float fAngle1 = Deg2Rad( 360.0f * i / m_nSegmentNumber );
 		float fAngle2 = Deg2Rad( 360.0f * (i + 1) / m_nSegmentNumber );
-		float x1 = m_Radius * cos(fAngle1);
-		float z1 = m_Radius * sin(fAngle1);
+		float x1 = m_Radius * cosf(fAngle1);
+		float z1 = m_Radius * sinf(fAngle1);
 
-		float x2 = m_Radius * cos(fAngle2);
-		float z2 = m_Radius * sin(fAngle2);
+		float x2 = m_Radius * cosf(fAngle2);
+		float z2 = m_Radius * sinf(fAngle2);
 
 		// normalization is not required
-		Vector n0 ( cos(fAngle1), 0.0f, sin(fAngle1) );
-		Vector n1 ( cos(fAngle2), 0.0f, sin(fAngle2) );
+		Vector n0 ( cosf(fAngle1), 0.0f, sinf(fAngle1) );
+		Vector n1 ( cosf(fAngle2), 0.0f, sinf(fAngle2) );
 		Vector n2 ( 0.0f, 1.0f, 0.0f );
 		Vector n3 ( 0.0f, -1.0f, 0.0f );
 

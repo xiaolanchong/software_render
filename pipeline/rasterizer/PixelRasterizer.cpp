@@ -33,10 +33,10 @@ void PixelRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 	DCColorPlotter dc(pDC);
 #elif	defined RASTERIZE_TEXTURE
 	DCTexturePlotter dc(pDC, 
-		std::auto_ptr<ITextureSource>( new TextureFileSource( _T("earth.bmp") ) ));
+		std::make_unique < TextureFileSource>( _T("earth.bmp") ));
 #elif	defined RASTERIZE_COLOR_AND_TEXTURE
 	DCTextureAndColorPlotter dc(pDC, 
-		std::auto_ptr<ITextureSource>( new TextureFileSource( _T("earth.bmp") ) ));
+		std::make_unique<TextureFileSource>( _T("earth.bmp") ) );
 #endif
 	PainterAlgoSort( Mesh );
 	CPoint	pt[3];
@@ -44,7 +44,6 @@ void PixelRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 	{
 		for( size_t j=0; j < 3; ++j )
 		{
-			COLORREF cl = Mesh[i].Color[j];
 			pt[j] = Trans2Viewport( w, h, Mesh[i].Vertices[j] );
 		}
 #if		defined RASTERIZE_COLOR

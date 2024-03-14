@@ -67,11 +67,11 @@ void SolidDodecahedron::GetFaces( Solid_t& s )
 
 Vector2D GenerateTexCoord( const Vector& v )
 {
-	float sq = sqrt( v.x * v.x + v.z * v.z );
+	float sq = sqrtf( v.x * v.x + v.z * v.z );
 	float cosPhi	= v.y/ !v;
 	float cosTheta	= v.x/ sq;
 
-	float Phi = acos( cosTheta );
+	float Phi = acosf( cosTheta );
 	Phi += v.z < 0.0f ? float(M_PI) : 0.0f;
 
 	return Vector2D( Phi/float(2*M_PI) , 0.5f - cosPhi/2.0f );

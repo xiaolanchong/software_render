@@ -58,12 +58,21 @@ public:
 	class IPropertyHandler 
 	{
 	public:
+		virtual ~IPropertyHandler() = default;
 		virtual void						Notify( DWORD dwID )			= 0;
 		virtual std::pair<bool, float>		GetNumericProperty(DWORD Id)	= 0;
 		virtual std::pair<bool, CString>	GetStringProperty(DWORD Id)		= 0;
 	};
 
-	class NoSuchProperty : std::exception {};
+	using IPropertyHandlerPtr = IPropertyHandler*; // std::shared_ptr<IPropertyHandler>;
+	using IPropertyHandlerWeakPtr = IPropertyHandler*; // std::weak_ptr<IPropertyHandler>;
+
+	class NoSuchProperty : public std::runtime_error 
+	{
+	public:
+		NoSuchProperty(DWORD id) : std::runtime_error(std::string("No such property: ") + std::to_string(id))
+		{}
+	};
 	virtual ~IPropertyMap() {};
 
 	virtual float		GetNumericProperty(DWORD Id)	= 0;
@@ -83,7 +92,7 @@ public:
 		return GetNumericProperty( Id ) != 0;
 	}
 
-	virtual void	AddHandler( IPropertyHandler * p) = 0;
+	virtual void	AddHandler(IPropertyHandlerWeakPtr p) = 0;
 	virtual void	Notify( DWORD Id ) = 0;
 
 };

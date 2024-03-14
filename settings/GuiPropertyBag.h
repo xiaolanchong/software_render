@@ -11,6 +11,7 @@
 //! \todo 
 
 class GuiPropertyBag : public IPropertyMap::IPropertyHandler
+	//, public std::enable_shared_from_this<GuiPropertyBag>
 {
 public:
 	class ControlHandler
@@ -24,12 +25,14 @@ public:
 		  m_nControlID(nControlID)
 		 {}
 
+		virtual ~ControlHandler() = default;
 		virtual float		GetNumericProperty() = 0;
 		virtual CString		GetStringProperty() = 0;
 	};
 private:
-	std::map< DWORD, ControlHandler* > m_Controls;
-	void InsertControl(DWORD Id, ControlHandler* p);
+	using ControlHandlerPtr = std::unique_ptr<ControlHandler>;
+	std::map< DWORD, ControlHandlerPtr > m_Controls;
+	void InsertControl(DWORD Id, ControlHandlerPtr p);
 protected:
 
 	void AddButton( DWORD Id, CWnd* pWnd, UINT nControlID );
@@ -38,9 +41,8 @@ protected:
 	void AddText( DWORD Id, CWnd* pWnd, UINT nControlID );
 
 	GuiPropertyBag();
-	virtual ~GuiPropertyBag();
 
-	virtual void						Notify( DWORD dwID )
+	virtual void						Notify( DWORD /*dwID*/ )
 	{
 		// do nothing, overrided by descendants
 	}

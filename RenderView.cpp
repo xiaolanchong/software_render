@@ -66,7 +66,7 @@ void CRenderView::OnDraw(CDC* pDC)
 	CMemDC memDC(pDC);
 	CRect rc;
 	GetClientRect(rc);
-	GetDocument()->Draw( &memDC, rc.Width(), rc.Height() );
+	GetDocument()->Draw( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()) );
 }
 
 
@@ -112,7 +112,7 @@ CRenderDoc* CRenderView::GetDocument() const // non-debug version is inline
 
 // CRenderView message handlers
 
-BOOL CRenderView::OnEraseBkgnd(CDC* pDC)
+BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -122,7 +122,7 @@ BOOL CRenderView::OnEraseBkgnd(CDC* pDC)
 UINT_PTR Timer_Draw		= 0xff;
 UINT	 Period_Draw	= 100; 
 
-void CRenderView::OnTimer( UINT_PTR nIDEvent)
+void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
 	GetDocument()->Tick( Period_Draw );
 }
@@ -144,14 +144,14 @@ void CRenderView::OnDestroy()
 	{
 		delete m_Pages[i];
 	}
-	m_pSheet	= std::auto_ptr<CPropertySheet>();
+	m_pSheet.reset();
 }
 
 #define SHOW_PROP_WINDOW
 
 void CRenderView::CreateSettingsWnd()
 {
-	m_pSheet	= std::auto_ptr<CPropertySheet>( new CPropertySheet(IDS_SETTINGS ) );
+	m_pSheet	= std::unique_ptr<CPropertySheet>( new CPropertySheet(IDS_SETTINGS ) );
 	m_Pages.push_back( new CGeometryPage( ) ) ;
 	m_Pages.push_back( new CLightPage(  ) ) ;
 	m_Pages.push_back( new CRotateScalePage(  ) ) ;
@@ -182,7 +182,7 @@ void CRenderView::CreateSettingsWnd()
 	m_pSheet->SetWindowPos( 0, rc.right , rc.top, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
 }
 
-LRESULT CRenderView::OnShowSettings(WPARAM w, LPARAM l)
+LRESULT CRenderView::OnShowSettings(WPARAM w, LPARAM /*l*/)
 {
 #ifdef SHOW_PROP_WINDOW
 	if( m_pSheet.get() )

@@ -14,7 +14,7 @@ void	PerspectiveFov( Matrix& m, float fovy, float Aspect, float zn, float zf )
 //	xScale = aspect ratio * yScale
 
 	m.Clear();
-	m.x[1][1] = 1.0f/tan( fovy/2 );
+	m.x[1][1] = 1.0f/tanf( fovy/2 );
 	m.x[0][0] = m.x[1][1] / Aspect;
 	m.x[2][2] = -zf/ (zn-zf);
 	m.x[3][2] = - zn * zf/ (zn-zf);

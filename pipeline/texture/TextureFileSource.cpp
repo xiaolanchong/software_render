@@ -51,7 +51,6 @@ COLORREF	TextureFileSource::GetTexelColor( float u, float v )
 	size_t indexX = ClampCoord( u, 0, m_RawData.GetWidth() / 4 - 1);
 	size_t indexY = ClampCoord( v, 0, m_RawData.GetHeight() - 1    );
 	
-	const BYTE* p = &m_RawData(0,0);
 	BYTE	b = m_RawData( 4 * indexX + 0, indexY );
 	BYTE	g = m_RawData( 4 * indexX + 1, indexY );
 	BYTE	r = m_RawData( 4 * indexX + 2, indexY );

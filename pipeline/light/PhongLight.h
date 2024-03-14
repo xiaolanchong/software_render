@@ -11,7 +11,7 @@ protected:
 	float		m_Shininess;
 public:
 	PhongLight(	
-		std::auto_ptr<ILightType> dir,
+		ILightTypePtr dir,
 		const Vector& ViewerPos,
 		const Vector& clLight,
 		const Vector& clSpecular,

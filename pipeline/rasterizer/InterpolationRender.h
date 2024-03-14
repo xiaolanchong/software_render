@@ -4,6 +4,16 @@
 #include "../../math/vector.h"
 #include "../texture/ITextureSource.h"
 
+namespace
+{
+	inline BYTE InterpolateByte(int v1, int v, int v2, BYTE b1, BYTE b2)
+	{
+		auto val = (b2 - b1) * (v - v1) / (v2 - v1) + b1;
+		ASSERT(val >= 0);
+		return static_cast<BYTE>(val);
+	}
+}
+
 //! вспомогательный рендер с интерполяцией между вершинами
 //! grayscale  - изображение
 class DCBytePlotter
@@ -14,7 +24,7 @@ public:
 
 	BYTE	Interpolate( int v1, int v, int v2, BYTE b1, BYTE b2 )
 	{
-		return (b2 - b1 )*(v - v1)/(v2 - v1) + b1;
+		return ::InterpolateByte(v1, v, v2, b1, b2);
 	}
 
 	void Plot( int x, int y, BYTE cl )
@@ -28,10 +38,6 @@ class DCColorPlotter
 {
 	CDC* m_pDC;
 
-	BYTE	InterpolateByte( int v1, int v, int v2, BYTE b1, BYTE b2 )
-	{
-		return ( b2 - b1 )*(v - v1)/(v2 - v1) + b1;
-	}
 public:
 	DCColorPlotter( CDC* pDC ) : m_pDC(pDC){}
 
@@ -86,11 +92,11 @@ public:
 class DCTexturePlotter : public DCTextureCoordPlotter
 {
 protected:
-	std::auto_ptr<ITextureSource> m_pTex;
+	ITextureSourcePtr m_pTex;
 public:
-	DCTexturePlotter( CDC* pDC,  std::auto_ptr<ITextureSource> pTex ):
+	DCTexturePlotter( CDC* pDC, ITextureSourcePtr pTex ):
 		DCTextureCoordPlotter(pDC),
-		  m_pTex( pTex )
+		  m_pTex( std::move(pTex) )
 	  {}
 
 	  void Plot( int x, int y, Vector2D cl )
@@ -106,13 +112,13 @@ class DCTextureAndColorPlotter : protected DCTexturePlotter
 public:
 	typedef std::pair< COLORREF, Vector2D> ColorAndCoord_t;
 
-	DCTextureAndColorPlotter( CDC* pDC,  std::auto_ptr<ITextureSource> pTex ):
-	  DCTexturePlotter(pDC, pTex )
+	DCTextureAndColorPlotter( CDC* pDC, ITextureSourcePtr pTex ):
+	  DCTexturePlotter(pDC, std::move(pTex) )
 	  {}
-
+	
 	  BYTE	InterpolateByte( int v1, int v, int v2, BYTE b1, BYTE b2 )
 	  {
-		  return ( b2 - b1 )*(v - v1)/(v2 - v1) + b1;
+		  return ::InterpolateByte(v1, v, v2, b1, b2);
 	  }
 
 	  ColorAndCoord_t	Interpolate( int v1, int v, int v2, 

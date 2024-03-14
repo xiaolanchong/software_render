@@ -23,7 +23,7 @@ class LambertLight : public ILightEngineAdvance
 {
 
 public:
-	LambertLight(	std::auto_ptr<ILightType> dir,
+	LambertLight(ILightTypePtr dir,
 					const Vector& clLight,
 					const Vector& clDiffuse,
 					const Vector& clAmbient);

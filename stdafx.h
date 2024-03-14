@@ -50,6 +50,9 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <memory>
+#include <exception>
+#include <stdexcept>
 
 const UINT	WM_SHOW_SETTINGS = WM_USER + 1;
 

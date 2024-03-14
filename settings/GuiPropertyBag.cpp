@@ -90,44 +90,30 @@ GuiPropertyBag::GuiPropertyBag()
 	GetPropertyMap()->AddHandler( this );
 }
 
-struct  DeleteMapMem
+void GuiPropertyBag::InsertControl(DWORD Id, GuiPropertyBag::ControlHandlerPtr p)
 {
-	void  operator () ( const std::pair< DWORD, GuiPropertyBag::ControlHandler* >& p ) const
-	{
-		delete p.second;
-	}
-};
-
-GuiPropertyBag::~GuiPropertyBag()
-{
-	std::for_each( m_Controls.begin(), m_Controls.end(), DeleteMapMem() );
-}
-
-void GuiPropertyBag::InsertControl(DWORD Id, ControlHandler* p)
-{
-	std::pair< std::map< DWORD, GuiPropertyBag::ControlHandler* >::iterator, bool >
-		res = m_Controls.insert( std::make_pair( Id, p  ) );
+	auto res = m_Controls.emplace(  Id, std::move(p)  );
 	ASSERT( res.second );
 }
 
 void GuiPropertyBag::AddButton( DWORD Id, CWnd* pWnd, UINT nControlID )
 {
-	InsertControl( Id, new ButtonHandler(pWnd, nControlID ) );
+	InsertControl( Id, std::make_unique<ButtonHandler>(pWnd, nControlID ) );
 }
 
 void GuiPropertyBag::AddSlider( DWORD Id, CWnd* pWnd, UINT nControlID )
 {
-	InsertControl( Id, new SliderHandler(pWnd, nControlID )  ) ;
+	InsertControl( Id, std::make_unique < SliderHandler>(pWnd, nControlID )  ) ;
 }
 
 void GuiPropertyBag::AddColor( DWORD Id, CWnd* pWnd, UINT nControlID )
 {
-	InsertControl( Id, new ColorHandler(pWnd, nControlID )  );
+	InsertControl( Id, std::make_unique < ColorHandler>(pWnd, nControlID )  );
 }
 
 void GuiPropertyBag::AddText( DWORD Id, CWnd* pWnd, UINT nControlID )
 {
-	InsertControl( Id, new TextHandler(pWnd, nControlID )  );
+	InsertControl( Id, std::make_unique < TextHandler>(pWnd, nControlID )  );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -135,8 +121,7 @@ void GuiPropertyBag::AddText( DWORD Id, CWnd* pWnd, UINT nControlID )
 
 std::pair<bool, float>		GuiPropertyBag::GetNumericProperty(DWORD Id)
 {
-	std::map< DWORD, ControlHandler* >::iterator it =
-		m_Controls.find( Id );
+	auto it = m_Controls.find( Id );
 	if( it != m_Controls.end() )
 	{
 		return std::make_pair( true, it->second->GetNumericProperty() );
@@ -147,8 +132,7 @@ std::pair<bool, float>		GuiPropertyBag::GetNumericProperty(DWORD Id)
 
 std::pair<bool, CString>	GuiPropertyBag::GetStringProperty(DWORD Id)
 {
-	std::map< DWORD, ControlHandler* >::iterator it =
-		m_Controls.find( Id );
+	auto it =	m_Controls.find( Id );
 	if( it != m_Controls.end() )
 	{
 		return std::make_pair( true, it->second->GetStringProperty() );

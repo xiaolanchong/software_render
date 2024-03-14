@@ -29,7 +29,7 @@ public:
 		ASSERT( j < m_nHeight );
 		return m_Data[ j * m_nStride + i ];
 	}
-	const operator() (size_t i, size_t j) const
+	const T operator() (size_t i, size_t j) const
 	{
 		ASSERT( i < m_nWidth );
 		ASSERT( j < m_nHeight );

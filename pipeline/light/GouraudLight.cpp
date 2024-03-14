@@ -2,11 +2,11 @@
 #include "GouraudLight.h"
 
 GouraudLight::GouraudLight
-	(std::auto_ptr<ILightType> dir, 
+	(ILightTypePtr dir,
 	 const Vector& clLight,
 	 const Vector& clDiffuse,
 	 const Vector& clAmbient): 
-	ILightEngineAdvance(dir, clLight, clDiffuse, clAmbient)
+	ILightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient)
 {
 }
 

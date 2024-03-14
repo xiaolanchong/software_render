@@ -83,7 +83,7 @@ Vector PointLightSolid::GetDiffuse()
 }
 
 
-void	PointLightSolid::AddGeometry( RenderEngine& re, const Matrix& MatWorld )
+void	PointLightSolid::AddGeometry( RenderEngine& re, const Matrix& /*MatWorld*/ )
 {
 	if( !BoolProperty( prop_light_point ) ) return;
 	SolidSphere			sc( 0.2f, 6, 6 );

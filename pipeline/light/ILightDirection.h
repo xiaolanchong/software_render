@@ -16,6 +16,8 @@ struct ILightType
 	virtual ~ILightType() {};
 };
 
+using ILightTypePtr = std::unique_ptr<ILightType>;
+
 //! направленнный свет с постоянной интенсивностью
 class DirectLight : public ILightType
 {
@@ -25,7 +27,7 @@ public:
 	{
 		Normalize(m_LightDirection) ;
 	}
-	std::pair<Vector,float>	GetDirection(const Vector& v) 
+	std::pair<Vector,float>	GetDirection(const Vector& /*v*/) 
 	{
 		return std::make_pair( m_LightDirection, 1.0f );
 	}
@@ -77,14 +79,14 @@ class SpotLight : public ILightType
 
 	float	GetSpotLightFactor(float rho)
 	{
-		float innerCone = cos( Deg2Rad( m_Theta/2 ) );
-		float outerCone = cos( Deg2Rad( m_Phi/2 ) );
+		float innerCone = cosf( Deg2Rad( m_Theta/2 ) );
+		float outerCone = cosf( Deg2Rad( m_Phi/2 ) );
 		if		( rho > innerCone )		return 1.0f;
 		else if	( rho < outerCone )		return 0.0f;
 		else	
 		{
 			float f = ( rho - outerCone ) / ( innerCone - outerCone );
-			f =  exp( m_Falloff * log( f ) );
+			f =  expf( m_Falloff * logf( f ) );
 			return f;
 		}
 	}

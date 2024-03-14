@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "LambertLight.h"
 
-LambertLight::LambertLight( std::auto_ptr<ILightType> dir,
+LambertLight::LambertLight(ILightTypePtr dir,
 						   const Vector& clLight,
 						   const Vector& clDiffuse,
 						   const Vector& clAmbient):
-	ILightEngineAdvance( dir, clLight, clDiffuse, clAmbient)
+	ILightEngineAdvance( std::move(dir), clLight, clDiffuse, clAmbient)
 {
 	m_clAmbient = clAmbient;
 }

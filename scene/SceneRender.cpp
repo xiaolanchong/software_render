@@ -26,7 +26,7 @@ float GetIntensity(float x)
 	return y;
 }
 
-std::auto_ptr<ILightType>	SceneRender::GetLightType() const
+ILightTypePtr	SceneRender::GetLightType() const
 {
 	ILightType* lt = NULL;
 	if		( BoolProperty( prop_light_point ) )
@@ -37,35 +37,35 @@ std::auto_ptr<ILightType>	SceneRender::GetLightType() const
 	else if	( BoolProperty( prop_light_direct ) )
 		lt = new DirectLight(GetDirLightDir());
 	else if	( BoolProperty( prop_light_spot ) )
-		SpotLight( Vector( 0.0f, 0.0f, -8.0f), Vector( 0.0f, 0.0f, 1.0f ),
+		lt = new SpotLight( Vector( 0.0f, 0.0f, -8.0f), Vector( 0.0f, 0.0f, 1.0f ),
 					0.05f, 20.0f, 90.0f, 3.0f );
 	else 
 		ASSERT(FALSE);
 	ASSERT(lt);
-	return std::auto_ptr<ILightType> (lt);
+	return ILightTypePtr(lt);
 }
 
-std::auto_ptr<ILightEngine>		SceneRender::GetLightEngine
+ILightEnginePtr		SceneRender::GetLightEngine
 				(
-					std::auto_ptr<ILightType> lt, 
+					ILightTypePtr lt,
 					const Vector& clLight, const Vector& clDiffuse, const Vector& clAmbient
 				) const
 {
 	ILightEngine* ple = NULL;
 
 	if		( BoolProperty( prop_light_lambert ) )
-		ple = new LambertLight ( lt, clLight, clDiffuse, clAmbient );
+		ple = new LambertLight ( std::move(lt), clLight, clDiffuse, clAmbient );
 	else if ( BoolProperty( prop_light_gouraud ) )
-		ple = new GouraudLight ( lt, clLight, clDiffuse, clAmbient );
+		ple = new GouraudLight (std::move(lt), clLight, clDiffuse, clAmbient );
 	else if ( BoolProperty( prop_light_phong ) )
-		ple = new PhongLight(	lt, GetViewerPos(), 
+		ple = new PhongLight(std::move(lt), GetViewerPos(),
 								clLight, Vector(1.0f, 1.0f, 1.0f), clDiffuse, clAmbient,
 								50.0f
 		);
 	else 
 		ASSERT(FALSE);
 	ASSERT(ple);
-	return std::auto_ptr<ILightEngine>(ple);
+	return ILightEnginePtr(ple);
 }
 
 void	SceneRender::Render( CDC* pDC, WORD w, WORD h )
@@ -93,15 +93,11 @@ void	SceneRender::Render( CDC* pDC, WORD w, WORD h )
 	for ( size_t i =0; i < SceneParts.size(); ++i )
 	{
 		Vector clDiffuse = SceneParts[i]->GetDiffuse();
-		std::auto_ptr<ILightType>	lt = GetLightType();
-		std::auto_ptr<ILightEngine>	le = GetLightEngine( lt, clLight, clDiffuse, clAmbient );
-		eng.SetLight( le );
+		ILightTypePtr	lt = GetLightType();
+		ILightEnginePtr le = GetLightEngine( std::move(lt), clLight, clDiffuse, clAmbient );
+		eng.SetLight( std::move(le) );
 		SceneParts[i]->AddGeometry( eng, MatWorld );
 	}
-#if 0
-	std::auto_ptr<IPointSolid> Light;
-	std::auto_ptr lt = new DirectLight(GetDirLightDir());
-#endif
 
 	eng.Draw( pDC, w, h  );
 
@@ -146,7 +142,7 @@ Vector	SceneRender::GetPointLightPos() const
 					);
 }
 
-void	SceneRender::Tick( float fTime )
+void	SceneRender::Tick( float /*fTime*/ )
 {
 	float RotX = FloatProperty( prop_rs_rotate_x );
 	float RotY = FloatProperty( prop_rs_rotate_y );

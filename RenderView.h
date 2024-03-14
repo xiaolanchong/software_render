@@ -36,7 +36,7 @@ public:
 #endif
 
 protected:
-	std::auto_ptr<CPropertySheet>		m_pSheet;
+	std::unique_ptr<CPropertySheet>		m_pSheet;
 	std::vector<CPropertyPage*>			m_Pages;
 
 // Generated message map functions

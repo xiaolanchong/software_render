@@ -31,7 +31,7 @@ void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h 
 			vert[nIndex].Alpha	= 0x0000;
 		}
 	}
-#if 1
+#if 0
 	size_t i1 = vert.size();
 	size_t i2 = Mesh.size();
 	size_t i3 = gTri.size();
@@ -42,11 +42,12 @@ void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h 
 		gTri[i].Vertex2	= ULONG( 3*i + 1 );
 		gTri[i].Vertex3	= ULONG( 3*i + 2 );
 	}
-#if 1
+#if 0
 	const TRIVERTEX* pv = &vert[0];
 	const GRADIENT_TRIANGLE *pi = &gTri[0];
 #endif
 	// shut up compiler, i guess 2^31 - 1 is much more
 	BOOL res = GradientFill(pDC->GetSafeHdc(), &vert[0], (ULONG) vert.size(), &gTri[0], (ULONG)gTri.size(), GRADIENT_FILL_TRIANGLE);
+	UNREFERENCED_PARAMETER(res);
 	//	ASSERT(res);
 }

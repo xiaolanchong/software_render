@@ -86,7 +86,7 @@ void	CRenderDoc::Draw( CDC* pDC, WORD w, WORD h )
 	sr.Render( pDC, w, h/*, s_fAngle*/ );
 }
 
-void	CRenderDoc::Tick( UINT nPeriod )
+void	CRenderDoc::Tick( UINT /*nPeriod*/ )
 {
 	sr.Tick( s_fTime );
 	s_fTime += 0.1f;

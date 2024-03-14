@@ -11,7 +11,9 @@
 //! \todo 
 
 struct	ILightType;
+using ILightTypePtr = std::unique_ptr<ILightType>;
 class	ILightEngine;
+using ILightEnginePtr = std::unique_ptr<ILightEngine>;
 
 class SceneRender
 {
@@ -23,10 +25,10 @@ class SceneRender
 	Vector	GetPointLightPos() const;
 	Vector	GetDirLightDir() const;
 
-	std::auto_ptr<ILightType>		GetLightType() const;
-	std::auto_ptr<ILightEngine>		GetLightEngine
+	ILightTypePtr		GetLightType() const;
+	ILightEnginePtr		GetLightEngine
 		(
-			std::auto_ptr<ILightType> lt, 
+			ILightTypePtr lt,
 			const Vector& clLight, const Vector& clDiffuse, const Vector& clAmbient
 		) const;
 

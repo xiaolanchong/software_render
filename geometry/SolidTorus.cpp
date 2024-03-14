@@ -29,11 +29,11 @@ void SolidTorus::GetFaces( Solid_t& s )
 		float Theta1 = (i + 0) * ringDelta;
 		float Theta2 = (i + 1) * ringDelta;
 
-		float cosTheta1 = cos(Theta1);
-		float sinTheta1 = sin(Theta1);
+		float cosTheta1 = cosf(Theta1);
+		float sinTheta1 = sinf(Theta1);
 
-		float cosTheta2 = cos(Theta2);
-		float sinTheta2 = sin(Theta2);
+		float cosTheta2 = cosf(Theta2);
+		float sinTheta2 = sinf(Theta2);
 
 
 
@@ -42,11 +42,11 @@ void SolidTorus::GetFaces( Solid_t& s )
 			float Phi1 = (j + 0) * sideDelta;
 			float Phi2 = (j + 1) * sideDelta; 
 
-			float cosPhi1 = cos(Phi1);
-			float sinPhi1 = sin(Phi1);
+			float cosPhi1 = cosf(Phi1);
+			float sinPhi1 = sinf(Phi1);
 
-			float cosPhi2 = cos(Phi2);
-			float sinPhi2 = sin(Phi2);
+			float cosPhi2 = cosf(Phi2);
+			float sinPhi2 = sinf(Phi2);
 
 			float Dist1 = m_innerRadius + m_outerRadius * cosPhi1;
 			float Dist2 = m_innerRadius + m_outerRadius * cosPhi2;

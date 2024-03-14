@@ -2,7 +2,7 @@
 #include "PhongLight.h"
 
 PhongLight::PhongLight(
-					   std::auto_ptr<ILightType> dir,
+					   ILightTypePtr dir,
 					   const Vector& ViewerPos,
 					   const Vector& clLight,
 					   const Vector& clSpecular,
@@ -10,7 +10,7 @@ PhongLight::PhongLight(
 					   const Vector& clAmbient,
 					   float Shininess
 					   ):
-	ILightEngineAdvance(dir, clLight, clDiffuse, clAmbient),
+	ILightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient),
 	m_clSpecular(clSpecular), 
 	m_ViewPos(ViewerPos),
 	m_Shininess(Shininess)
@@ -21,14 +21,14 @@ PhongLight::~PhongLight()
 {
 }
 
-Vector Calculate( const Vector& LightDir, const Vector & ViewDir, const Vector& Normal,
+Vector Calculate( const Vector& LightDir, const Vector & /*ViewDir*/, const Vector& Normal,
 				 /* const Vector& clLight, */const Vector& clDiffuse, const Vector& clSpecular,
 				  float Shininess)
 {
 	Vector ReflectRay = 2 * ( Normal & LightDir ) * Normal - LightDir;
 	float DiffPart = clamp( Normal & LightDir, 0.0f, 1.0f);
 	float SpecPart = clamp( Normal & ReflectRay, 0.0f, 1.0f );
-	SpecPart = exp( Shininess * log(SpecPart) );
+	SpecPart = expf( Shininess * logf(SpecPart) );
 	return /*clLight **/ ( clDiffuse * DiffPart + clSpecular * SpecPart );
 }
 
