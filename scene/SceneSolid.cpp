@@ -22,7 +22,7 @@ void	DodecahedronSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWor
 	sc.GetFaces( Faces );
 	
 	Matrix MatRotDod = RotateZ(Deg2Rad(32.0f));
-	Matrix MatWorldTor = Translate( Vector(0.0f, 2.70f, 0.0f) ) ;
+	Matrix MatWorldTor = Translate( Vector(0.0f, 1.7f, 0.0f) ) ;
 	MatWorldTor = MatRotDod * MatWorldTor * MatWorld;
 	re.SetWorldMatrix( MatWorldTor );
 	re.AddPrimitive( Faces );
@@ -47,7 +47,7 @@ void	CylinderSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWorld )
 	IGeoSolid::Solid_t Faces;
 	sc.GetFaces( Faces );
 
-	Matrix MatWorldCyl = Translate( Vector(0.0f, 1.0f, 0.0f) ) ;
+	Matrix MatWorldCyl = Translate( Vector(0.0f, 0.0f, 0.0f) ) ;
 	MatWorldCyl = MatWorldCyl * MatWorld;
 	re.SetWorldMatrix( MatWorldCyl );
 	re.AddPrimitive( Faces );
@@ -71,7 +71,9 @@ void	TorusSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWorld )
 	IGeoSolid::Solid_t Faces;
 	sc.GetFaces( Faces );
 
-	re.SetWorldMatrix( MatWorld );
+	Matrix MatWorldTor = Translate(Vector(0.0f, -1.f, 0.0f));
+	MatWorldTor = MatWorldTor * MatWorld;
+	re.SetWorldMatrix(MatWorldTor);
 	re.AddPrimitive( Faces );
 }
 

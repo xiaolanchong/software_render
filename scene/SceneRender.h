@@ -10,13 +10,17 @@
 //! \bug 
 //! \todo 
 
-struct	ILightType;
+class	ILightType;
 using ILightTypePtr = std::unique_ptr<ILightType>;
 class	ILightEngine;
 using ILightEnginePtr = std::unique_ptr<ILightEngine>;
+class ISceneSolid;
+
+class RenderEngine;
 
 class SceneRender
 {
+private:
 	Matrix	GetWorldMatrix() const;
 	Matrix	GetViewMatrix() const;
 	Matrix	GetProjMatrix(WORD w, WORD h) const;
@@ -33,6 +37,11 @@ class SceneRender
 		) const;
 
 	mutable float m_AngleX, m_AngleY, m_AngleZ;
+
+	using ISceneSolidPtr = std::unique_ptr<ISceneSolid>;
+	std::vector<ISceneSolidPtr> m_sceneParts;
+
+	std::unique_ptr<RenderEngine> m_eng;
 public:
 	SceneRender();
 	virtual ~SceneRender();

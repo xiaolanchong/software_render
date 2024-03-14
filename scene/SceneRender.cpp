@@ -14,6 +14,11 @@
 SceneRender::SceneRender() :
 	m_AngleX(0.0f), m_AngleY(0.0f), m_AngleZ(0.0f)
 {
+	m_sceneParts.push_back(std::make_unique<DodecahedronSceneSolid>());
+	m_sceneParts.push_back(std::make_unique < CylinderSceneSolid>());
+	m_sceneParts.push_back(std::make_unique < TorusSceneSolid>());
+
+	m_eng = std::make_unique<RenderEngine>();
 }
 
 SceneRender::~SceneRender()
@@ -22,27 +27,25 @@ SceneRender::~SceneRender()
 
 float GetIntensity(float x)
 {
-	float y = (float)exp( 5 * log((20.0000001 - x)/10 ) ) / 10.0f;
+	float y = expf( 5 * logf((20.0000001f - x)/10 ) ) / 10.0f;
 	return y;
 }
 
 ILightTypePtr	SceneRender::GetLightType() const
 {
-	ILightType* lt = NULL;
 	if		( BoolProperty( prop_light_point ) )
 	{
 		float nIntensity = FloatProperty( prop_light_intensity );
-		lt = new PointLightWithAttenuation(GetPointLightPos(), GetIntensity( nIntensity )  ) ;
+		return std::make_unique<PointLightWithAttenuation>(GetPointLightPos(), GetIntensity( nIntensity )  ) ;
 	}
 	else if	( BoolProperty( prop_light_direct ) )
-		lt = new DirectLight(GetDirLightDir());
+		return std::make_unique < DirectLight>(GetDirLightDir());
 	else if	( BoolProperty( prop_light_spot ) )
-		lt = new SpotLight( Vector( 0.0f, 0.0f, -8.0f), Vector( 0.0f, 0.0f, 1.0f ),
+		return std::make_unique < SpotLight>( Vector( 0.0f, 0.0f, -8.0f), Vector( 0.0f, 0.0f, 1.0f ),
 					0.05f, 20.0f, 90.0f, 3.0f );
 	else 
 		ASSERT(FALSE);
-	ASSERT(lt);
-	return ILightTypePtr(lt);
+	return nullptr;
 }
 
 ILightEnginePtr		SceneRender::GetLightEngine
@@ -70,41 +73,34 @@ ILightEnginePtr		SceneRender::GetLightEngine
 
 void	SceneRender::Render( CDC* pDC, WORD w, WORD h )
 {
-	std::vector<ISceneSolid*> SceneParts;
 
-	SceneParts.push_back( new DodecahedronSceneSolid );
-	SceneParts.push_back( new CylinderSceneSolid );
-	SceneParts.push_back( new TorusSceneSolid );
-
-	RenderEngine eng;
 
 	Matrix MatWorld = GetWorldMatrix( );
 	Matrix MatProj	= GetProjMatrix(w, h);	
 	Matrix MatView	= GetViewMatrix();
-	eng.SetViewMatrix(  MatView );
-	eng.SetProjectionMatrix( MatProj );
+	m_eng->SetViewMatrix(  MatView );
+	m_eng->SetProjectionMatrix( MatProj );
 
 	Vector clAmbient( 0.0f, 0.0f, 0.0f );
 	Vector clLight = GetColorVector( prop_light_color );
 
 	if( BoolProperty( prop_geo_wireframe ) )
-		eng.SetWireFrame(true);
+		m_eng->SetMode(RenderEngine::Mode::OnlyWire);
+	else if(BoolProperty(prop_geo_fill))
+		m_eng->SetMode(RenderEngine::Mode::Fill);
+	else if (BoolProperty(prop_geo_fill_and_textures))
+		m_eng->SetMode(RenderEngine::Mode::FillAndTextures);
 
-	for ( size_t i =0; i < SceneParts.size(); ++i )
+	for ( size_t i =0; i < m_sceneParts.size(); ++i )
 	{
-		Vector clDiffuse = SceneParts[i]->GetDiffuse();
+		Vector clDiffuse = m_sceneParts[i]->GetDiffuse();
 		ILightTypePtr	lt = GetLightType();
 		ILightEnginePtr le = GetLightEngine( std::move(lt), clLight, clDiffuse, clAmbient );
-		eng.SetLight( std::move(le) );
-		SceneParts[i]->AddGeometry( eng, MatWorld );
+		m_eng->SetLight( std::move(le) );
+		m_sceneParts[i]->AddGeometry(*m_eng, MatWorld );
 	}
 
-	eng.Draw( pDC, w, h  );
-
-	for( size_t i =0; i < SceneParts.size(); ++i )
-	{
-		delete SceneParts[i];
-	}
+	m_eng->Draw( pDC, w, h  );
 }
 
 Matrix	SceneRender::GetViewMatrix() const

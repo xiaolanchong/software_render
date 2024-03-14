@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "SoftwareRender.h"
+#include "resource.h"
 #include "MemDC.h"
 #include "RenderView.h"
 

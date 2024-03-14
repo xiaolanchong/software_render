@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "SoftwareRender.h"
+#include "Resource.h"
 
 #include "MainFrm.h"
 

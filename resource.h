@@ -26,10 +26,10 @@
 #define IDC_SLIDER_GEO_TOR_SEG          1006
 #define IDC_RADIO4                      1006
 #define IDC_RADIO_LIGHT_POINT           1006
-#define IDC_CHECK_GEO_WIRE              1007
 #define IDC_SLIDER1                     1007
 #define IDC_SLIDER_LIGHT_INTENSITY      1007
 #define IDC_SLIDER_RS_ROTATE_X          1007
+#define IDC_RADIO_GEO_WIRE              1007
 #define IDC_STATIC_GEO_CYL              1008
 #define IDC_RADIO5                      1008
 #define IDC_RADIO_LIGHT_POSITION        1008
@@ -55,8 +55,10 @@
 #define IDC_EDIT_LIGHT_POS_X            1021
 #define IDC_EDIT_RS_ROTATE_Z            1022
 #define IDC_EDIT_LIGHT_POS_Y            1022
+#define IDC_RADIO_GEO_FILL              1022
 #define IDC_EDIT_RS_SCALE_X             1023
 #define IDC_EDIT_LIGHT_POS_Z            1023
+#define IDC_RADIO_GEO_TEXTURE           1023
 #define IDC_EDIT_RS_SCALE_Y             1024
 #define IDC_EDIT_RS_SCALE_Z             1025
 #define IDS_SETTINGS                    10000
@@ -68,9 +70,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_RESOURCE_VALUE        134
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

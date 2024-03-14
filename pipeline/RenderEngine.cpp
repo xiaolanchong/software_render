@@ -20,10 +20,13 @@ IRasterizer * GetPreferredRasterizer()
 
 RenderEngine::RenderEngine():
 	m_bEnableCull(true),
-	m_pRasterizer( GetPreferredRasterizer() ) 
+	m_pRasterizer(std::make_unique<GradientRasterizer>()),
+	m_mode(Mode::Fill)
 {
 	// guess enough
 	m_RasterizeCache.reserve( 2048 );
+
+	//SetMode(Mode::Fill);
 }
 
 RenderEngine::~RenderEngine()
@@ -119,13 +122,29 @@ void	RenderEngine::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 	ASSERT( m_pRasterizer.get() );
 	m_pRasterizer->Rasterize( pDC, Mesh, w, h );
 	Mesh.clear();
-
-	
 }
 
-void	RenderEngine::SetWireFrame( bool bWire )
+void	RenderEngine::SetMode( Mode mode )
 {
-	m_pRasterizer = std::unique_ptr<IRasterizer>
-		( bWire? new WireFrameRasterizer : GetPreferredRasterizer()  );
-	 SetCull( !bWire );
+	if (m_mode == mode)
+		return;
+
+	m_mode = mode;
+	switch (mode)
+	{
+	case Mode::OnlyWire:
+		m_pRasterizer = std::make_unique<WireFrameRasterizer>();
+		SetCull(false);
+		break;
+	case Mode::Fill:
+		m_pRasterizer = std::make_unique<GradientRasterizer>();
+		SetCull(true);
+		break;
+	case Mode::FillAndTextures:
+		m_pRasterizer = std::make_unique<PixelRasterizer>();
+		SetCull(true);
+		break;
+	default:
+		ASSERT(!"Uknown rasterizing mode");
+	};
 }

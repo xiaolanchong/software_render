@@ -66,11 +66,15 @@ BOOL	CGeometryPage::OnInitDialog()
 	AddSlider(	prop_geo_torus_segments,	this, ( IDC_SLIDER_GEO_TOR_SEG ) );
 	AddSlider(	prop_geo_torus_rings,		this, ( IDC_SLIDER_GEO_TOR_RING ) );
 
-	AddButton(	prop_geo_wireframe,			this, ( IDC_CHECK_GEO_WIRE ) );
+	AddButton(	prop_geo_wireframe,			this, ( IDC_RADIO_GEO_WIRE ) );
+	AddButton(prop_geo_fill, this, (IDC_RADIO_GEO_FILL));
+	AddButton(prop_geo_fill_and_textures, this, (IDC_RADIO_GEO_TEXTURE));
 
 	AddColor(  prop_geo_dodecahedron_color,		this, IDC_STATIC_GEO_DOD );
 	AddColor(  prop_geo_cylinder_color,		this, IDC_STATIC_GEO_CYL );
 	AddColor(  prop_geo_torus_color,		this, IDC_STATIC_GEO_TORUS );
+
+	CheckDlgButton(IDC_RADIO_GEO_FILL, BST_CHECKED);
 
 	return TRUE;
 }

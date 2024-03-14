@@ -127,50 +127,49 @@ void	DrawTriangle( ScreenPlotter& dc, int x1, int y1, int x2, int y2, int x3, in
 					 DrawValue cl1, DrawValue cl2, DrawValue cl3  )
 {
 	//! сортируем пока не y1 <= y2 <= y3
-	while ( true )
-		if (y1>y2)
+	while (true)
+	{
+		if (y1 > y2)
 		{
 			std::swap(y1, y2);
 			std::swap(x1, x2);
 			std::swap(cl1, cl2);
-		} else
-			if (y2>y3)
-			{
-				std::swap(y2, y3);
-				std::swap(x2, x3);
-				std::swap(cl2, cl3);
-			} else
-				if (y1>y3)
-				{
-					std::swap(y1, y3);
-					std::swap(x1, x3);
-					std::swap(cl1, cl3);
-				}
-				else break;
+		}
+		else if (y2 > y3)
+		{
+			std::swap(y2, y3);
+			std::swap(x2, x3);
+			std::swap(cl2, cl3);
+		}
+		else if (y1 > y3)
+		{
+			std::swap(y1, y3);
+			std::swap(x1, x3);
+			std::swap(cl1, cl3);
+		}
+		else
+			break;
+	}
 
-				if( abs(y1) >= c_nMaxResolution/2  ||
-					abs(x1) >= c_nMaxResolution/2  ||
-					abs(y2) >= c_nMaxResolution/2  ||
-					abs(x2) >= c_nMaxResolution/2  ||
-					abs(x3) >= c_nMaxResolution/2  ||
-					abs(y3) >= c_nMaxResolution/2   )
-					return ; //! error
+	if( abs(y1) >= c_nMaxResolution/2  ||
+		abs(x1) >= c_nMaxResolution/2  ||
+		abs(y2) >= c_nMaxResolution/2  ||
+		abs(x2) >= c_nMaxResolution/2  ||
+		abs(x3) >= c_nMaxResolution/2  ||
+		abs(y3) >= c_nMaxResolution/2   )
+		return ; //! error
 
-				if( y3 == y1 )
-				{
-					DrawLine( dc,  x1, x3, y1, cl1,  cl3 );
-					return;
-				}
+	if( y3 == y1 )
+	{
+		DrawLine( dc,  x1, x3, y1, cl1,  cl3 );
+		return;
+	}
 
-				int  nx = (x3 - x1 )*(y2-y1)/(y3 - y1) + x1;
-#if 0
-				BYTE cln = (cl3 - cl1 )*(y2-y1)/(y3 - y1) + cl1;
-#else
-				DrawValue cln = dc.Interpolate( y1, y2, y3, cl1, cl3 );
-#endif
+	int  nx = (x3 - x1 )*(y2-y1)/(y3 - y1) + x1;
+	DrawValue cln = dc.Interpolate( y1, y2, y3, cl1, cl3 );
 
-				DrawAlignTriangle( dc, x1, y1, x2, y2, nx, cl1, cl2, cln );
-				DrawAlignTriangle( dc, x3, y3, x2, y2, nx, cl3, cl2, cln );
+	DrawAlignTriangle( dc, x1, y1, x2, y2, nx, cl1, cl2, cln );
+	DrawAlignTriangle( dc, x3, y3, x2, y2, nx, cl3, cl2, cln );
 }
 
 #endif // _DRAW_TRIANGLE_6182470877125656_

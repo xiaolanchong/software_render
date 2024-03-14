@@ -10,8 +10,9 @@
 //! \bug 
 //! \todo 
 
-struct ILightType
+class ILightType
 {
+public:
 	virtual std::pair<Vector,float>	GetDirection(const Vector& v) = 0;
 	virtual ~ILightType() {};
 };
