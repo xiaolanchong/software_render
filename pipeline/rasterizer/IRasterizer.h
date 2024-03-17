@@ -32,7 +32,7 @@ typedef		std::vector<ColorFace>	ColorMesh_t;
 class IRasterizer
 {	
 protected:
-	CPoint Trans2Viewport( WORD w, WORD h, const Vector& v )
+	static CPoint Trans2Viewport( WORD w, WORD h, const Vector& v )
 	{
 		return CPoint( int(w/2 + w/2 * v.x), int(h/2 - h/2 * v.y ) );
 	}
@@ -47,13 +47,13 @@ protected:
 		}
 	};
 
-	void	PainterAlgoSort( ColorMesh_t& Mesh )
+	static void	PainterAlgoSort( ColorMesh_t& Mesh )
 	{
 		std::sort( Mesh.begin(), Mesh.end(), CompareFaces() );
 	}
 public:
 	virtual void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) = 0;
-	virtual ~IRasterizer() {};
+	virtual ~IRasterizer() = default;
 };
 
 #endif // _I_RASTERIZER_3781606653240254_

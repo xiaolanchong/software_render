@@ -1,14 +1,6 @@
-#ifndef _SOLID_CYLINDER_6159010435812994_
-#define _SOLID_CYLINDER_6159010435812994_
+#pragma once
 
 #include "IGeoSolid.h"
-
-//! \brief Интерфейс Цилиндра как геометрического тела
-//! \author 
-//! \date   29.11.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
 
 class SolidCylinder : public IGeoSolid
 {
@@ -18,8 +10,5 @@ class SolidCylinder : public IGeoSolid
 public:
 	SolidCylinder( float Radius, float Height, size_t nSegmentNumber );
 
-	virtual void GetFaces( Solid_t& s );
-	virtual ~SolidCylinder();
+	Faces GetFaces() const override;
 };
-
-#endif // _SOLID_CYLINDER_6159010435812994_

@@ -10,12 +10,10 @@
 // CRotateScale dialog
 
 IMPLEMENT_DYNAMIC(CRotateScalePage, CPropertyPage)
-CRotateScalePage::CRotateScalePage()
-	: CPropertyPage(CRotateScalePage::IDD, IDS_ROTATE_SCALE)
-{
-}
 
-CRotateScalePage::~CRotateScalePage()
+CRotateScalePage::CRotateScalePage(IPropertyMap& propMap)
+	: CPropertyPage(CRotateScalePage::IDD, IDS_ROTATE_SCALE)
+	, m_propBag(GuiPropertyBag::Create(propMap))
 {
 }
 
@@ -63,12 +61,12 @@ BOOL CRotateScalePage::OnInitDialog()
 
 	CheckDlgButton( IDC_RADIO_RS_SIMPLE, BST_CHECKED );
 
-	AddText(  prop_rs_rotate_x,	this, IDC_EDIT_RS_ROTATE_X );
-	AddText(  prop_rs_rotate_y,	this, IDC_EDIT_RS_ROTATE_Y );
-	AddText(  prop_rs_rotate_z,	this, IDC_EDIT_RS_ROTATE_Z );
-	AddText(  prop_rs_scale_x,	this, IDC_EDIT_RS_SCALE_X );
-	AddText(  prop_rs_scale_y,	this, IDC_EDIT_RS_SCALE_Y );
-	AddText(  prop_rs_scale_z,	this, IDC_EDIT_RS_SCALE_Z );
+	m_propBag->AddText(  prop_rs_rotate_x,	this, IDC_EDIT_RS_ROTATE_X );
+	m_propBag->AddText(  prop_rs_rotate_y,	this, IDC_EDIT_RS_ROTATE_Y );
+	m_propBag->AddText(  prop_rs_rotate_z,	this, IDC_EDIT_RS_ROTATE_Z );
+	m_propBag->AddText(  prop_rs_scale_x,	this, IDC_EDIT_RS_SCALE_X );
+	m_propBag->AddText(  prop_rs_scale_y,	this, IDC_EDIT_RS_SCALE_Y );
+	m_propBag->AddText(  prop_rs_scale_z,	this, IDC_EDIT_RS_SCALE_Z );
 
 	LRESULT z;
 	OnPosChange(0, &z);

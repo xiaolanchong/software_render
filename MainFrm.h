@@ -7,29 +7,22 @@
 
 class CMainFrame : public CFrameWnd
 {
-	
 public:
 	CMainFrame() noexcept;
 protected: 
 	DECLARE_DYNAMIC(CMainFrame)
 
-// Attributes
-public:
-
-// Operations
-public:
-
 // Overrides
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs) override;
+	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) override;
 
 // Implementation
 public:
-	virtual ~CMainFrame();
+	virtual ~CMainFrame() override;
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const override;
+	virtual void Dump(CDumpContext& dc) const override;
 #endif
 
 protected:  // control bar embedded members

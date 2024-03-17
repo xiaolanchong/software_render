@@ -63,7 +63,7 @@ void CRenderView::OnPaint()
 	CMemDC memDC(&dc);
 	CRect rc;
 	GetClientRect(&rc);
-	m_sr.Render( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()) );
+	m_sr.Render( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()), m_propMap);
 }
 
 BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
@@ -74,14 +74,11 @@ BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
 
 const UINT_PTR c_transformEvent		= 0xff;
 const UINT	 c_transformPeriodMSec	= 100;
-const float  c_transformPeriodSec   = c_transformPeriodMSec / 1000.f;
+//const float  c_transformPeriodSec   = c_transformPeriodMSec / 1000.f;
 
 void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
-	//GetDocument()->Tick( Period_Draw );
-	
-	m_sr.Tick(c_transformPeriodSec);
-	//m_secSinceStart += tick;
+	m_sr.Tick(m_propMap);
 	InvalidateRect(nullptr);
 }
 
@@ -100,6 +97,7 @@ int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CRenderView::OnDestroy()
 {
+	m_pSheet->DestroyWindow();
 	CWnd::OnDestroy();
 
 	// TODO: Add your message handler code here
@@ -112,9 +110,19 @@ void CRenderView::OnDestroy()
 void CRenderView::CreateSettingsWnd()
 {
 	m_pSheet	= std::unique_ptr<CPropertySheet>( new CPropertySheet(IDS_SETTINGS ) );
-	m_Pages.push_back( std::make_unique<CGeometryPage>( ) ) ;
-	m_Pages.push_back(std::make_unique < CLightPage>(  ) ) ;
-	m_Pages.push_back(std::make_unique < CRotateScalePage>(  ) ) ;
+
+	{
+		auto page = std::make_unique<CGeometryPage>(m_propMap);
+		m_Pages.push_back(std::move(page));
+	}
+	{
+		auto page = std::make_unique<CLightPage>(m_propMap);
+		m_Pages.push_back(std::move(page));
+	}
+	{
+		auto page = std::make_unique<CRotateScalePage>(m_propMap);
+		m_Pages.push_back(std::move(page));
+	}
 
 	m_pSheet->m_psh.dwFlags |= PSH_MODELESS|PSH_NOAPPLYNOW;
 

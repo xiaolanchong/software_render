@@ -9,12 +9,10 @@
 // CLightPage dialog
 
 IMPLEMENT_DYNAMIC(CLightPage, CPropertyPage)
-CLightPage::CLightPage( /*=NULL*/)
-	: CPropertyPage(CLightPage::IDD, IDS_LIGHT )
-{
-}
 
-CLightPage::~CLightPage()
+CLightPage::CLightPage(IPropertyMap& propMap)
+	: CPropertyPage(CLightPage::IDD, IDS_LIGHT )
+	, m_propBag(GuiPropertyBag::Create(propMap))
 {
 }
 
@@ -68,26 +66,25 @@ BOOL	CLightPage::OnInitDialog()
 	m_stLightColor.SubclassDlgItem( IDC_STATIC_LIGHT_COLOR, this );
 	m_stLightColor.SetColor( RGB( 255, 255, 255 ) );
 
-	AddButton(  prop_light_lambert,	this, IDC_RADIO_LIGHT_LAMBERT	);
-	AddButton(  prop_light_gouraud,	this, IDC_RADIO_LIGHT_GOURAUD	);
-	AddButton(  prop_light_phong,	this, IDC_RADIO_LIGHT_PHONG		);
+	m_propBag->AddButton(  prop_light_lambert,	this, IDC_RADIO_LIGHT_LAMBERT	);
+	m_propBag->AddButton(  prop_light_gouraud,	this, IDC_RADIO_LIGHT_GOURAUD	);
+	m_propBag->AddButton(  prop_light_phong,	this, IDC_RADIO_LIGHT_PHONG		);
 
-	AddButton(  prop_light_direct,	this, IDC_RADIO_LIGHT_DIRECTION );
-	AddButton(  prop_light_point,	this, IDC_RADIO_LIGHT_POINT );
+	m_propBag->AddButton(  prop_light_direct,	this, IDC_RADIO_LIGHT_DIRECTION );
+	m_propBag->AddButton(  prop_light_point,	this, IDC_RADIO_LIGHT_POINT );
 
-	AddColor(	prop_light_color,		this, IDC_STATIC_LIGHT_COLOR );
+	m_propBag->AddColor(	prop_light_color,		this, IDC_STATIC_LIGHT_COLOR );
 
-	AddSlider(  prop_light_intensity,	this, IDC_SLIDER_LIGHT_INTENSITY );
-	AddText(  prop_light_pos_x,	this, IDC_EDIT_LIGHT_POS_X );
-	AddText(  prop_light_pos_y,	this, IDC_EDIT_LIGHT_POS_Y );
-	AddText(  prop_light_pos_z,	this, IDC_EDIT_LIGHT_POS_Z );
+	m_propBag->AddSlider(  prop_light_intensity,	this, IDC_SLIDER_LIGHT_INTENSITY );
+	m_propBag->AddText(  prop_light_pos_x,	this, IDC_EDIT_LIGHT_POS_X );
+	m_propBag->AddText(  prop_light_pos_y,	this, IDC_EDIT_LIGHT_POS_Y );
+	m_propBag->AddText(  prop_light_pos_z,	this, IDC_EDIT_LIGHT_POS_Z );
 
 	LRESULT z;
 	OnPosChange( 0, &z  );
 	return TRUE;
 }
 
-//HACK
 void CLightPage::OnPosChange( NMHDR* /*pHdr*/, LRESULT* pRes)
 {
 	SetTextValue( IDC_EDIT_LIGHT_POS_X, &m_sldLightPosX, -5.0, 5.0 );

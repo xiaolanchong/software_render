@@ -3,15 +3,10 @@
 
 #include "IPropertyMap.h"
 
-//! \brief Not available
-//! \author 
-//! \date   01.12.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
+class GuiPropertyBag;
+using GuiPropertyBagPtr = std::shared_ptr<GuiPropertyBag>;
 
 class GuiPropertyBag : public IPropertyMap::IPropertyHandler
-	//, public std::enable_shared_from_this<GuiPropertyBag>
 {
 public:
 	class ControlHandler
@@ -29,26 +24,24 @@ public:
 		virtual float		GetNumericProperty() = 0;
 		virtual CString		GetStringProperty() = 0;
 	};
+
+	static GuiPropertyBagPtr Create(IPropertyMap& propMap);
 private:
 	using ControlHandlerPtr = std::unique_ptr<ControlHandler>;
 	std::map< DWORD, ControlHandlerPtr > m_Controls;
 	void InsertControl(DWORD Id, ControlHandlerPtr p);
-protected:
+
+	GuiPropertyBag();
+public:
 
 	void AddButton( DWORD Id, CWnd* pWnd, UINT nControlID );
 	void AddSlider( DWORD Id, CWnd* pWnd, UINT nControlID );
 	void AddColor( DWORD Id, CWnd* pWnd, UINT nControlID );	
 	void AddText( DWORD Id, CWnd* pWnd, UINT nControlID );
 
-	GuiPropertyBag();
-
-	virtual void						Notify( DWORD /*dwID*/ )
-	{
-		// do nothing, overrided by descendants
-	}
-
-	virtual std::pair<bool, float>		GetNumericProperty(DWORD Id);
-	virtual std::pair<bool, CString>	GetStringProperty(DWORD Id);
+	virtual std::pair<bool, float>	GetNumericProperty(DWORD Id) override;
+	virtual std::pair<bool, CString>	GetStringProperty(DWORD Id) override;
+	virtual void Notify(DWORD /*id*/) override {}
 };
 
 #endif // _GUI_PROPERTY_BAG_1272553053832792_

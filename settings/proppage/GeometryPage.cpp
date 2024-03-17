@@ -9,12 +9,10 @@
 // CGeometryPage dialog
 
 IMPLEMENT_DYNAMIC(CGeometryPage, CPropertyPage)
-CGeometryPage::CGeometryPage(CWnd* /*pParent*/ /*=NULL*/)
-	: CPropertyPage(CGeometryPage::IDD, IDS_GEOMETRY)
-{
-}
 
-CGeometryPage::~CGeometryPage()
+CGeometryPage::CGeometryPage(IPropertyMap& propMap)
+	: CPropertyPage(CGeometryPage::IDD, IDS_GEOMETRY)
+	, m_propBag(GuiPropertyBag::Create(propMap))
 {
 }
 
@@ -55,24 +53,24 @@ BOOL	CGeometryPage::OnInitDialog()
 	m_stColorTorus.SubclassDlgItem( IDC_STATIC_GEO_TORUS, this );
 
 	m_stColorDodecahedron.SetColor( RGB( 255, 0, 0) );
-	m_stColorCylinder.SetColor( RGB( 255, 0, 0) );
-	m_stColorTorus.SetColor( RGB( 255, 0, 0) );
+	m_stColorCylinder.SetColor( RGB( 0, 255, 0) );
+	m_stColorTorus.SetColor( RGB( 0, 0, 255) );
 
-	AddButton(  prop_geo_dodecahedron_enable,	this, ( IDC_CHECK_GEO_DOD ) );
-	AddButton(	prop_geo_cylinder_enable,		this, ( IDC_CHECK_GEO_CYL ) );
-	AddButton(	prop_geo_torus_enable,			this, ( IDC_CHECK_GEO_TORUS ) );
+	m_propBag->AddButton(  prop_geo_dodecahedron_enable,	this, ( IDC_CHECK_GEO_DOD ) );
+	m_propBag->AddButton(	prop_geo_cylinder_enable,		this, ( IDC_CHECK_GEO_CYL ) );
+	m_propBag->AddButton(	prop_geo_torus_enable,			this, ( IDC_CHECK_GEO_TORUS ) );
 
-	AddSlider(  prop_geo_cylinder_segments,	this, ( IDC_SLIDER_GEO_CYL ) );
-	AddSlider(	prop_geo_torus_segments,	this, ( IDC_SLIDER_GEO_TOR_SEG ) );
-	AddSlider(	prop_geo_torus_rings,		this, ( IDC_SLIDER_GEO_TOR_RING ) );
+	m_propBag->AddSlider(  prop_geo_cylinder_segments,	this, ( IDC_SLIDER_GEO_CYL ) );
+	m_propBag->AddSlider(	prop_geo_torus_segments,	this, ( IDC_SLIDER_GEO_TOR_SEG ) );
+	m_propBag->AddSlider(	prop_geo_torus_rings,		this, ( IDC_SLIDER_GEO_TOR_RING ) );
 
-	AddButton(	prop_geo_wireframe,			this, ( IDC_RADIO_GEO_WIRE ) );
-	AddButton(prop_geo_fill, this, (IDC_RADIO_GEO_FILL));
-	AddButton(prop_geo_fill_and_textures, this, (IDC_RADIO_GEO_TEXTURE));
+	m_propBag->AddButton(	prop_geo_wireframe,			this, ( IDC_RADIO_GEO_WIRE ) );
+	m_propBag->AddButton(prop_geo_fill, this, (IDC_RADIO_GEO_FILL));
+	m_propBag->AddButton(prop_geo_fill_and_textures, this, (IDC_RADIO_GEO_TEXTURE));
 
-	AddColor(  prop_geo_dodecahedron_color,		this, IDC_STATIC_GEO_DOD );
-	AddColor(  prop_geo_cylinder_color,		this, IDC_STATIC_GEO_CYL );
-	AddColor(  prop_geo_torus_color,		this, IDC_STATIC_GEO_TORUS );
+	m_propBag->AddColor(  prop_geo_dodecahedron_color,		this, IDC_STATIC_GEO_DOD );
+	m_propBag->AddColor(  prop_geo_cylinder_color,		this, IDC_STATIC_GEO_CYL );
+	m_propBag->AddColor(  prop_geo_torus_color,		this, IDC_STATIC_GEO_TORUS );
 
 	CheckDlgButton(IDC_RADIO_GEO_FILL, BST_CHECKED);
 
@@ -80,8 +78,3 @@ BOOL	CGeometryPage::OnInitDialog()
 }
 
 // IPropertyHandler
-
-void	CGeometryPage::Notify( DWORD /*dwID*/ )	
-{
-
-}

@@ -11,7 +11,7 @@ TextureFileSource::TextureFileSource( LPCTSTR szFileName ) :
 {
 	HBITMAP hBmp = 
 		(HBITMAP)LoadImage( 0, szFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE ); 
-	if( !hBmp ) throw FileNotFound();
+	if( !hBmp ) throw std::runtime_error("Can't load file: ");
 	m_Bmp.Attach( hBmp );
 
 	BitampInfoEx	bi;
@@ -45,7 +45,7 @@ size_t ClampCoord( float x, size_t b, size_t t )
 	else						return size_t(( t - b ) * x);
 }
 
-COLORREF	TextureFileSource::GetTexelColor( float u, float v )
+COLORREF	TextureFileSource::GetTexelColor( float u, float v ) const
 {
 	v = 1.0f - v;
 	size_t indexX = ClampCoord( u, 0, m_RawData.GetWidth() / 4 - 1);

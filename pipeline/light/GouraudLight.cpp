@@ -6,11 +6,7 @@ GouraudLight::GouraudLight
 	 const Vector& clLight,
 	 const Vector& clDiffuse,
 	 const Vector& clAmbient): 
-	ILightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient)
-{
-}
-
-GouraudLight::~GouraudLight()
+	LightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient)
 {
 }
 

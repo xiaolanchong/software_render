@@ -3,13 +3,16 @@
 
 #include "IRasterizer.h"
 
+class DCTextureAndColorPlotter;
+
 class PixelRasterizer : public IRasterizer
 {
 public:
 	PixelRasterizer();
-	virtual ~PixelRasterizer();
+	void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) override;
 
-	virtual void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h );
+private:
+	std::unique_ptr<DCTextureAndColorPlotter> m_plotter;
 };
 
 #endif // _PIXEL_RASTERIZER_5952036371517463_

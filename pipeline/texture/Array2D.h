@@ -44,8 +44,6 @@ public:
 
 	size_t	GetWidth()	const { return m_nWidth; }
 	size_t	GetHeight() const { return m_nHeight; }
-
-	~Array2D(){}
 };
 
 #endif // _ARRAY2_D_1120725408559299_

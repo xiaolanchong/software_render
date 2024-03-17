@@ -53,6 +53,7 @@
 #include <memory>
 #include <exception>
 #include <stdexcept>
+#include <cstdint>
 
 const UINT	WM_SHOW_SETTINGS = WM_USER + 1;
 
@@ -60,7 +61,6 @@ const double M_PI   =    3.14159265358979323846;
 
 inline float Deg2Rad(float d)
 {
-//	const double M_PI   =    3.14159265358979323846;
 	return float(M_PI) * d/180;
 }
 

@@ -1,14 +1,6 @@
 #include "stdafx.h"
 #include "GradientRasterizer.h"
 
-GradientRasterizer::GradientRasterizer()
-{
-}
-
-GradientRasterizer::~GradientRasterizer()
-{
-}
-
 void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 {
 	std::vector<TRIVERTEX>				vert(Mesh.size() * 3);

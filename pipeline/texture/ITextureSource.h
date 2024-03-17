@@ -3,9 +3,10 @@
 
 struct ITextureSource
 {
-	virtual COLORREF	GetTexelColor( float u, float v ) = 0 ;
+public:
+	virtual COLORREF	GetTexelColor( float u, float v ) const = 0 ;
 
-	virtual ~ITextureSource() {};
+	virtual ~ITextureSource() = default;
 };
 
 using ITextureSourcePtr = std::unique_ptr<ITextureSource>;

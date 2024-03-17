@@ -5,13 +5,9 @@ LambertLight::LambertLight(ILightTypePtr dir,
 						   const Vector& clLight,
 						   const Vector& clDiffuse,
 						   const Vector& clAmbient):
-	ILightEngineAdvance( std::move(dir), clLight, clDiffuse, clAmbient)
+	LightEngineAdvance( std::move(dir), clLight, clDiffuse, clAmbient)
 {
 	m_clAmbient = clAmbient;
-}
-
-LambertLight::~LambertLight()
-{
 }
 
 void	LambertLight::Shade(	const Face& f, 
@@ -19,21 +15,9 @@ void	LambertLight::Shade(	const Face& f,
 {
 	ASSERT(  m_pLightDirection.get());
 
-#if 1
 	std::pair<Vector, float> dir1 = m_pLightDirection->GetDirection( f[0] );
 	Vector dir = dir1.first;
 	float  fIntensity	= dir1.second;
-#else
-	std::pair<Vector, float> dir1 = m_pLightDirection->GetDirection( f[0] );
-	std::pair<Vector, float> dir2 = m_pLightDirection->GetDirection( f[1] );
-	std::pair<Vector, float> dir3 = m_pLightDirection->GetDirection( f[2] );
-	Vector dir			= (dir1.first + dir2.first + dir3.first)/3;
-	dir = Normalize(dir);
-	float  fIntensity	= (dir1.second + dir2.second + dir3.second)/3; 
-#endif
-/*	Vector dir2 = m_pLightDirection->GetDirection( f[1] );
-	Vector dir3 = m_pLightDirection->GetDirection( f[2] );
-	Vector dir = (dir1 + dir)*/
 
 	Vector n1 = ( f.n[0] + f.n[1] + f.n[2] )/3;
 	n1 = Normalize( n1 );

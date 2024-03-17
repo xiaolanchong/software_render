@@ -23,6 +23,7 @@
     <ProjectGuid>{FB9120AC-9ABF-40DF-9328-8AF5E1DC8E9F}</ProjectGuid>
     <RootNamespace>Render</RootNamespace>
     <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -86,6 +87,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -109,6 +111,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,6 +133,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,6 +159,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -183,7 +188,6 @@
     <ClCompile Include="math\MatrixUtil.cpp" />
     <ClCompile Include="math\Vector.cpp" />
     <ClCompile Include="pipeline\light\GouraudLight.cpp" />
-    <ClCompile Include="pipeline\light\ILightDirection.cpp" />
     <ClCompile Include="pipeline\light\LambertLight.cpp" />
     <ClCompile Include="pipeline\light\PhongLight.cpp" />
     <ClCompile Include="pipeline\rasterizer\DrawTriangle.cpp" />
@@ -198,7 +202,7 @@
     <ClCompile Include="scene\SceneSolid.cpp" />
     <ClCompile Include="settings\ColorStatic.cpp" />
     <ClCompile Include="settings\GuiPropertyBag.cpp" />
-    <ClCompile Include="settings\IPropertyMap.cpp" />
+    <ClCompile Include="settings\PropertyMapImpl.cpp" />
     <ClCompile Include="settings\proppage\GeometryPage.cpp" />
     <ClCompile Include="settings\proppage\LightPage.cpp" />
     <ClCompile Include="settings\proppage\RotateScalePage.cpp" />
@@ -244,6 +248,7 @@
     <ClInclude Include="settings\ColorStatic.h" />
     <ClInclude Include="settings\GuiPropertyBag.h" />
     <ClInclude Include="settings\IPropertyMap.h" />
+    <ClInclude Include="settings\PropertyMapImpl.h" />
     <ClInclude Include="settings\proppage\GeometryPage.h" />
     <ClInclude Include="settings\proppage\LightPage.h" />
     <ClInclude Include="settings\proppage\RotateScalePage.h" />

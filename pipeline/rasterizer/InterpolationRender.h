@@ -1,21 +1,25 @@
-#ifndef _INTERPOLATION_RENDER_1724244415444253_
-#define _INTERPOLATION_RENDER_1724244415444253_
+п»ї#pragma once
 
 #include "../../math/vector.h"
 #include "../texture/ITextureSource.h"
 
 namespace
 {
-	inline BYTE InterpolateByte(int v1, int v, int v2, BYTE b1, BYTE b2)
+	BYTE InterpolateByte(int v1, int v, int v2, BYTE b1, BYTE b2)
 	{
 		auto val = (b2 - b1) * (v - v1) / (v2 - v1) + b1;
 		ASSERT(val >= 0);
 		return static_cast<BYTE>(val);
 	}
+
+	float	InterpolateFloat(int v1, int v, int v2, float b1, float b2)
+	{
+		return (b2 - b1) * (v - v1) / (v2 - v1) + b1;
+	}
 }
 
-//! вспомогательный рендер с интерполяцией между вершинами
-//! grayscale  - изображение
+//! РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ СЂРµРЅРґРµСЂ СЃ РёРЅС‚РµСЂРїРѕР»СЏС†РёРµР№ РјРµР¶РґСѓ РІРµСЂС€РёРЅР°РјРё
+//! grayscale  - РёР·РѕР±СЂР°Р¶РµРЅРёРµ
 class DCBytePlotter
 {
 	CDC* m_pDC;
@@ -24,16 +28,17 @@ public:
 
 	BYTE	Interpolate( int v1, int v, int v2, BYTE b1, BYTE b2 )
 	{
-		return ::InterpolateByte(v1, v, v2, b1, b2);
+		return InterpolateByte(v1, v, v2, b1, b2);
 	}
 
 	void Plot( int x, int y, BYTE cl )
 	{
 		m_pDC->SetPixel( x, y, RGB(cl, cl, cl ));
 	}
+
 };
 
-//! рендер с интерполяцией цветов между вершинами грани
+//! СЂРµРЅРґРµСЂ СЃ РёРЅС‚РµСЂРїРѕР»СЏС†РёРµР№ С†РІРµС‚РѕРІ РјРµР¶РґСѓ РІРµСЂС€РёРЅР°РјРё РіСЂР°РЅРё
 class DCColorPlotter
 {
 	CDC* m_pDC;
@@ -53,18 +58,17 @@ public:
 	{
 		m_pDC->SetPixel( x, y, cl );
 	}
+
+
 };
 
-//! вспомогательный рендер, для проверки текстурных координат
+//! РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ СЂРµРЅРґРµСЂ, РґР»СЏ РїСЂРѕРІРµСЂРєРё С‚РµРєСЃС‚СѓСЂРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚
 class DCTextureCoordPlotter
 {
 protected:
 	CDC* m_pDC;
 
-	float	InterpolateFloat( int v1, int v, int v2, float b1, float b2 )
-	{
-		return ( b2 - b1 )*(v - v1)/(v2 - v1) + b1;
-	}
+
 public:
 	DCTextureCoordPlotter( CDC* pDC ) : m_pDC(pDC){}
 
@@ -79,6 +83,9 @@ public:
 
 	void Plot( int x, int y, Vector2D cl )
 	{
+		if (!m_pDC)
+			return;
+
 		BYTE g;
 		if		( cl.y < 0.0f)  g = 0;
 		else if	( cl.y > 1.0f)	g = 255;
@@ -86,9 +93,15 @@ public:
 		COLORREF c = RGB( /*255 * cl.x*/0, g, 0 );
 		m_pDC->SetPixel( x, y, c );
 	}
+
+
+	void SetDC(CDC* pDC)
+	{
+		m_pDC = pDC;
+	}
 };
 
-//! текстурный рендер, интерполирует текстурные координаты
+//! С‚РµРєСЃС‚СѓСЂРЅС‹Р№ СЂРµРЅРґРµСЂ, РёРЅС‚РµСЂРїРѕР»РёСЂСѓРµС‚ С‚РµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
 class DCTexturePlotter : public DCTextureCoordPlotter
 {
 protected:
@@ -101,47 +114,28 @@ public:
 
 	  void Plot( int x, int y, Vector2D cl )
 	  {
+		  if (!m_pDC)
+			  return;
 		  COLORREF c = m_pTex->GetTexelColor( cl.x, cl.y );
 		  m_pDC->SetPixel( x, y, c );
 	  }
 };
 
-//! текстурный рендер, интерполирует текстурные координаты и цвет вершин
+//! С‚РµРєСЃС‚СѓСЂРЅС‹Р№ СЂРµРЅРґРµСЂ, РёРЅС‚РµСЂРїРѕР»РёСЂСѓРµС‚ С‚РµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ Рё С†РІРµС‚ РІРµСЂС€РёРЅ
 class DCTextureAndColorPlotter : protected DCTexturePlotter
 {
 public:
 	typedef std::pair< COLORREF, Vector2D> ColorAndCoord_t;
 
-	DCTextureAndColorPlotter( CDC* pDC, ITextureSourcePtr pTex ):
-	  DCTexturePlotter(pDC, std::move(pTex) )
+	DCTextureAndColorPlotter(ITextureSourcePtr pTex ):
+	  DCTexturePlotter(nullptr, std::move(pTex) )
 	  {}
-	
-	  BYTE	InterpolateByte( int v1, int v, int v2, BYTE b1, BYTE b2 )
-	  {
-		  return ::InterpolateByte(v1, v, v2, b1, b2);
-	  }
 
-	  ColorAndCoord_t	Interpolate( int v1, int v, int v2, 
-									 ColorAndCoord_t b1, 
-									 ColorAndCoord_t b2 )
-	  {
-		  float uc = InterpolateFloat( v1, v, v2, b1.second.x, b2.second.x );
-		  float vc = InterpolateFloat( v1, v, v2, b1.second.y, b2.second.y );
-		  BYTE r  = InterpolateByte( v1, v, v2, GetRValue(b1.first), GetRValue(b2.first) );
-		  BYTE g  = InterpolateByte( v1, v, v2, GetGValue(b1.first), GetGValue(b2.first) );
-		  BYTE b  = InterpolateByte( v1, v, v2, GetBValue(b1.first), GetBValue(b2.first) );
-		  return std::make_pair( RGB(r, g, b), Vector2D( uc, vc ) );
-	  }
+	ColorAndCoord_t	Interpolate(int v1, int v, int v2,
+		ColorAndCoord_t b1,
+		ColorAndCoord_t b2);
 
-	  void Plot( int x, int y, ColorAndCoord_t cl )
-	  {
-		  COLORREF c = m_pTex->GetTexelColor( cl.second.x, cl.second.y );
-		  COLORREF cf = RGB(	GetRValue(c) * GetRValue(cl.first)/255, 
-								GetGValue(c) * GetGValue(cl.first)/255, 
-								GetBValue(c) * GetBValue(cl.first)/255 );
-		  m_pDC->SetPixel( x, y, cf );
-	  }
+	void Plot(int x, int y, ColorAndCoord_t cl);
+
+	using DCTexturePlotter::SetDC;
 };
-
-
-#endif // _INTERPOLATION_RENDER_1724244415444253_

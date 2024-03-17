@@ -9,14 +9,9 @@ SolidSphere::SolidSphere(  float Radius, size_t Rings, size_t Segments ) :
 
 }
 
-SolidSphere::~SolidSphere()
+IGeoSolid::Faces SolidSphere::GetFaces() const
 {
-
-}
-
-void SolidSphere::GetFaces( Solid_t& s )
-{
-	s.clear();
+	Faces s;
 
 	for ( size_t i = 0; i < m_Rings; ++i )
 	{
@@ -57,4 +52,6 @@ void SolidSphere::GetFaces( Solid_t& s )
 			s.push_back( f2 );
 		}
 	}
+
+	return s;
 }

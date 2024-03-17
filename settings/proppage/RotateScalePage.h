@@ -1,19 +1,17 @@
 #pragma once
 
 #include "../GuiPropertyBag.h"
-// CRotateScalePage dialog
 
-class CRotateScalePage :	public CPropertyPage,
-							public GuiPropertyBag
+class CRotateScalePage :	public CPropertyPage
 {
 	DECLARE_DYNAMIC(CRotateScalePage)
 
 public:
-	CRotateScalePage();   // standard constructor
-	virtual ~CRotateScalePage();
+	CRotateScalePage(IPropertyMap& propMap);
 
 // Dialog Data
 	enum { IDD = IDD_PP_ROTATE_SCALE };
+
 protected:
 	CSliderCtrl		m_sldRotateX;
 	CSliderCtrl		m_sldRotateY;
@@ -21,6 +19,8 @@ protected:
 	CSliderCtrl		m_sldScaleX;
 	CSliderCtrl		m_sldScaleY;
 	CSliderCtrl		m_sldScaleZ;
+
+	const GuiPropertyBagPtr m_propBag;
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

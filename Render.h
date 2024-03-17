@@ -21,8 +21,8 @@ public:
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+	virtual BOOL InitInstance() override;
+	virtual int ExitInstance() override;
 
 // Implementation
 	afx_msg void OnAppAbout();

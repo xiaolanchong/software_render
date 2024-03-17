@@ -1,19 +1,15 @@
-#ifndef _SCENE_RENDER_5780562940148396_
+п»ї#ifndef _SCENE_RENDER_5780562940148396_
 #define _SCENE_RENDER_5780562940148396_
 
 #include "../math/Matrix.h"
 
-//! \brief Главный рендер сцены - настройка геометрии, освещения и т.д.
-//! \author Eugene Gorbachev (Eugene.Gorbachev@biones.com)
-//! \date   01.12.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
+//! Р“Р»Р°РІРЅС‹Р№ СЂРµРЅРґРµСЂ СЃС†РµРЅС‹ - РЅР°СЃС‚СЂРѕР№РєР° РіРµРѕРјРµС‚СЂРёРё, РѕСЃРІРµС‰РµРЅРёСЏ Рё С‚.Рґ.
 
 class	ILightType;
 using ILightTypePtr = std::unique_ptr<ILightType>;
 class	ILightEngine;
 using ILightEnginePtr = std::unique_ptr<ILightEngine>;
+class IPropertyMap;
 class ISceneSolid;
 
 class RenderEngine;
@@ -21,19 +17,20 @@ class RenderEngine;
 class SceneRender
 {
 private:
-	Matrix	GetWorldMatrix() const;
+	Matrix	GetWorldMatrix(IPropertyMap& propMap) const;
 	Matrix	GetViewMatrix() const;
 	Matrix	GetProjMatrix(WORD w, WORD h) const;
 	Vector	GetViewerPos() const ;
 
-	Vector	GetPointLightPos() const;
+	Vector	GetPointLightPos(IPropertyMap& propMap) const;
 	Vector	GetDirLightDir() const;
 
-	ILightTypePtr		GetLightType() const;
+	ILightTypePtr		GetLightType(IPropertyMap& propMap) const;
 	ILightEnginePtr		GetLightEngine
 		(
 			ILightTypePtr lt,
-			const Vector& clLight, const Vector& clDiffuse, const Vector& clAmbient
+			const Vector& clLight, const Vector& clDiffuse, const Vector& clAmbient,
+			IPropertyMap& propMap
 		) const;
 
 	mutable float m_AngleX, m_AngleY, m_AngleZ;
@@ -44,10 +41,10 @@ private:
 	std::unique_ptr<RenderEngine> m_eng;
 public:
 	SceneRender();
-	virtual ~SceneRender();
+	~SceneRender();
 
-	void	Render( CDC* pDC, WORD w, WORD h );
-	void	Tick(float fTime);
+	void	Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap );
+	void	Tick(IPropertyMap& propMap);
 };
 
 #endif // _SCENE_RENDER_5780562940148396_

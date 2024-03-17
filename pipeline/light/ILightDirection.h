@@ -1,25 +1,18 @@
-#ifndef _I_LIGHT_DIRECTION_7073925213746170_
-#define _I_LIGHT_DIRECTION_7073925213746170_
+п»ї#pragma once
 
 #include "../../math/Vector.h"
 
-//! \brief Модель интенсивности и направления света
-//! \author 
-//! \date   30.11.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
-
+/// РњРѕРґРµР»СЊ РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚Рё Рё РЅР°РїСЂР°РІР»РµРЅРёСЏ СЃРІРµС‚Р°
 class ILightType
 {
 public:
 	virtual std::pair<Vector,float>	GetDirection(const Vector& v) = 0;
-	virtual ~ILightType() {};
+	virtual ~ILightType() = default;
 };
 
 using ILightTypePtr = std::unique_ptr<ILightType>;
 
-//! направленнный свет с постоянной интенсивностью
+//! РЅР°РїСЂР°РІР»РµРЅРЅРЅС‹Р№ СЃРІРµС‚ СЃ РїРѕСЃС‚РѕСЏРЅРЅРѕР№ РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊСЋ
 class DirectLight : public ILightType
 {
 	Vector	m_LightDirection;
@@ -34,7 +27,7 @@ public:
 	}
 };
 
-//! точечный источник с постоянной интенсивностью
+//! С‚РѕС‡РµС‡РЅС‹Р№ РёСЃС‚РѕС‡РЅРёРє СЃ РїРѕСЃС‚РѕСЏРЅРЅРѕР№ РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊСЋ
 class PointLight : public ILightType
 {
 	Vector	m_LightPosition;
@@ -46,7 +39,7 @@ public:
 	}
 };
 
-//! точечный источник с линейно уменьшающейся интенсивностью
+//! С‚РѕС‡РµС‡РЅС‹Р№ РёСЃС‚РѕС‡РЅРёРє СЃ Р»РёРЅРµР№РЅРѕ СѓРјРµРЅСЊС€Р°СЋС‰РµР№СЃСЏ РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊСЋ
 class PointLightWithAttenuation : public ILightType
 {
 	Vector	m_LightPosition;
@@ -118,5 +111,3 @@ public:
 		  return std::make_pair( Normalize( dist), Atten * GetSpotLightFactor( rho ) );
 	  }
 };
-
-#endif // _I_LIGHT_DIRECTION_7073925213746170_

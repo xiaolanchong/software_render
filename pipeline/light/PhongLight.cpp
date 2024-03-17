@@ -10,14 +10,10 @@ PhongLight::PhongLight(
 					   const Vector& clAmbient,
 					   float Shininess
 					   ):
-	ILightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient),
+	LightEngineAdvance(std::move(dir), clLight, clDiffuse, clAmbient),
 	m_clSpecular(clSpecular), 
 	m_ViewPos(ViewerPos),
 	m_Shininess(Shininess)
-{
-}
-
-PhongLight::~PhongLight()
 {
 }
 
@@ -35,19 +31,7 @@ Vector Calculate( const Vector& LightDir, const Vector & /*ViewDir*/, const Vect
 void	PhongLight::Shade(const Face& f, Vector& cl1, Vector& cl2, Vector& cl3 )
 {
 	ASSERT(  m_pLightDirection.get());
-#if 0
-	std::pair<Vector, float> dir1 = m_pLightDirection->GetDirection( f[0] );
-	std::pair<Vector, float> dir2 = m_pLightDirection->GetDirection( f[1] );
-	std::pair<Vector, float> dir3 = m_pLightDirection->GetDirection( f[2] );
 
-	float dot1 = clamp(dir1.first & f.n[0], 0.0f, 1.0f);
-	float dot2 = clamp(dir2.first & f.n[1], 0.0f, 1.0f);
-	float dot3 = clamp(dir3.first & f.n[2], 0.0f, 1.0f);
-
-	cl1 = ClampLight(m_clAmbient + dot1 * dir1.second * m_clLight * m_clDiffuse);
-	cl2 = ClampLight(m_clAmbient + dot2 * dir2.second * m_clLight * m_clDiffuse);
-	cl3 = ClampLight(m_clAmbient + dot3 * dir3.second * m_clLight * m_clDiffuse);
-#endif
 	Vector clAll[3];
 	Vector ViewDir;
 	std::pair<Vector, float> LightProp;

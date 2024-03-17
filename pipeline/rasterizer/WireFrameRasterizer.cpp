@@ -1,14 +1,6 @@
 #include "stdafx.h"
 #include "WireFrameRasterizer.h"
 
-WireFrameRasterizer::WireFrameRasterizer()
-{
-}
-
-WireFrameRasterizer::~WireFrameRasterizer()
-{
-}
-
 void WireFrameRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
 {
 	CGdiObject * pPrevBrush = pDC->SelectStockObject( NULL_BRUSH );

@@ -12,13 +12,9 @@ SolidTorus::SolidTorus(float innerRadius, float outerRadius, size_t sides, size_
 	ASSERT( rings > 2 );
 }
 
-SolidTorus::~SolidTorus()
+IGeoSolid::Faces SolidTorus::GetFaces() const
 {
-}
-
-void SolidTorus::GetFaces( Solid_t& s )
-{
-	s.clear();
+	Faces s;
 	float ringDelta, sideDelta;
 
 	ringDelta = Deg2Rad( 360.0f/ m_rings);
@@ -72,4 +68,6 @@ void SolidTorus::GetFaces( Solid_t& s )
 			s.push_back( f2 );
 		}
 	}
+
+	return s;
 }

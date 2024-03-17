@@ -1,25 +1,18 @@
-#ifndef _LAMBERT_LIGHT_4403499311454775_
-#define _LAMBERT_LIGHT_4403499311454775_
+п»ї#pragma once
 
 #include "ILightEngine.h"
 
-//! \brief Освещение по Ламберту.
+//! \brief РћСЃРІРµС‰РµРЅРёРµ РїРѕ Р›Р°РјР±РµСЂС‚Сѓ.
 //	intensity = Ambient + Diffuse * LightColor * Atten * cos(n, L),
-//	где n - нормаль к грани.
-//		L - направление на свет
-//		Фееут - интунсивность
-//		Diffuse - диффузный цвет материала
-//		LightColor - цвет источника
-//		Ambient - рассеянный цвет материала
-//	Освещение постоянно по всей грани.
-//	
-//! \author 
-//! \date   29.11.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
+//	РіРґРµ n - РЅРѕСЂРјР°Р»СЊ Рє РіСЂР°РЅРё.
+//		L - РЅР°РїСЂР°РІР»РµРЅРёРµ РЅР° СЃРІРµС‚
+//		Atten - РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ
+//		Diffuse - РґРёС„С„СѓР·РЅС‹Р№ С†РІРµС‚ РјР°С‚РµСЂРёР°Р»Р°
+//		LightColor - С†РІРµС‚ РёСЃС‚РѕС‡РЅРёРєР°
+//		Ambient - СЂР°СЃСЃРµСЏРЅРЅС‹Р№ С†РІРµС‚ РјР°С‚РµСЂРёР°Р»Р°
+//	РћСЃРІРµС‰РµРЅРёРµ РїРѕСЃС‚РѕСЏРЅРЅРѕ РїРѕ РІСЃРµР№ РіСЂР°РЅРё.
 
-class LambertLight : public ILightEngineAdvance
+class LambertLight : public LightEngineAdvance
 {
 
 public:
@@ -27,11 +20,7 @@ public:
 					const Vector& clLight,
 					const Vector& clDiffuse,
 					const Vector& clAmbient);
-	virtual ~LambertLight();
-
 	
 	virtual void	Shade(	const Face& f, 
 							Vector& cl1, Vector& cl2, Vector& cl3 ) ;
 };
-
-#endif // _LAMBERT_LIGHT_4403499311454775_

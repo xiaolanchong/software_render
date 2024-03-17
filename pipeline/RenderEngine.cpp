@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "RenderEngine.h"
 
 #include "rasterizer/GradientRasterizer.h"
@@ -23,14 +23,7 @@ RenderEngine::RenderEngine():
 	m_pRasterizer(std::make_unique<GradientRasterizer>()),
 	m_mode(Mode::Fill)
 {
-	// guess enough
 	m_RasterizeCache.reserve( 2048 );
-
-	//SetMode(Mode::Fill);
-}
-
-RenderEngine::~RenderEngine()
-{
 }
 
 void		RenderEngine::Draw( CDC* pDC, WORD w, WORD h )
@@ -40,7 +33,7 @@ void		RenderEngine::Draw( CDC* pDC, WORD w, WORD h )
 }
 
 
-//! для преобразования нормалей в мировые координаты убираем столбец переноса
+//! РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РЅРѕСЂРјР°Р»РµР№ РІ РјРёСЂРѕРІС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓР±РёСЂР°РµРј СЃС‚РѕР»Р±РµС† РїРµСЂРµРЅРѕСЃР°
 void ForNormal( Matrix& m )
 {
 	m.x[3][0] = 
@@ -52,11 +45,11 @@ void ForNormal( Matrix& m )
 	m.x[3][3] = 1.0f;
 }
 
-void	RenderEngine::AddPrimitive(const IGeoSolid::Solid_t& s)
+void	RenderEngine::AddPrimitive(const IGeoSolid::Faces& s)
 {
 	Matrix MatAll = m_MatWorld * m_MatView * m_MatProj;
 
-	IGeoSolid::Solid_t		TransformedSolid;
+	IGeoSolid::Faces		TransformedSolid;
 	std::vector<COLORREF>	VertexColors ( TransformedSolid.size() * 3 );
 
 	
@@ -64,7 +57,7 @@ void	RenderEngine::AddPrimitive(const IGeoSolid::Solid_t& s)
 	Matrix MatViewForNormals = m_MatView;
 	ForNormal(MatWorldForNormals);
 	ForNormal(MatViewForNormals);
-	//! преобразуем нормали в систему координат наблюдателя и посмотрим знак
+	//! РїСЂРµРѕР±СЂР°Р·СѓРµРј РЅРѕСЂРјР°Р»Рё РІ СЃРёСЃС‚РµРјСѓ РєРѕРѕСЂРґРёРЅР°С‚ РЅР°Р±Р»СЋРґР°С‚РµР»СЏ Рё РїРѕСЃРјРѕС‚СЂРёРј Р·РЅР°Рє
 	Matrix MatWorldViewForNormals = MatWorldForNormals * MatViewForNormals;
 
 	for ( size_t i = 0; i < s.size(); ++i )
@@ -98,8 +91,8 @@ void	RenderEngine::AddPrimitive(const IGeoSolid::Solid_t& s)
 		const Vector& v2 = TransformedSolid[i][1];
 		const Vector& v3 = TransformedSolid[i][2];
 
-		//! отсечение невидимых поверхностей(culling)
-		//! если z нормали > 0, то грань смотрит от нас
+		//! РѕС‚СЃРµС‡РµРЅРёРµ РЅРµРІРёРґРёРјС‹С… РїРѕРІРµСЂС…РЅРѕСЃС‚РµР№(culling)
+		//! РµСЃР»Рё z РЅРѕСЂРјР°Р»Рё > 0, С‚Рѕ РіСЂР°РЅСЊ СЃРјРѕС‚СЂРёС‚ РѕС‚ РЅР°СЃ
 		if( (v2.x - v1.x) * (v3.y - v1.y) - (v3.x - v1.x) * (v2.y - v1.y) > 0 && m_bEnableCull )
 			continue;
 		ScreenMesh.push_back(ColorFace(

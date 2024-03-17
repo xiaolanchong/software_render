@@ -15,7 +15,6 @@ public:
 	Matrix& operator -= ( const Matrix& );
 	Matrix& operator *= ( const Matrix& );
 	Matrix& operator *= ( float );
-	Matrix& operator /= ( float );
 
 	void	Invert ();
 	void	Transpose ();
@@ -32,7 +31,6 @@ Matrix	Scale     ( const Vector& );
 Matrix	RotateX   ( float );
 Matrix	RotateY   ( float );
 Matrix	RotateZ   ( float );
-Matrix	Rotate    ( const Vector& v, float );
 Matrix	MirrorX   ();
 Matrix	MirrorY   ();
 Matrix	MirrorZ   ();

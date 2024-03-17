@@ -5,16 +5,13 @@
 #include "SliderToText.h"
 
 // CLightPage dialog
-
-class CLightPage :	public CPropertyPage,
-					public GuiPropertyBag
+class CLightPage : public CPropertyPage
 {
 	DECLARE_DYNAMIC(CLightPage)
 
 	void	SetTextValue( int nStaticID, CSliderCtrl* pSlider, double MinValue, double MaxValue );
 public:
-	CLightPage();   // standard constructor
-	virtual ~CLightPage();
+	explicit CLightPage(IPropertyMap& propMap);
 
 // Dialog Data
 	enum { IDD = IDD_PP_LIGHT };
@@ -25,6 +22,8 @@ protected:
 	CSliderCtrl		m_sldLightPosX;
 	CSliderCtrl		m_sldLightPosY;
 	CSliderCtrl		m_sldLightPosZ;
+
+	const GuiPropertyBagPtr m_propBag;
 
 protected:
 	virtual BOOL OnInitDialog();

@@ -1,20 +1,14 @@
-#ifndef _I_GEO_SOLID_6697391762634109_
-#define _I_GEO_SOLID_6697391762634109_
+п»ї#pragma once
 
 #include "../math/Face.h"
 
-//! \brief Интерфейс геометрического тела
-//! \author Eugene Gorbachev (Eugene.Gorbachev@biones.com)
-//! \date   29.11.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
-
-struct IGeoSolid
+//! Geometric body description interface
+class IGeoSolid
 {
-	typedef std::vector<Face>	Solid_t;
-	virtual void GetFaces( Solid_t& s ) = 0;
-	virtual ~IGeoSolid() {};
-};
+public:
+	using Faces = std::vector<Face>;
 
-#endif // _I_GEO_SOLID_6697391762634109_
+	virtual ~IGeoSolid() = default;
+
+	virtual Faces GetFaces() const = 0;
+};

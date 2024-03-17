@@ -5,18 +5,12 @@
 
 // CGeometryPage dialog
 
-class CGeometryPage :	public CPropertyPage, 
-						public GuiPropertyBag
+class CGeometryPage: public CPropertyPage
 {
 	DECLARE_DYNAMIC(CGeometryPage)
 
 public:
-	CGeometryPage(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CGeometryPage();
-
-	virtual void						Notify( DWORD dwID )			;
-//	virtual std::pair<bool, float>		GetNumericProperty(DWORD Id)	;
-//	virtual std::pair<bool, CString>	GetStringProperty(DWORD Id)		;
+	CGeometryPage(IPropertyMap& propMap);   // standard constructor
 
 // Dialog Data
 	enum { IDD = IDD_PP_GEOMETRY };
@@ -29,8 +23,9 @@ protected:
 	CColorStatic	m_stColorDodecahedron;
 	CColorStatic	m_stColorCylinder;
 	CColorStatic	m_stColorTorus;
-	
 
+	const GuiPropertyBagPtr m_propBag;
+	
 	virtual void	DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL	OnInitDialog();
 

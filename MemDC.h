@@ -1,26 +1,5 @@
-#if !defined(AFX_MEMDC_H__CA1D3541_7235_11D1_ABBA_00A0243D1382__INCLUDED_)
-#define AFX_MEMDC_H__CA1D3541_7235_11D1_ABBA_00A0243D1382__INCLUDED_
-
-#if _MSC_VER >= 1000
 #pragma once
-#endif // _MSC_VER >= 1000
-// MemDC.h : header file
-//
 
-//////////////////////////////////////////////////
-// CMemDC - memory DC
-//
-// Author: Keith Rule
-// Email:  keithr@europa.com
-// Copyright 1996-1997, Keith Rule
-//
-// You may freely use or modify this code provided this
-// Copyright is included in all derived versions.
-//
-// History - 10/3/97 Fixed scrolling bug.
-//                   Added print support.
-//           25 feb 98 - fixed minor assertion bug
-//
 // This class implements a memory Device Context
 
 class CMemDC : public CDC
@@ -97,10 +76,3 @@ private:
     CRect    m_rect;        // Rectangle of drawing area.
     BOOL     m_bMemDC;      // TRUE if CDC really is a Memory DC.
 };
-
-/////////////////////////////////////////////////////////////////////////////
-
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Developer Studio will insert additional declarations immediately before the previous line.
-
-#endif // !defined(AFX_MEMDC_H__CA1D3541_7235_11D1_ABBA_00A0243D1382__INCLUDED_)

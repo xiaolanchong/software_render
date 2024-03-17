@@ -1,20 +1,16 @@
-#ifndef _SOLID_DODECAHEDRON_4933700737521826_
-#define _SOLID_DODECAHEDRON_4933700737521826_
+﻿#pragma once
 
 #include "IGeoSolid.h"
 
+// 20 faces platonic solid
 class SolidDodecahedron : public IGeoSolid
 {
-//	float	m_Radius;
 	float	dodec[20][3];
 
-	void pentagon(	Solid_t& s,  
-					size_t a, size_t b, size_t c, size_t d, size_t e);
+	void pentagon(IGeoSolid::Faces& s,
+					size_t a, size_t b, size_t c, size_t d, size_t e) const;
 public:
 	SolidDodecahedron(float Radius);
-	virtual ~SolidDodecahedron();
 
-	virtual void GetFaces( Solid_t& s );
+	Faces GetFaces() const override;
 };
-
-#endif // _SOLID_DODECAHEDRON_4933700737521826_

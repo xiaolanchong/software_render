@@ -43,12 +43,9 @@ SolidDodecahedron::SolidDodecahedron(float Radius)
 		}
 }
 
-SolidDodecahedron::~SolidDodecahedron()
+IGeoSolid::Faces SolidDodecahedron::GetFaces() const
 {
-}
-
-void SolidDodecahedron::GetFaces( Solid_t& s )
-{
+	Faces s;
 	s.reserve( 12 * 3);
 	
 	pentagon(s, 0, 1, 9, 16, 5);
@@ -63,6 +60,8 @@ void SolidDodecahedron::GetFaces( Solid_t& s )
 	pentagon(s, 6, 15, 8, 10, 11);
 	pentagon(s, 4, 17, 8, 15, 14);
 	pentagon(s, 4, 12, 5, 16, 17);
+
+	return s;
 }
 
 Vector2D GenerateTexCoord( const Vector& v )
@@ -77,8 +76,8 @@ Vector2D GenerateTexCoord( const Vector& v )
 	return Vector2D( Phi/float(2*M_PI) , 0.5f - cosPhi/2.0f );
 }
 
-void SolidDodecahedron::pentagon(Solid_t& s,  
-									size_t a, size_t b, size_t c, size_t d, size_t e)
+void SolidDodecahedron::pentagon(IGeoSolid::Faces& s,  
+									size_t a, size_t b, size_t c, size_t d, size_t e) const
 {
 	Vector v1 ( dodec[a][0], dodec[a][1], dodec[a][2] );
 	Vector v2 ( dodec[b][0], dodec[b][1], dodec[b][2] );

@@ -1,4 +1,4 @@
-#ifndef _RENDER_ENGINE_6898470234012872_
+п»ї#ifndef _RENDER_ENGINE_6898470234012872_
 #define _RENDER_ENGINE_6898470234012872_
 
 #include "../math/vector.h"
@@ -8,13 +8,7 @@
 #include "light/ILightEngine.h"
 #include "rasterizer/IRasterizer.h"
 
-//! \brief Класс отображения тел
-//! \author 
-//! \date   29.11.2005
-//! \version 1.0
-//! \bug 
-//! \todo 
-
+//! РљР»Р°СЃСЃ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‚РµР»
 class RenderEngine
 {
 public:
@@ -26,7 +20,6 @@ public:
 	};
 
 	RenderEngine();
-	virtual ~RenderEngine();
 
 	void		SetWorldMatrix		( const Matrix & m ) { m_MatWorld = m; } 
 	void		SetViewMatrix		( const Matrix & m ) { m_MatView = m; } 
@@ -39,7 +32,7 @@ public:
 		m_pLightEngine = std::move(LightEng);
 	}
 
-	void		AddPrimitive(const IGeoSolid::Solid_t& s);
+	void		AddPrimitive(const IGeoSolid::Faces& s);
 
 	void		Draw( CDC* pDC, WORD w, WORD h );
 

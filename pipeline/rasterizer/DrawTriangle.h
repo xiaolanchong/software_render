@@ -1,17 +1,12 @@
-#ifndef _DRAW_TRIANGLE_6182470877125656_
-#define _DRAW_TRIANGLE_6182470877125656_
+п»ї#pragma once
 
 template <class ScreenPlotter, typename DrawValue>
-void	DrawLine(	ScreenPlotter& dc, int x1, int x2, int y, 
+void	DrawLine(ScreenPlotter& dc, int x1, int x2, int y, 
 				 DrawValue cl1, DrawValue cl2 )
 {
 	if( x2 == x1 ) 
 	{
-#if 0
-		pDC->SetPixel( x1, y, RGB(cl1, cl1, cl1 ));
-#else
 		dc.Plot( x1, y, cl1 );
-#endif
 		return;
 	}
 	if( x2 < x1 )
@@ -21,13 +16,8 @@ void	DrawLine(	ScreenPlotter& dc, int x1, int x2, int y,
 	}
 	for( int x = x1; x <= x2; ++x )
 	{
-#if 0
-		BYTE cl = (cl2 - cl1) * (x - x1)/(x2 - x1) + cl1;
-		pDC->SetPixel( x, y, RGB(cl, cl, cl ));
-#else
 		DrawValue cl = dc.Interpolate( x1, x, x2, cl1, cl2 );
 		dc.Plot( x, y, cl )	;
-#endif
 	}
 }
 
@@ -99,25 +89,15 @@ void	DrawAlignTriangle(	ScreenPlotter& dc,
 	if( bSwap )
 		for( int y = y1; y <= y2; ++y  )
 		{
-#if 0
-			cl1to2 = ( y - y1 ) * ( cl1 - cl2 )/ (y2 - y1) + cl2;
-			cl1to3 = ( y - y1 ) * ( cl1 - cl3 )/ (y2 - y1) + cl3;
-#else
 			cl1to2 = dc.Interpolate( y1, y, y2, cl2, cl1 );
 			cl1to3 = dc.Interpolate( y1, y, y2, cl3, cl1 );
-#endif
 			DrawLine( dc,  edge1to2[y], edge1to3[y], y, cl1to2,  cl1to3 );
 		}
 	else
 		for( int y = y1; y <= y2; ++y  )
 		{
-#if 0
-			cl1to2 = ( y - y1 ) * ( cl2 - cl1 )/ (y2 - y1) + cl1;
-			cl1to3 = ( y - y1 ) * ( cl3 - cl1 )/ (y2 - y1) + cl1;
-#else
 			cl1to2 = dc.Interpolate( y1, y, y2, cl1, cl2 );
 			cl1to3 = dc.Interpolate( y1, y, y2, cl1, cl3 );
-#endif
 			DrawLine( dc,  edge1to2[y], edge1to3[y], y, cl1to2,  cl1to3 );
 		}
 }
@@ -126,7 +106,7 @@ template <class ScreenPlotter, class DrawValue>
 void	DrawTriangle( ScreenPlotter& dc, int x1, int y1, int x2, int y2, int x3, int y3,
 					 DrawValue cl1, DrawValue cl2, DrawValue cl3  )
 {
-	//! сортируем пока не y1 <= y2 <= y3
+	//! СЃРѕСЂС‚РёСЂСѓРµРј РїРѕРєР° РЅРµ y1 <= y2 <= y3
 	while (true)
 	{
 		if (y1 > y2)
@@ -171,5 +151,3 @@ void	DrawTriangle( ScreenPlotter& dc, int x1, int y1, int x2, int y2, int x3, in
 	DrawAlignTriangle( dc, x1, y1, x2, y2, nx, cl1, cl2, cln );
 	DrawAlignTriangle( dc, x3, y3, x2, y2, nx, cl3, cl2, cln );
 }
-
-#endif // _DRAW_TRIANGLE_6182470877125656_

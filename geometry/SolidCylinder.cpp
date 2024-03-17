@@ -9,13 +9,9 @@ SolidCylinder::SolidCylinder(float Radius, float Height, size_t nSegmentNumber):
 	ASSERT( Height > 0.0f );
 }
 
-SolidCylinder::~SolidCylinder()
+IGeoSolid::Faces SolidCylinder::GetFaces() const
 {
-}
-
-void SolidCylinder::GetFaces( Solid_t& s )
-{
-	s.clear();
+	Faces s;
 
 	// texture bounds
 	const float c_TopCircle		= m_Radius/( 2 * m_Radius + m_Height );
@@ -78,4 +74,6 @@ void SolidCylinder::GetFaces( Solid_t& s )
 		s.push_back( f3 );
 		s.push_back( f4 );
 	}
+
+	return s;
 }

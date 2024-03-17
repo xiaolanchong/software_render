@@ -3,7 +3,7 @@
 
 #include "ILightEngine.h"
 
-class PhongLight: public ILightEngineAdvance
+class PhongLight: public LightEngineAdvance
 {
 protected:
 	Vector		m_clSpecular;
@@ -19,9 +19,8 @@ public:
 		const Vector& clAmbient,
 		float Shininess
 		);
-	virtual ~PhongLight();
 
-	virtual void	Shade(	const Face& f, Vector& cl1, Vector& cl2, Vector& cl3 ) ;
+	void	Shade(	const Face& f, Vector& cl1, Vector& cl2, Vector& cl3 ) override;
 };
 
 #endif // _PHONG_LIGHT_6212698885417518_

@@ -10,7 +10,7 @@ public:
 	ButtonHandler( CWnd* pWnd, UINT nControlID  ) : ControlHandler( pWnd, nControlID ){}
 	virtual float		GetNumericProperty()
 	{
-		bool b = m_pWnd ->IsDlgButtonChecked(m_nControlID) != 0;//BST_CHECKED;
+		bool b = m_pWnd->IsDlgButtonChecked(m_nControlID) != BST_UNCHECKED;
 		return b ? 1.0f : 0.0f;
 	}
 	virtual CString		GetStringProperty()
@@ -87,7 +87,13 @@ public:
 
 GuiPropertyBag::GuiPropertyBag()
 {
-	GetPropertyMap()->AddHandler( this );
+}
+
+GuiPropertyBagPtr GuiPropertyBag::Create(IPropertyMap& propMap)
+{
+	GuiPropertyBagPtr newBag(new GuiPropertyBag);
+	propMap.AddHandler(newBag);
+	return newBag;
 }
 
 void GuiPropertyBag::InsertControl(DWORD Id, GuiPropertyBag::ControlHandlerPtr p)
