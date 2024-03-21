@@ -20,11 +20,14 @@ namespace
 
 //! вспомогательный рендер с интерполяцией между вершинами
 //! grayscale  - изображение
+//! DeviceContext functions:
+//!   SetPixel(int x, int y, COLORREF color) - set the pixel color with the given coordinates
+template<typename DeviceContext>
 class DCBytePlotter
 {
-	CDC* m_pDC;
+	DeviceContext* m_pDC;
 public:
-	DCBytePlotter( CDC* pDC ) : m_pDC(pDC){}
+	DCBytePlotter(DeviceContext* pDC ) : m_pDC(pDC){}
 
 	BYTE	Interpolate( int v1, int v, int v2, BYTE b1, BYTE b2 )
 	{
@@ -35,16 +38,16 @@ public:
 	{
 		m_pDC->SetPixel( x, y, RGB(cl, cl, cl ));
 	}
-
 };
 
 //! рендер с интерполяцией цветов между вершинами грани
+template<typename DeviceContext>
 class DCColorPlotter
 {
-	CDC* m_pDC;
+	DeviceContext* m_pDC;
 
 public:
-	DCColorPlotter( CDC* pDC ) : m_pDC(pDC){}
+	DCColorPlotter(DeviceContext* pDC ) : m_pDC(pDC){}
 
 	COLORREF	Interpolate( int v1, int v, int v2, COLORREF b1, COLORREF b2 )
 	{
@@ -58,19 +61,17 @@ public:
 	{
 		m_pDC->SetPixel( x, y, cl );
 	}
-
-
 };
 
 //! вспомогательный рендер, для проверки текстурных координат
+template<typename DeviceContext>
 class DCTextureCoordPlotter
 {
 protected:
-	CDC* m_pDC;
-
+	DeviceContext* m_pDC;
 
 public:
-	DCTextureCoordPlotter( CDC* pDC ) : m_pDC(pDC){}
+	DCTextureCoordPlotter(DeviceContext* pDC ) : m_pDC(pDC){}
 
 	Vector2D	Interpolate( int v1, int v, int v2, 
 		Vector2D b1, 
@@ -94,7 +95,6 @@ public:
 		m_pDC->SetPixel( x, y, c );
 	}
 
-
 	void SetDC(CDC* pDC)
 	{
 		m_pDC = pDC;
@@ -102,40 +102,75 @@ public:
 };
 
 //! текстурный рендер, интерполирует текстурные координаты
-class DCTexturePlotter : public DCTextureCoordPlotter
+template<typename DeviceContext>
+class DCTexturePlotter : public DCTextureCoordPlotter< DeviceContext>
 {
 protected:
 	ITextureSourcePtr m_pTex;
 public:
-	DCTexturePlotter( CDC* pDC, ITextureSourcePtr pTex ):
-		DCTextureCoordPlotter(pDC),
+	DCTexturePlotter(DeviceContext* pDC, ITextureSourcePtr pTex ):
+		DCTextureCoordPlotter< DeviceContext>(pDC),
 		  m_pTex( std::move(pTex) )
-	  {}
+	{}
 
-	  void Plot( int x, int y, Vector2D cl )
-	  {
-		  if (!m_pDC)
-			  return;
-		  COLORREF c = m_pTex->GetTexelColor( cl.x, cl.y );
-		  m_pDC->SetPixel( x, y, c );
-	  }
+	void Plot( int x, int y, Vector2D cl )
+	{
+		if (!m_pDC)
+			return;
+		COLORREF c = m_pTex->GetTexelColor( cl.x, cl.y );
+		m_pDC->SetPixel( x, y, c );
+	}
 };
 
 //! текстурный рендер, интерполирует текстурные координаты и цвет вершин
-class DCTextureAndColorPlotter : protected DCTexturePlotter
+template<typename DeviceContext>
+class DCTextureAndColorPlotter : protected DCTexturePlotter<DeviceContext>
 {
 public:
 	typedef std::pair< COLORREF, Vector2D> ColorAndCoord_t;
 
-	DCTextureAndColorPlotter(ITextureSourcePtr pTex ):
-	  DCTexturePlotter(nullptr, std::move(pTex) )
-	  {}
+	DCTextureAndColorPlotter(DeviceContext* pDC, ITextureSourcePtr pTex, int width, int height):
+	  DCTexturePlotter(pDC, std::move(pTex) )
+		, m_width(width)
+		, m_height(height)
+	{}
 
 	ColorAndCoord_t	Interpolate(int v1, int v, int v2,
 		ColorAndCoord_t b1,
 		ColorAndCoord_t b2);
 
 	void Plot(int x, int y, ColorAndCoord_t cl);
-
-	using DCTexturePlotter::SetDC;
+private:
+	int m_width;
+	int m_height;
 };
+
+template<typename DeviceContext>
+typename DCTextureAndColorPlotter<DeviceContext>::ColorAndCoord_t
+DCTextureAndColorPlotter<DeviceContext>::Interpolate(int v1, int v, int v2,
+	ColorAndCoord_t b1, ColorAndCoord_t b2)
+{
+	float uc = InterpolateFloat(v1, v, v2, b1.second.x, b2.second.x);
+	float vc = InterpolateFloat(v1, v, v2, b1.second.y, b2.second.y);
+	BYTE r = InterpolateByte(v1, v, v2, GetRValue(b1.first), GetRValue(b2.first));
+	BYTE g = InterpolateByte(v1, v, v2, GetGValue(b1.first), GetGValue(b2.first));
+	BYTE b = InterpolateByte(v1, v, v2, GetBValue(b1.first), GetBValue(b2.first));
+	return std::make_pair(RGB(r, g, b), Vector2D(uc, vc));
+}
+
+template<typename DeviceContext>
+void DCTextureAndColorPlotter< DeviceContext>::Plot(int x, int y, ColorAndCoord_t cl)
+{
+	if (!m_pDC)
+		return;
+	// TODO: culling better to be on the vertex level
+	if (x >= m_width || y >= m_height ||
+		 x < 0 || y < 0)
+		return;
+
+	COLORREF c = m_pTex->GetTexelColor(cl.second.x, cl.second.y);
+	COLORREF cf = RGB(GetRValue(c) * GetRValue(cl.first) / 255,
+		GetGValue(c) * GetGValue(cl.first) / 255,
+		GetBValue(c) * GetBValue(cl.first) / 255);
+	m_pDC->SetPixel(x, y, cf);
+}

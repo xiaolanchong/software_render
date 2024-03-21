@@ -1,5 +1,4 @@
-﻿#ifndef _GOURAUD_LIGHT_9073291314267220_
-#define _GOURAUD_LIGHT_9073291314267220_
+﻿#pragma once
 
 #include "ILightEngine.h"
 
@@ -18,5 +17,3 @@ public:
 	void	Shade( const Face& f, 
 					Vector& cl1, Vector& cl2, Vector& cl3 ) override;
 };
-
-#endif // _GOURAUD_LIGHT_9073291314267220_

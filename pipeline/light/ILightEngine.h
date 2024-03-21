@@ -8,7 +8,7 @@ class ILightEngine
 {
 public:
 	virtual ~ILightEngine() = default;
-	virtual void	Shade(const Face& f,
+	virtual void Shade(const Face& f,
 		Vector& cl1, Vector& cl2, Vector& cl3) = 0;
 };
 

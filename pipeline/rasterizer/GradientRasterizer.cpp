@@ -32,5 +32,5 @@ void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h 
 	}
 
 	BOOL res = GradientFill(pDC->GetSafeHdc(), &vert[0], (ULONG) vert.size(), &gTri[0], (ULONG)gTri.size(), GRADIENT_FILL_TRIANGLE);
-	UNREFERENCED_PARAMETER(res);
+	VERIFY(res);
 }

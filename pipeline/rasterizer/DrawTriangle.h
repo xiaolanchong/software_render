@@ -2,7 +2,7 @@
 
 template <class ScreenPlotter, typename DrawValue>
 void	DrawLine(ScreenPlotter& dc, int x1, int x2, int y, 
-				 DrawValue cl1, DrawValue cl2 )
+		         DrawValue cl1, DrawValue cl2 )
 {
 	if( x2 == x1 ) 
 	{
@@ -56,7 +56,7 @@ inline void	BresenhamDraw( int x0, int y0, int x1, int y1, int * pArr  )
 	}
 }
 
-const size_t c_nMaxResolution = 10000;
+constexpr size_t c_nMaxResolution = 10000;
 
 template <class ScreenPlotter, typename DrawValue>
 void	DrawAlignTriangle(	ScreenPlotter& dc, 

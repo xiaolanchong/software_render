@@ -1,10 +1,8 @@
 //////////////////////////////////////////////////////////
 // basic vector library                                 //
-//    all major operators overloaded to support vectors //
 //////////////////////////////////////////////////////////
 
-#ifndef	__VECTOR__
-#define	__VECTOR__
+#pragma once
 
 #include	<math.h>
 
@@ -147,4 +145,3 @@ inline	Vector&	Vector :: operator /= ( float v )
 inline	Vector	Normalize ( const Vector& v ) { return v / !v; };
 Vector	RndVector ();
 Vector&	Clip ( Vector& );
-#endif

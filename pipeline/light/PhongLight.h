@@ -1,5 +1,4 @@
-#ifndef _PHONG_LIGHT_6212698885417518_
-#define _PHONG_LIGHT_6212698885417518_
+#pragma once
 
 #include "ILightEngine.h"
 
@@ -22,5 +21,3 @@ public:
 
 	void	Shade(	const Face& f, Vector& cl1, Vector& cl2, Vector& cl3 ) override;
 };
-
-#endif // _PHONG_LIGHT_6212698885417518_

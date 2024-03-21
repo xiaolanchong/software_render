@@ -1,5 +1,4 @@
-#ifndef _I_TEXTURE_SOURCE_8577321150828403_
-#define _I_TEXTURE_SOURCE_8577321150828403_
+#pragma once
 
 struct ITextureSource
 {
@@ -9,6 +8,4 @@ public:
 	virtual ~ITextureSource() = default;
 };
 
-using ITextureSourcePtr = std::unique_ptr<ITextureSource>;
-
-#endif // _I_TEXTURE_SOURCE_8577321150828403_
+using ITextureSourcePtr = std::shared_ptr<ITextureSource>;

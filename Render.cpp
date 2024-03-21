@@ -36,7 +36,7 @@ CRenderApp::CRenderApp()
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("SoftwareRender.AppID.NoVersion"));
+	SetAppID(_T("Render.1.1"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
@@ -87,7 +87,6 @@ BOOL CRenderApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-
 	// To create the main window, this code creates a new frame window
 	// object and then sets it as the application's main window object
 	CFrameWnd* pFrame = new CMainFrame;
@@ -98,10 +97,6 @@ BOOL CRenderApp::InitInstance()
 	pFrame->LoadFrame(IDR_MAINFRAME,
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr,
 		nullptr);
-
-
-
-
 
 	// The one and only window has been initialized, so show and update it
 	pFrame->ShowWindow(SW_SHOW);

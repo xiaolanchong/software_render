@@ -1,10 +1,11 @@
-#ifndef _PIXEL_RASTERIZER_5952036371517463_
-#define _PIXEL_RASTERIZER_5952036371517463_
+#pragma once
 
 #include "IRasterizer.h"
+#include "../texture/Array2D.h"
 
-class DCTextureAndColorPlotter;
+class TextureFileSource;
 
+// Rendering to the back buffer
 class PixelRasterizer : public IRasterizer
 {
 public:
@@ -12,7 +13,7 @@ public:
 	void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) override;
 
 private:
-	std::unique_ptr<DCTextureAndColorPlotter> m_plotter;
-};
 
-#endif // _PIXEL_RASTERIZER_5952036371517463_
+	std::shared_ptr<TextureFileSource> m_texture;
+	Array2D<DWORD> m_screenBuffer;
+};

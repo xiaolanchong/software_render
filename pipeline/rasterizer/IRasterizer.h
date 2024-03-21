@@ -1,5 +1,4 @@
-#ifndef _I_RASTERIZER_3781606653240254_
-#define _I_RASTERIZER_3781606653240254_
+#pragma once
 
 #include "../../math/Face.h"
 
@@ -55,5 +54,3 @@ public:
 	virtual void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) = 0;
 	virtual ~IRasterizer() = default;
 };
-
-#endif // _I_RASTERIZER_3781606653240254_

@@ -1,5 +1,4 @@
-#ifndef __MATRIX__
-#define __MATRIX__
+#pragma once
 
 #include	"Vector.h"
 
@@ -34,5 +33,3 @@ Matrix	RotateZ   ( float );
 Matrix	MirrorX   ();
 Matrix	MirrorY   ();
 Matrix	MirrorZ   ();
-
-#endif

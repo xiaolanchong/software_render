@@ -21,6 +21,6 @@ public:
 					const Vector& clDiffuse,
 					const Vector& clAmbient);
 	
-	virtual void	Shade(	const Face& f, 
-							Vector& cl1, Vector& cl2, Vector& cl3 ) ;
+	void	Shade(const Face& f, 
+					Vector& cl1, Vector& cl2, Vector& cl3 ) override;
 };

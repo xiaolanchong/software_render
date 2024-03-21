@@ -57,9 +57,6 @@ void CRenderView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	
-	// TODO: Add your message handler code here
-	// Do not call CWnd::OnPaint() for painting messages
-	
 	CMemDC memDC(&dc);
 	CRect rc;
 	GetClientRect(&rc);
@@ -68,13 +65,11 @@ void CRenderView::OnPaint()
 
 BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
 {
-	// TODO: Add your message handler code here and/or call default
 	return TRUE;
 }
 
 const UINT_PTR c_transformEvent		= 0xff;
 const UINT	 c_transformPeriodMSec	= 100;
-//const float  c_transformPeriodSec   = c_transformPeriodMSec / 1000.f;
 
 void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
@@ -87,7 +82,6 @@ int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	// TODO:  Add your specialized creation code here
 	CreateSettingsWnd();
 
 	SetTimer(c_transformEvent, c_transformPeriodMSec, NULL);
@@ -100,7 +94,6 @@ void CRenderView::OnDestroy()
 	m_pSheet->DestroyWindow();
 	CWnd::OnDestroy();
 
-	// TODO: Add your message handler code here
 	m_Pages.clear();
 	m_pSheet.reset();
 }
