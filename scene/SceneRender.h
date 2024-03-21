@@ -11,6 +11,8 @@ class	ILightEngine;
 using ILightEnginePtr = std::unique_ptr<ILightEngine>;
 class IPropertyMap;
 class ISceneSolid;
+class ITextureSource;
+using ITextureSourcePtr = std::shared_ptr<ITextureSource>;
 
 class RenderEngine;
 
@@ -33,18 +35,24 @@ private:
 			IPropertyMap& propMap
 		) const;
 
-	mutable float m_AngleX, m_AngleY, m_AngleZ;
 
-	using ISceneSolidPtr = std::unique_ptr<ISceneSolid>;
-	std::vector<ISceneSolidPtr> m_sceneParts;
-
-	std::unique_ptr<RenderEngine> m_eng;
 public:
 	SceneRender();
 	~SceneRender();
 
 	void	Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap );
 	void	Tick(IPropertyMap& propMap);
+
+private:
+
+	mutable float m_AngleX, m_AngleY, m_AngleZ;
+
+	using ISceneSolidPtr = std::unique_ptr<ISceneSolid>;
+	std::vector<ISceneSolidPtr> m_sceneParts;
+
+	std::unique_ptr<RenderEngine> m_eng;
+
+	ITextureSourcePtr m_texture;
 };
 
 #endif // _SCENE_RENDER_5780562940148396_

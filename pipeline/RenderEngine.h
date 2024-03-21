@@ -32,9 +32,18 @@ public:
 		m_pLightEngine = std::move(LightEng);
 	}
 
-	void		AddPrimitive(const IGeoSolid::Faces& s);
+	void		AddPrimitive(const IGeoSolid::Faces& s, TextureIndex textureIndex);
+	void		SetTexture(TextureIndex index, const ITextureSourcePtr& texture);
 
 	void		Draw( CDC* pDC, WORD w, WORD h );
+
+private:
+	COLORREF Vec2Color(const Vector& v)
+	{
+		return RGB(255 * v.x, 255 * v.y, 255 * v.z);
+	}
+	void		Rasterize(CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h);
+
 
 private:
 	Matrix		m_MatWorld;
@@ -45,16 +54,7 @@ private:
 
 	ILightEnginePtr					   m_pLightEngine;
 	std::unique_ptr<IRasterizer>		m_pRasterizer;
-
-
-	void		Rasterize(CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h);
-
-	mutable ColorMesh_t	 m_RasterizeCache;
-
-	COLORREF Vec2Color(const Vector& v)
-	{
-		return RGB(255 * v.x, 255 * v.y, 255 * v.z);
-	}
+	ColorMesh_t								m_RasterizeCache;
 };
 
 #endif // _RENDER_ENGINE_6898470234012872_

@@ -69,7 +69,8 @@ BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
 }
 
 const UINT_PTR c_transformEvent		= 0xff;
-const UINT	 c_transformPeriodMSec	= 100;
+const auto c_fps = 30;
+const UINT	 c_transformPeriodMSec	= 1000 / c_fps;
 
 void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
@@ -126,7 +127,7 @@ void CRenderView::CreateSettingsWnd()
 
 	m_pSheet->Create(	NULL, 
 						WS_SYSMENU | WS_POPUP | WS_CAPTION | 
-						DS_MODALFRAME | DS_CONTEXTHELP/* | WS_VISIBLE*/ , 
+						DS_MODALFRAME | DS_CONTEXTHELP, 
 						WS_EX_TOOLWINDOW|WS_EX_TOPMOST );
 
 	for ( size_t i =0 ; i < m_Pages.size(); ++i )

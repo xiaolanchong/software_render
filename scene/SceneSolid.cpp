@@ -27,7 +27,7 @@ void	DodecahedronSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWor
 	Matrix MatWorldTor = Translate( Vector(0.0f, 1.7f, 0.0f) ) ;
 	MatWorldTor = MatRotDod * MatWorldTor * MatWorld;
 	re.SetWorldMatrix( MatWorldTor );
-	re.AddPrimitive(m_faces);
+	re.AddPrimitive(m_faces, TEXTURE_0);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -53,14 +53,14 @@ void	CylinderSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWorld, 
 	Matrix MatWorldCyl = Translate( Vector(0.0f, 0.0f, 0.0f) ) ;
 	MatWorldCyl = MatWorldCyl * MatWorld;
 	re.SetWorldMatrix( MatWorldCyl );
-	re.AddPrimitive(m_faces);
+	re.AddPrimitive(m_faces, NO_TEXTURE);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-Vector	SphereSceneSolid::GetDiffuse(IPropertyMap& propMap)
+Vector	SphereSceneSolid::GetDiffuse(IPropertyMap& /*propMap*/)
 {
-	return GetColorVector(propMap, prop_geo_cylinder_color);
+	return Vector(0.9f, 0.9f, 0.9f);;
 }
 
 void	SphereSceneSolid::AddGeometry(RenderEngine& re, const Matrix& MatWorld, IPropertyMap& propMap)
@@ -71,7 +71,7 @@ void	SphereSceneSolid::AddGeometry(RenderEngine& re, const Matrix& MatWorld, IPr
 	const size_t segments = static_cast<size_t>(propMap.GetIntProperty(prop_geo_cylinder_segments));
 	if (m_lastSegments != segments)
 	{
-		SolidSphere			sc(1.0f, segments / 2, segments / 2);
+		SolidSphere	sc(1.5f, segments / 2, segments / 2);
 		m_faces = sc.GetFaces();
 		m_lastSegments = segments;
 	}
@@ -79,7 +79,7 @@ void	SphereSceneSolid::AddGeometry(RenderEngine& re, const Matrix& MatWorld, IPr
 	Matrix MatWorldCyl = Translate(Vector(3.0f, 0.0f, 0.0f));
 	MatWorldCyl = MatWorldCyl * MatWorld;
 	re.SetWorldMatrix(MatWorldCyl);
-	re.AddPrimitive(m_faces);
+	re.AddPrimitive(m_faces, TEXTURE_0);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ void	TorusSceneSolid::AddGeometry( RenderEngine& re, const Matrix& MatWorld, IPr
 	Matrix MatWorldTor = Translate(Vector(0.0f, -1.f, 0.0f));
 	MatWorldTor = MatWorldTor * MatWorld;
 	re.SetWorldMatrix(MatWorldTor);
-	re.AddPrimitive(m_faces);
+	re.AddPrimitive(m_faces, NO_TEXTURE);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -130,5 +130,5 @@ void	PointLightSolid::AddGeometry( RenderEngine& re, const Matrix& /*MatWorld*/,
 		propMap.GetFloatProperty( prop_light_pos_z )) );
 
 	re.SetWorldMatrix( MatPos );
-	re.AddPrimitive(faces);
+	re.AddPrimitive(faces, NO_TEXTURE);
 }

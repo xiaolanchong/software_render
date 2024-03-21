@@ -50,9 +50,6 @@ BOOL	CLightPage::OnInitDialog()
 {
 	if ( !CPropertyPage::OnInitDialog() ) return FALSE;
 
-	CheckDlgButton( IDC_RADIO_LIGHT_GOURAUD,		BST_CHECKED );
-	CheckDlgButton( IDC_RADIO_LIGHT_POINT,			BST_CHECKED );
-
 	m_sldIntensity.SetRange( 0, 20 );
 	m_sldLightPosX.SetRange( 0, 20 );
 	m_sldLightPosY.SetRange( 0, 20 );
@@ -80,8 +77,11 @@ BOOL	CLightPage::OnInitDialog()
 	m_propBag->AddText(  prop_light_pos_y,	this, IDC_EDIT_LIGHT_POS_Y );
 	m_propBag->AddText(  prop_light_pos_z,	this, IDC_EDIT_LIGHT_POS_Z );
 
-	LRESULT z;
-	OnPosChange( 0, &z  );
+	CheckDlgButton(IDC_RADIO_LIGHT_PHONG, BST_CHECKED);
+	CheckDlgButton(IDC_RADIO_LIGHT_POINT, BST_CHECKED);
+
+	LRESULT res;
+	OnPosChange( 0, &res  );
 	return TRUE;
 }
 

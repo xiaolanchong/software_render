@@ -7,17 +7,6 @@
 
 #include "texture/TextureFileSource.h"
 
-IRasterizer * GetPreferredRasterizer()
-{
-	return new 
-#if 1
-		GradientRasterizer
-#else
-		PixelRasterizer
-#endif
-		;
-}
-
 RenderEngine::RenderEngine():
 	m_bEnableCull(true),
 	m_pRasterizer(std::make_unique<GradientRasterizer>()),
@@ -45,7 +34,7 @@ void ForNormal( Matrix& m )
 	m.x[3][3] = 1.0f;
 }
 
-void	RenderEngine::AddPrimitive(const IGeoSolid::Faces& s)
+void	RenderEngine::AddPrimitive(const IGeoSolid::Faces& s, TextureIndex textureIndex)
 {
 	Matrix MatAll = m_MatWorld * m_MatView * m_MatProj;
 
@@ -104,10 +93,15 @@ void	RenderEngine::AddPrimitive(const IGeoSolid::Faces& s)
 			VertexColors[ 3*i + 2 ],
 			TransformedSolid[i].t[0],
 			TransformedSolid[i].t[1],
-			TransformedSolid[i].t[2]) );
+			TransformedSolid[i].t[2], textureIndex) );
 	}
 	m_RasterizeCache.insert( m_RasterizeCache.begin(), 
 							 ScreenMesh.begin(), ScreenMesh.end() );
+}
+
+void	RenderEngine::SetTexture(TextureIndex index, const ITextureSourcePtr& texture)
+{
+	m_pRasterizer->SetTexture(index, texture);
 }
 
 void	RenderEngine::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )

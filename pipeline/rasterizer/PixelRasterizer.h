@@ -11,9 +11,9 @@ class PixelRasterizer : public IRasterizer
 public:
 	PixelRasterizer();
 	void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) override;
-
+	void SetTexture(TextureIndex index, const ITextureSourcePtr& texture) override;
 private:
 
-	std::shared_ptr<TextureFileSource> m_texture;
+	ITextureSourcePtr m_texture;
 	Array2D<DWORD> m_screenBuffer;
 };

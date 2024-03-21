@@ -47,7 +47,11 @@ class DCColorPlotter
 	DeviceContext* m_pDC;
 
 public:
-	DCColorPlotter(DeviceContext* pDC ) : m_pDC(pDC){}
+	DCColorPlotter(DeviceContext* pDC, int width, int height)
+		: m_pDC(pDC)
+		, m_width(width)
+		, m_height(height)
+	{}
 
 	COLORREF	Interpolate( int v1, int v, int v2, COLORREF b1, COLORREF b2 )
 	{
@@ -59,8 +63,16 @@ public:
 
 	void Plot( int x, int y, COLORREF cl )
 	{
+		if (x >= m_width || y >= m_height ||
+			x < 0 || y < 0)
+			return;
+
 		m_pDC->SetPixel( x, y, cl );
 	}
+
+private:
+	int m_width;
+	int m_height;
 };
 
 //! вспомогательный рендер, для проверки текстурных координат
@@ -71,7 +83,7 @@ protected:
 	DeviceContext* m_pDC;
 
 public:
-	DCTextureCoordPlotter(DeviceContext* pDC ) : m_pDC(pDC){}
+	DCTextureCoordPlotter(DeviceContext* pDC) : m_pDC(pDC){}
 
 	Vector2D	Interpolate( int v1, int v, int v2, 
 		Vector2D b1, 
@@ -93,11 +105,6 @@ public:
 		else					g = BYTE(255 * cl.y);
 		COLORREF c = RGB( /*255 * cl.x*/0, g, 0 );
 		m_pDC->SetPixel( x, y, c );
-	}
-
-	void SetDC(CDC* pDC)
-	{
-		m_pDC = pDC;
 	}
 };
 

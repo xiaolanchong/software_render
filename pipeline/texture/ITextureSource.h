@@ -1,6 +1,6 @@
 #pragma once
 
-struct ITextureSource
+class ITextureSource
 {
 public:
 	virtual COLORREF	GetTexelColor( float u, float v ) const = 0 ;

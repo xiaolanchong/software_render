@@ -29,6 +29,7 @@ public:
 
 class DodecahedronSceneSolid : public ISceneSolid
 {
+public:
 	virtual Vector	GetDiffuse(IPropertyMap& propMap) override;
 	virtual void	AddGeometry( RenderEngine& re, const Matrix& MatWorld, IPropertyMap& propMap) override;
 

@@ -103,8 +103,8 @@ void	DrawAlignTriangle(	ScreenPlotter& dc,
 }
 
 template <class ScreenPlotter, class DrawValue>
-void	DrawTriangle( ScreenPlotter& dc, int x1, int y1, int x2, int y2, int x3, int y3,
-					 DrawValue cl1, DrawValue cl2, DrawValue cl3  )
+void	DrawTriangle(ScreenPlotter& dc, int x1, int y1, int x2, int y2, int x3, int y3,
+					    DrawValue cl1, DrawValue cl2, DrawValue cl3  )
 {
 	//! сортируем пока не y1 <= y2 <= y3
 	while (true)

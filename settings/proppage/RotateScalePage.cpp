@@ -68,6 +68,8 @@ BOOL CRotateScalePage::OnInitDialog()
 	m_propBag->AddText(  prop_rs_scale_y,	this, IDC_EDIT_RS_SCALE_Y );
 	m_propBag->AddText(  prop_rs_scale_z,	this, IDC_EDIT_RS_SCALE_Z );
 
+	m_sldRotateY.SetPos(15);
+
 	LRESULT z;
 	OnPosChange(0, &z);
 	return TRUE;

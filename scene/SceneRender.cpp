@@ -9,6 +9,9 @@
 #include "../pipeline/light/PhongLight.h"
 
 #include "../settings/IPropertyMap.h"
+
+#include "../pipeline/texture/TextureFileSource.h"
+
 #include "SceneSolid.h"
 
 SceneRender::SceneRender() :
@@ -21,6 +24,8 @@ SceneRender::SceneRender() :
 	m_sceneParts.push_back(std::make_unique<PointLightSolid>());
 
 	m_eng = std::make_unique<RenderEngine>();
+
+	m_texture = std::make_shared< TextureFileSource>(_T("earth.bmp"));
 }
 
 SceneRender::~SceneRender()
@@ -88,6 +93,8 @@ void	SceneRender::Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap )
 		m_eng->SetMode(RenderEngine::Mode::Fill);
 	else if (propMap.GetBoolProperty(prop_geo_fill_and_textures))
 		m_eng->SetMode(RenderEngine::Mode::FillAndTextures);
+
+	m_eng->SetTexture(TEXTURE_0, m_texture);
 
 	for ( size_t i =0; i < m_sceneParts.size(); ++i )
 	{
