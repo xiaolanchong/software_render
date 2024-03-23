@@ -5,7 +5,7 @@
 class GradientRasterizer : public IRasterizer
 {
 public:
-	void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) override;
+	void Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h ) override;
 
 	// doesn't support texturing
 	void SetTexture(TextureIndex /*index*/, const ITextureSourcePtr& /*texture*/) override {}

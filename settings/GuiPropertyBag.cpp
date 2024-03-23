@@ -8,16 +8,19 @@ class ButtonHandler : public GuiPropertyBag::ControlHandler
 {
 public:
 	ButtonHandler( CWnd* pWnd, UINT nControlID  ) : ControlHandler( pWnd, nControlID ){}
-	virtual float		GetNumericProperty()
+	virtual float		GetNumericProperty() override
 	{
-		bool b = m_pWnd->IsDlgButtonChecked(m_nControlID) != BST_UNCHECKED;
-		return b ? 1.0f : 0.0f;
+		if(m_pWnd->GetSafeHwnd())
+			m_currentValue = m_pWnd->IsDlgButtonChecked(m_nControlID) != BST_UNCHECKED;
+		return m_currentValue ? 1.0f : 0.0f;
 	}
-	virtual CString		GetStringProperty()
+	virtual std::string GetStringProperty() override
 	{
 		ASSERT(FALSE);
-		return CString();
+		return {};
 	}
+private:
+	bool m_currentValue = false;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -26,18 +29,25 @@ class SliderHandler : public GuiPropertyBag::ControlHandler
 {
 public:
 	SliderHandler( CWnd* pWnd, UINT nControlID ) : ControlHandler( pWnd, nControlID ){}
-	virtual float		GetNumericProperty()
+	virtual float		GetNumericProperty() override
 	{
-		CSliderCtrl* pSlider = static_cast< CSliderCtrl* >( m_pWnd->GetDlgItem( m_nControlID ) );
-		ASSERT(pSlider);
-		int b = pSlider->GetPos(  );
-		return float(b);
+		if (m_pWnd->GetSafeHwnd())
+		{
+			CSliderCtrl* pSlider = static_cast<CSliderCtrl*>(m_pWnd->GetDlgItem(m_nControlID));
+			ASSERT(pSlider);
+			m_currentValue = pSlider->GetPos();
+		}
+
+		return float(m_currentValue);
 	}
-	virtual CString		GetStringProperty()
+	virtual std::string 	GetStringProperty() override
 	{
 		ASSERT(FALSE);
-		return CString();
+		return {};
 	}
+
+private:
+	int m_currentValue = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -46,18 +56,24 @@ class ColorHandler : public GuiPropertyBag::ControlHandler
 {
 public:
 	ColorHandler( CWnd* pWnd, UINT nControlID ) : ControlHandler( pWnd, nControlID ){}
-	virtual float		GetNumericProperty()
+	virtual float		GetNumericProperty() override
 	{
-		CColorStatic* pSlider = static_cast< CColorStatic* >( m_pWnd->GetDlgItem( m_nControlID ) );
-		ASSERT(pSlider);
-		COLORREF b = pSlider->GetColor(  );
-		return float(b);
+		if (m_pWnd->GetSafeHwnd())
+		{
+			CColorStatic* pSlider = static_cast<CColorStatic*>(m_pWnd->GetDlgItem(m_nControlID));
+			ASSERT(pSlider);
+			m_currentValue = pSlider->GetColor();
+		}
+		return float(m_currentValue);
 	}
-	virtual CString		GetStringProperty()
+	virtual std::string		GetStringProperty() override
 	{
 		ASSERT(FALSE);
-		return CString();
+		return {};
 	}
+
+private:
+	COLORREF m_currentValue = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,21 +82,33 @@ class TextHandler : public GuiPropertyBag::ControlHandler
 {
 public:
 	TextHandler( CWnd* pWnd, UINT nControlID ) : ControlHandler( pWnd, nControlID ){}
-	virtual float		GetNumericProperty()
+
+	virtual float		GetNumericProperty() override
 	{
-		CString sText;
-		m_pWnd->GetDlgItemText( m_nControlID, sText );
-		TCHAR* p = NULL;
-		double v = _tcstod( sText, &p );
+		if (m_pWnd->GetSafeHwnd())
+		{
+			CString val;
+			m_pWnd->GetDlgItemText(m_nControlID, val);
+			m_currentValue = CT2CA(val);
+		}
+		char* p = NULL;
+		double v = strtod(m_currentValue.c_str(), &p);
 		ASSERT( p == NULL || *p == NULL );
-		return float(v);
+		return static_cast<float>(v);
 	}
-	virtual CString		GetStringProperty()
+	virtual std::string		GetStringProperty() override
 	{
-		CString sText;
-		m_pWnd->GetDlgItemText( m_nControlID, sText );
-		return sText;
+		if (m_pWnd->GetSafeHwnd())
+		{
+			CString val;
+			m_pWnd->GetDlgItemText(m_nControlID, val);
+			m_currentValue = CT2CA(val);
+		}
+		return m_currentValue;
 	}
+
+private:
+	std::string m_currentValue;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -96,28 +124,28 @@ GuiPropertyBagPtr GuiPropertyBag::Create(IPropertyMap& propMap)
 	return newBag;
 }
 
-void GuiPropertyBag::InsertControl(DWORD Id, GuiPropertyBag::ControlHandlerPtr p)
+void GuiPropertyBag::InsertControl(PropertyId Id, GuiPropertyBag::ControlHandlerPtr p)
 {
 	auto res = m_Controls.emplace(  Id, std::move(p)  );
 	ASSERT( res.second );
 }
 
-void GuiPropertyBag::AddButton( DWORD Id, CWnd* pWnd, UINT nControlID )
+void GuiPropertyBag::AddButton(PropertyId Id, CWnd* pWnd, UINT nControlID )
 {
 	InsertControl( Id, std::make_unique<ButtonHandler>(pWnd, nControlID ) );
 }
 
-void GuiPropertyBag::AddSlider( DWORD Id, CWnd* pWnd, UINT nControlID )
+void GuiPropertyBag::AddSlider(PropertyId Id, CWnd* pWnd, UINT nControlID )
 {
 	InsertControl( Id, std::make_unique < SliderHandler>(pWnd, nControlID )  ) ;
 }
 
-void GuiPropertyBag::AddColor( DWORD Id, CWnd* pWnd, UINT nControlID )
+void GuiPropertyBag::AddColor(PropertyId Id, CWnd* pWnd, UINT nControlID )
 {
 	InsertControl( Id, std::make_unique < ColorHandler>(pWnd, nControlID )  );
 }
 
-void GuiPropertyBag::AddText( DWORD Id, CWnd* pWnd, UINT nControlID )
+void GuiPropertyBag::AddText(PropertyId Id, CWnd* pWnd, UINT nControlID )
 {
 	InsertControl( Id, std::make_unique < TextHandler>(pWnd, nControlID )  );
 }
@@ -125,24 +153,24 @@ void GuiPropertyBag::AddText( DWORD Id, CWnd* pWnd, UINT nControlID )
 //////////////////////////////////////////////////////////////////////////
 
 
-std::pair<bool, float>		GuiPropertyBag::GetNumericProperty(DWORD Id)
+std::optional<float>	GuiPropertyBag::GetNumericProperty(PropertyId Id)
 {
 	auto it = m_Controls.find( Id );
 	if( it != m_Controls.end() )
 	{
-		return std::make_pair( true, it->second->GetNumericProperty() );
+		return it->second->GetNumericProperty();
 	}
 	else
-		return std::make_pair( false, float() );
+		return {};
 }
 
-std::pair<bool, CString>	GuiPropertyBag::GetStringProperty(DWORD Id)
+std::string	GuiPropertyBag::GetStringProperty(PropertyId Id)
 {
 	auto it =	m_Controls.find( Id );
 	if( it != m_Controls.end() )
 	{
-		return std::make_pair( true, it->second->GetStringProperty() );
+		return it->second->GetStringProperty();
 	}
 	else
-		return std::make_pair( false, CString() );
+		return {};
 }

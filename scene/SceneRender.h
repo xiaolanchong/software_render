@@ -1,5 +1,4 @@
-﻿#ifndef _SCENE_RENDER_5780562940148396_
-#define _SCENE_RENDER_5780562940148396_
+﻿#pragma once
 
 #include "../math/Matrix.h"
 
@@ -13,6 +12,7 @@ class IPropertyMap;
 class ISceneSolid;
 class ITextureSource;
 using ITextureSourcePtr = std::shared_ptr<ITextureSource>;
+class IDeviceContext;
 
 class RenderEngine;
 
@@ -21,7 +21,7 @@ class SceneRender
 private:
 	Matrix	GetWorldMatrix(IPropertyMap& propMap) const;
 	Matrix	GetViewMatrix() const;
-	Matrix	GetProjMatrix(WORD w, WORD h) const;
+	Matrix	GetProjMatrix(unsigned int w, unsigned int h) const;
 	Vector	GetViewerPos() const ;
 
 	Vector	GetPointLightPos(IPropertyMap& propMap) const;
@@ -40,7 +40,7 @@ public:
 	SceneRender();
 	~SceneRender();
 
-	void	Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap );
+	void	Render( IDeviceContext& dc, unsigned int w, unsigned int h, IPropertyMap& propMap );
 	void	Tick(IPropertyMap& propMap);
 
 private:
@@ -54,5 +54,3 @@ private:
 
 	ITextureSourcePtr m_texture;
 };
-
-#endif // _SCENE_RENDER_5780562940148396_

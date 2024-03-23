@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "MemDC.h"
+#include "GdiDeviceContext.h"
 #include "RenderView.h"
 
 #include "settings\proppage\GeometryPage.h"
@@ -15,17 +16,9 @@
 #define new DEBUG_NEW
 #endif
 
-
-// CRenderView
-
-CRenderView::CRenderView()
-{
-}
-
 CRenderView::~CRenderView()
 {
 }
-
 
 BEGIN_MESSAGE_MAP(CRenderView, CWnd)
 	ON_WM_CREATE()
@@ -33,10 +26,9 @@ BEGIN_MESSAGE_MAP(CRenderView, CWnd)
 	ON_WM_ERASEBKGND()
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
-	ON_MESSAGE( WM_SHOW_SETTINGS, OnShowSettings )
+	ON_COMMAND(ID_VIEW_PROPERTYWINDOW, TogglePropertyWindow)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPERTYWINDOW, OnUpdateTogglePropertyWindow)
 END_MESSAGE_MAP()
-
-
 
 // CChildView message handlers
 
@@ -60,7 +52,8 @@ void CRenderView::OnPaint()
 	CMemDC memDC(&dc);
 	CRect rc;
 	GetClientRect(&rc);
-	m_sr.Render( &memDC, static_cast<WORD>(rc.Width()), static_cast<WORD>(rc.Height()), m_propMap);
+	GdiDeviceContext devCon(memDC);
+	m_sr.Render(devCon, static_cast<unsigned int>(rc.Width()), static_cast<unsigned int>(rc.Height()), m_propMap);
 }
 
 BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
@@ -83,10 +76,8 @@ int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	CreateSettingsWnd();
-
+	CreatePropertyWindow(true);
 	SetTimer(c_transformEvent, c_transformPeriodMSec, NULL);
-
 	return 0;
 }
 
@@ -99,11 +90,10 @@ void CRenderView::OnDestroy()
 	m_pSheet.reset();
 }
 
-#define SHOW_PROP_WINDOW
-
-void CRenderView::CreateSettingsWnd()
+void CRenderView::CreatePropertyWindow(bool visible)
 {
-	m_pSheet	= std::unique_ptr<CPropertySheet>( new CPropertySheet(IDS_SETTINGS ) );
+	m_Pages.clear();
+	m_pSheet	= std::make_unique<CPropertySheet>(IDS_SETTINGS );
 
 	{
 		auto page = std::make_unique<CGeometryPage>(m_propMap);
@@ -135,20 +125,36 @@ void CRenderView::CreateSettingsWnd()
 		m_pSheet->SetActivePage( m_Pages[i].get() );
 	}
 	m_pSheet->SetActivePage( m_Pages[0].get() );
-#ifdef SHOW_PROP_WINDOW
-	m_pSheet->ShowWindow( SW_SHOW );
-#endif
+
+	m_pSheet->ShowWindow( visible ? SW_SHOW : SW_HIDE );
+
 	CWnd* pWnd = AfxGetMainWnd();
 	CRect rc;
 	pWnd->GetWindowRect( &rc );
 	m_pSheet->SetWindowPos( 0, rc.right , rc.top, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
 }
 
-LRESULT CRenderView::OnShowSettings(WPARAM w, LPARAM /*l*/)
+void CRenderView::OnUpdateTogglePropertyWindow(CCmdUI* pCmdUI)
 {
-#ifdef SHOW_PROP_WINDOW
-	if( m_pSheet.get() )
-		m_pSheet->ShowWindow( w > 0 ? SW_SHOW : SW_HIDE );
-#endif
-	return 0;
+	if (m_pSheet.get())
+	{
+		if (m_pSheet->GetSafeHwnd())
+			pCmdUI->SetCheck(m_pSheet->IsWindowVisible() ? BST_CHECKED : BST_UNCHECKED);
+		else
+		{
+			m_pSheet = nullptr;
+			pCmdUI->SetCheck(BST_UNCHECKED);
+		}
+	}
+		
+	else
+		pCmdUI->SetCheck(BST_UNCHECKED);
+}
+
+void CRenderView::TogglePropertyWindow()
+{
+	if (m_pSheet.get())
+		m_pSheet->ShowWindow(!m_pSheet->IsWindowVisible() ? SW_SHOW : SW_HIDE);
+	else
+		CreatePropertyWindow(true);
 }

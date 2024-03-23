@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GradientRasterizer.h"
 
-void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
+void GradientRasterizer::Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h )
 {
 	std::vector<TRIVERTEX>				vert(Mesh.size() * 3);
 	std::vector<GRADIENT_TRIANGLE>		gTri(Mesh.size());
@@ -31,6 +31,7 @@ void GradientRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h 
 		gTri[i].Vertex3	= ULONG( 3*i + 2 );
 	}
 
-	BOOL res = GradientFill(pDC->GetSafeHdc(), &vert[0], (ULONG) vert.size(), &gTri[0], (ULONG)gTri.size(), GRADIENT_FILL_TRIANGLE);
+	bool res = dc.GradientFill(&vert[0], vert.size(), &gTri[0], gTri.size());
+	//BOOL res = GradientFill(pDC->GetSafeHdc(), &vert[0], (ULONG) vert.size(), &gTri[0], (ULONG)gTri.size(), GRADIENT_FILL_TRIANGLE);
 	VERIFY(res);
 }

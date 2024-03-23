@@ -129,6 +129,9 @@
     <ClCompile Include="settings\PropertyMapImpl.cpp">
       <Filter>settings</Filter>
     </ClCompile>
+    <ClCompile Include="GdIDeviceContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -250,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="settings\PropertyMapImpl.h">
       <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="IDeviceContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GdiDeviceContext.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ SceneRender::SceneRender() :
 
 	m_eng = std::make_unique<RenderEngine>();
 
-	m_texture = std::make_shared< TextureFileSource>(_T("earth.bmp"));
+	m_texture = std::make_shared< TextureFileSource>("earth.bmp");
 }
 
 SceneRender::~SceneRender()
@@ -76,7 +76,7 @@ ILightEnginePtr		SceneRender::GetLightEngine
 	return nullptr;
 }
 
-void	SceneRender::Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap )
+void	SceneRender::Render( IDeviceContext& dc, unsigned int w, unsigned int h, IPropertyMap& propMap )
 {
 	Matrix MatWorld = GetWorldMatrix( propMap );
 	Matrix MatProj	= GetProjMatrix(w, h);	
@@ -105,7 +105,7 @@ void	SceneRender::Render( CDC* pDC, WORD w, WORD h, IPropertyMap& propMap )
 		m_sceneParts[i]->AddGeometry(*m_eng, MatWorld, propMap);
 	}
 
-	m_eng->Draw( pDC, w, h  );
+	m_eng->Draw( dc, w, h  );
 }
 
 Matrix	SceneRender::GetViewMatrix() const
@@ -117,10 +117,10 @@ Matrix	SceneRender::GetViewMatrix() const
 	return MatView;
 }
 
-Matrix	SceneRender::GetProjMatrix( WORD w, WORD h ) const
+Matrix	SceneRender::GetProjMatrix(unsigned int w, unsigned int h ) const
 {
 	Matrix MatProj;
-	PerspectiveFov( MatProj, Deg2Rad(45.0f), float(w)/h, 0.1f, 20.0f);
+	PerspectiveFov( MatProj, Deg2Rad(45.0f), float(w)/h, 0.1f, 2000.0f);
 	//	OrthoOffCenter( MatProj, -1.5f, 1.5f, -1.0f, 1.0f,  0.1f, 20.0f );
 	return MatProj;
 }

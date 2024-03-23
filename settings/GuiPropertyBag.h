@@ -22,26 +22,26 @@ public:
 
 		virtual ~ControlHandler() = default;
 		virtual float		GetNumericProperty() = 0;
-		virtual CString		GetStringProperty() = 0;
+		virtual std::string		GetStringProperty() = 0;
 	};
 
 	static GuiPropertyBagPtr Create(IPropertyMap& propMap);
 private:
 	using ControlHandlerPtr = std::unique_ptr<ControlHandler>;
-	std::map< DWORD, ControlHandlerPtr > m_Controls;
-	void InsertControl(DWORD Id, ControlHandlerPtr p);
+	std::map< PropertyId, ControlHandlerPtr > m_Controls;
+	void InsertControl(PropertyId Id, ControlHandlerPtr p);
 
 	GuiPropertyBag();
 public:
 
-	void AddButton( DWORD Id, CWnd* pWnd, UINT nControlID );
-	void AddSlider( DWORD Id, CWnd* pWnd, UINT nControlID );
-	void AddColor( DWORD Id, CWnd* pWnd, UINT nControlID );	
-	void AddText( DWORD Id, CWnd* pWnd, UINT nControlID );
+	void AddButton(PropertyId Id, CWnd* pWnd, UINT nControlID );
+	void AddSlider(PropertyId Id, CWnd* pWnd, UINT nControlID );
+	void AddColor(PropertyId Id, CWnd* pWnd, UINT nControlID );
+	void AddText(PropertyId Id, CWnd* pWnd, UINT nControlID );
 
-	virtual std::pair<bool, float>	GetNumericProperty(DWORD Id) override;
-	virtual std::pair<bool, CString>	GetStringProperty(DWORD Id) override;
-	virtual void Notify(DWORD /*id*/) override {}
+	virtual std::optional<float>	GetNumericProperty(PropertyId Id) override;
+	virtual std::string	GetStringProperty(PropertyId Id) override;
+	virtual void Notify(PropertyId /*id*/) override {}
 };
 
 #endif // _GUI_PROPERTY_BAG_1272553053832792_

@@ -1,15 +1,8 @@
 #include "stdafx.h"
+#include <execution>
 #include "PixelRasterizer.h"
 #include "DrawTriangle.h"
 #include "InterpolationRender.h"
-
-void	DrawTriangleGraySclae( CDC* pDC, 
- int x1, int y1, int x2, int y2, int x3, int y3,
- BYTE cl1, BYTE cl2, BYTE cl3  )
-{
-	DCBytePlotter dc( pDC );
-	DrawTriangle( dc, x1, y1, x2, y2, x3, y3, cl1, cl2, cl3 );
-}
 
 PixelRasterizer::PixelRasterizer()
 	: m_screenBuffer(1, 1, 1)
@@ -19,7 +12,7 @@ PixelRasterizer::PixelRasterizer()
 class BufferContext
 {
 public:
-	BufferContext(Array2D<DWORD>& buffer)
+	BufferContext(Array2D<std::uint32_t>& buffer)
 		: m_buffer(buffer)
 	{}
 
@@ -29,7 +22,7 @@ public:
 		m_buffer(x, y) = newCl;
 	}
 private:
-	Array2D<DWORD>& m_buffer;
+	Array2D<std::uint32_t>& m_buffer;
 };
 
 void PixelRasterizer::SetTexture(TextureIndex index, const ITextureSourcePtr& texture)
@@ -38,60 +31,60 @@ void PixelRasterizer::SetTexture(TextureIndex index, const ITextureSourcePtr& te
 	m_texture = texture;
 }
 
-void PixelRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
+int toIntZ(float z)
+{
+	const float maxZ = 10000.f;
+	const float minZ = -10000.f;
+	return static_cast<int>((z / (maxZ - minZ)) * (std::numeric_limits<int>::max)());
+}
+
+void PixelRasterizer::Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h )
 {
 	m_screenBuffer.resize(w, h, w);
 	std::fill(m_screenBuffer.begin(), m_screenBuffer.end(), 0xffffffff);  // BGR
 	BufferContext buffer(m_screenBuffer);
 
 	using Plotter = DCTextureAndColorPlotter<BufferContext>;
-	Plotter texturePlotter(&buffer, m_texture, w, h);
-	DCColorPlotter<BufferContext> colorOnlyPlotter(&buffer, w, h);
+	Plotter texturePlotter(&buffer, nullptr, w, h);
 
-	PainterAlgoSort( Mesh );
-	CPoint pt[3];
-	for (const auto& face: Mesh)
+	auto drawFace = [w, h, this, &texturePlotter](const ColorFace& face)
 	{
-		for( size_t j=0; j < 3; ++j )
+		CPoint pt[3];
+		for (size_t j = 0; j < 3; ++j)
 		{
-			pt[j] = Trans2Viewport( w, h, face.Vertices[j] );
+			pt[j] = Trans2Viewport(w, h, face.Vertices[j]);
 		}
 
 		if (face.m_texture == NO_TEXTURE)
 		{
-			DrawTriangle(colorOnlyPlotter, 
-				pt[0].x, pt[0].y, pt[1].x, pt[1].y, pt[2].x, pt[2].y,
-				face.Color[0], face.Color[1], face.Color[2]);
+			texturePlotter.SetTexture(nullptr);
 		}
 		else
 		{
-#if defined RASTERIZE_TEXTURE 
-			DrawTriangle(texturePlotter, pt[0].x, pt[0].y, pt[1].x, pt[1].y, pt[2].x, pt[2].y,
-				face.TexCoord[0], face.TexCoord[1], face.TexCoord[2]);
-#else
-			DrawTriangle(texturePlotter,
-				pt[0].x, pt[0].y, pt[1].x, pt[1].y, pt[2].x, pt[2].y,
-				Plotter::ColorAndCoord_t(face.Color[0], face.TexCoord[0]),
-				Plotter::ColorAndCoord_t(face.Color[1], face.TexCoord[1]),
-				Plotter::ColorAndCoord_t(face.Color[2], face.TexCoord[2]));
-#endif
+			texturePlotter.SetTexture(m_texture);
 		}
+		DrawTriangle(texturePlotter,
+			pt[0].x, pt[0].y, pt[1].x, pt[1].y, pt[2].x, pt[2].y,
+			Plotter::InterpolatedValue{ face.Color[0], face.TexCoord[0], toIntZ(face.Vertices[0].z) },
+			Plotter::InterpolatedValue{ face.Color[1], face.TexCoord[1], toIntZ(face.Vertices[1].z) },
+			Plotter::InterpolatedValue{ face.Color[2], face.TexCoord[2], toIntZ(face.Vertices[2].z) });
+	};
+
+	PainterAlgoSort( Mesh );
+
+#if 0
+	std::for_each(std::execution::par, std::begin(Mesh), std::end(Mesh),
+		[&drawFace](const ColorFace& face)
+		{
+			drawFace(face);
+		});
+#else
+	for (const auto& face: Mesh)
+	{
+		drawFace(face);
 	}
+#endif
 
-	BITMAPINFO bmi;
-	memset(&bmi, 0, sizeof(bmi));
-	auto& header = bmi.bmiHeader;
-	header.biSize = sizeof(BITMAPINFOHEADER);
-	header.biWidth = w;
-	header.biHeight = -h;
-	header.biPlanes = 1;
-	header.biBitCount = 32;
-	header.biCompression = BI_RGB;
-	header.biSizeImage = 0;
-
-	auto res = ::SetDIBitsToDevice(pDC->GetSafeHdc(), 
-		0, 0, w, h,
-		0, 0, 0, h,
-		&(*m_screenBuffer.begin()), &bmi, DIB_RGB_COLORS);
+	auto res = dc.BitBlt(w, h, &(*m_screenBuffer.begin()));
 	VERIFY(res);
 }

@@ -1,21 +1,19 @@
 #include "stdafx.h"
 #include "WireFrameRasterizer.h"
 
-void WireFrameRasterizer::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
+void WireFrameRasterizer::Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h )
 {
-	CGdiObject * pPrevBrush = pDC->SelectStockObject( NULL_BRUSH );
-	CGdiObject * pPrevPen = pDC->SelectStockObject( BLACK_PEN );
+	constexpr size_t VERTICES_IN_TRIANGLE = 3;
+	m_vertices.resize(Mesh.size() * VERTICES_IN_TRIANGLE);
 
-	CPoint pt[3];
 	for ( size_t i=0; i < Mesh.size(); ++i )
 	{
-		for( size_t j=0; j < 3; ++j )
+		for( size_t j=0; j < VERTICES_IN_TRIANGLE; ++j )
 		{
-			pt[j] = Trans2Viewport( w, h, Mesh[i].Vertices[j] );
+			m_vertices[VERTICES_IN_TRIANGLE * i + j] = Trans2Viewport( w, h, Mesh[i].Vertices[j] );
 		}
-		pDC->Polygon( pt, 3 );
 	}
 
-	pDC->SelectObject(pPrevPen);
-	pDC->SelectObject(pPrevBrush);
+	auto res = dc.DrawEmptyTriangles(&m_vertices[0], Mesh.size());
+	assert(res);
 }

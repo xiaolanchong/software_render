@@ -10,10 +10,10 @@ class PixelRasterizer : public IRasterizer
 {
 public:
 	PixelRasterizer();
-	void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) override;
+	void Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h ) override;
 	void SetTexture(TextureIndex index, const ITextureSourcePtr& texture) override;
 private:
 
 	ITextureSourcePtr m_texture;
-	Array2D<DWORD> m_screenBuffer;
+	Array2D<std::uint32_t> m_screenBuffer;
 };

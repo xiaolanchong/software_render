@@ -11,11 +11,25 @@
 
 class CRenderView : public CWnd
 {
-// Construction
 public:
-	CRenderView();
+	~CRenderView() override;
 
-// Attributes
+protected:
+	BOOL PreCreateWindow(CREATESTRUCT& cs) override;
+	
+protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnPaint();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnTimer( UINT_PTR nIDEvent);
+	afx_msg void OnDestroy();
+	afx_msg void OnUpdateTogglePropertyWindow(CCmdUI* pCmdUI);
+	afx_msg void TogglePropertyWindow();
+	DECLARE_MESSAGE_MAP()
+
+private:
+	void CreatePropertyWindow(bool visible);
+
 private:
 	using CPropertyPagePtr = std::unique_ptr<CPropertyPage>;
 
@@ -23,27 +37,5 @@ private:
 	std::vector<CPropertyPagePtr>			m_Pages;
 	PropertyMapImpl m_propMap;
 	SceneRender m_sr;
-
-// Overrides
-protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs) override;
-
-	//virtual void	OnInitialUpdate() override;
-	void			CreateSettingsWnd();
-// Implementation
-public:
-	virtual ~CRenderView();
-
-	// Generated message map functions
-protected:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnPaint();
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnTimer( UINT_PTR nIDEvent);
-	afx_msg void OnDestroy();
-	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
-	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
-	afx_msg LRESULT OnShowSettings(WPARAM w, LPARAM l);
-	DECLARE_MESSAGE_MAP()
 };
 

@@ -7,6 +7,7 @@
 #include "../geometry/IGeoSolid.h"
 #include "light/ILightEngine.h"
 #include "rasterizer/IRasterizer.h"
+#include "IDeviceContext.h"
 
 //! Класс отображения тел
 class RenderEngine
@@ -35,14 +36,14 @@ public:
 	void		AddPrimitive(const IGeoSolid::Faces& s, TextureIndex textureIndex);
 	void		SetTexture(TextureIndex index, const ITextureSourcePtr& texture);
 
-	void		Draw( CDC* pDC, WORD w, WORD h );
+	void		Draw( IDeviceContext& pDC, unsigned int w, unsigned int h );
 
 private:
 	COLORREF Vec2Color(const Vector& v)
 	{
 		return RGB(255 * v.x, 255 * v.y, 255 * v.z);
 	}
-	void		Rasterize(CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h);
+	void		Rasterize(IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h);
 
 
 private:

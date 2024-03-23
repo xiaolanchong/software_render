@@ -15,12 +15,11 @@ RenderEngine::RenderEngine():
 	m_RasterizeCache.reserve( 2048 );
 }
 
-void		RenderEngine::Draw( CDC* pDC, WORD w, WORD h )
+void		RenderEngine::Draw( IDeviceContext& dc, unsigned int w, unsigned int h )
 {
-	Rasterize(pDC, m_RasterizeCache, w, h);
+	Rasterize(dc, m_RasterizeCache, w, h);
 	m_RasterizeCache.clear();
 }
-
 
 //! для преобразования нормалей в мировые координаты убираем столбец переноса
 void ForNormal( Matrix& m )
@@ -104,10 +103,10 @@ void	RenderEngine::SetTexture(TextureIndex index, const ITextureSourcePtr& textu
 	m_pRasterizer->SetTexture(index, texture);
 }
 
-void	RenderEngine::Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h )
+void	RenderEngine::Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h )
 {
 	ASSERT( m_pRasterizer.get() );
-	m_pRasterizer->Rasterize( pDC, Mesh, w, h );
+	m_pRasterizer->Rasterize( dc, Mesh, w, h );
 	Mesh.clear();
 }
 

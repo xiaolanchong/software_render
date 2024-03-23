@@ -40,11 +40,6 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-// CRT
-#include	<math.h>
-#include	<stdlib.h>
-
-// STL
 #include <vector>
 #include <list>
 #include <algorithm>
@@ -54,17 +49,12 @@
 #include <exception>
 #include <stdexcept>
 #include <cstdint>
+#include <future>
+#include <optional>
 
-const UINT	WM_SHOW_SETTINGS = WM_USER + 1;
+#define _USE_MATH_DEFINES
+#include <math.h>
 
-const double M_PI   =    3.14159265358979323846;
+#include <assert.h>
 
-inline float Deg2Rad(float d)
-{
-	return float(M_PI) * d/180;
-}
-
-template <typename T>  T clamp( T val, T min, T max)
-{ 
-	return (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)));
-}
+#include "math/MathUtils.h"

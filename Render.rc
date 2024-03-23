@@ -1,5 +1,7 @@
-﻿// Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -17,7 +19,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
-#pragma code_page(65001)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -66,24 +67,16 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Додекаэдр",IDC_STATIC,6,6,186,74
-    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_DOD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,13,20,171,17
+    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_DOD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,20,171,17
     GROUPBOX        "Цилиндр",IDC_STATIC,6,88,186,86
-    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_CYL,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,13,104,171,17
-    CONTROL         "",IDC_SLIDER_GEO_CYL,"msctls_trackbar32",TBS_AUTOTICKS | 
-                    TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,119,95,26
+    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_CYL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,104,171,17
+    CONTROL         "",IDC_SLIDER_GEO_CYL,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,119,95,26
     LTEXT           "Кол-во секторов",IDC_STATIC,13,124,70,14
     GROUPBOX        "Тор",IDC_STATIC,6,185,186,110
-    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_TORUS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,13,201,171,17
-    CONTROL         "",IDC_SLIDER_GEO_TOR_RING,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,
-                    219,95,21
+    CONTROL         "Отображать на сцене",IDC_CHECK_GEO_TORUS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,201,171,17
+    CONTROL         "",IDC_SLIDER_GEO_TOR_RING,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,219,95,21
     LTEXT           "Кол-во секторов",IDC_STATIC,13,225,70,14
-    CONTROL         "",IDC_SLIDER_GEO_TOR_SEG,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,
-                    243,95,26
+    CONTROL         "",IDC_SLIDER_GEO_TOR_SEG,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,89,243,95,26
     LTEXT           "Кол-во сегментов",IDC_STATIC,13,248,69,14
     LTEXT           "Цвет",IDC_STATIC_GEO_DOD,13,46,171,19
     LTEXT           "Цвет",IDC_STATIC_GEO_CYL,13,145,171,19
@@ -99,38 +92,23 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Расчет освещения",IDC_STATIC,5,4,175,69
-    CONTROL         "по Ламберту",IDC_RADIO_LIGHT_LAMBERT,"Button",
-                    BS_AUTORADIOBUTTON,13,15,149,18
-    CONTROL         "по Гуро",IDC_RADIO_LIGHT_GOURAUD,"Button",
-                    BS_AUTORADIOBUTTON,13,33,149,18
-    CONTROL         "Направленный источник",IDC_RADIO_LIGHT_DIRECTION,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,5,84,143,18
-    CONTROL         "Точечный источник",IDC_RADIO_LIGHT_POINT,"Button",
-                    BS_AUTORADIOBUTTON,5,106,169,17
+    CONTROL         "по Ламберту",IDC_RADIO_LIGHT_LAMBERT,"Button",BS_AUTORADIOBUTTON,13,15,149,18
+    CONTROL         "по Гуро",IDC_RADIO_LIGHT_GOURAUD,"Button",BS_AUTORADIOBUTTON,13,33,149,18
+    CONTROL         "Направленный источник",IDC_RADIO_LIGHT_DIRECTION,"Button",BS_AUTORADIOBUTTON | WS_GROUP,5,84,143,18
+    CONTROL         "Точечный источник",IDC_RADIO_LIGHT_POINT,"Button",BS_AUTORADIOBUTTON,5,106,169,17
     LTEXT           "Цвет",IDC_STATIC_LIGHT_COLOR,5,130,146,17
     LTEXT           "Интенсивность",IDC_STATIC,11,152,64,16,SS_CENTERIMAGE
-    CONTROL         "",IDC_SLIDER_LIGHT_INTENSITY,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,72,
-                    149,108,19
-    CONTROL         "Положение",IDC_RADIO_LIGHT_POSITION,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,5,178,160,10
-    CONTROL         "Движение по траектории",IDC_RADIO_LIGHT_PATH,"Button",
-                    BS_AUTORADIOBUTTON,5,276,160,10
+    CONTROL         "",IDC_SLIDER_LIGHT_INTENSITY,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,72,149,108,19
+    CONTROL         "Положение",IDC_RADIO_LIGHT_POSITION,"Button",BS_AUTORADIOBUTTON | WS_GROUP,5,178,160,10
+    CONTROL         "Движение по траектории",IDC_RADIO_LIGHT_PATH,"Button",BS_AUTORADIOBUTTON,5,276,160,10
     LTEXT           "X",IDC_STATIC,13,201,14,19
-    CONTROL         "",IDC_SLIDER_LIGHT_POS_X,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,
-                    198,124,19
+    CONTROL         "",IDC_SLIDER_LIGHT_POS_X,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,198,124,19
     LTEXT           "Y",IDC_STATIC,13,227,14,17
-    CONTROL         "",IDC_SLIDER_LIGHT_POS_Y,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,
-                    222,124,19
+    CONTROL         "",IDC_SLIDER_LIGHT_POS_Y,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,222,124,19
     LTEXT           "Z",IDC_STATIC,13,250,14,17
     GROUPBOX        "",IDC_STATIC,5,193,175,78
-    CONTROL         "",IDC_SLIDER_LIGHT_POS_Z,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,
-                    246,124,19
-    CONTROL         "по Фонгу",IDC_RADIO_LIGHT_PHONG,"Button",
-                    BS_AUTORADIOBUTTON,13,51,149,18
+    CONTROL         "",IDC_SLIDER_LIGHT_POS_Z,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | TBS_TOOLTIPS | WS_TABSTOP,50,246,124,19
+    CONTROL         "по Фонгу",IDC_RADIO_LIGHT_PHONG,"Button",BS_AUTORADIOBUTTON,13,51,149,18
     EDITTEXT        IDC_EDIT_LIGHT_POS_X,26,201,24,14,ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_EDIT_LIGHT_POS_Y,26,227,24,14,ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_EDIT_LIGHT_POS_Z,26,250,24,14,ES_AUTOHSCROLL | ES_READONLY
@@ -143,7 +121,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "Render Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2005",IDC_STATIC,40,25,119,8
+    LTEXT           "Copyright (C) 2023",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
@@ -153,25 +131,18 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Вращение",IDC_STATIC,3,5,189,76
     RTEXT           "Скорость по  X",IDC_STATIC,7,17,53,15
-    CONTROL         "",IDC_SLIDER_RS_ROTATE_X,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,11,88,20
+    CONTROL         "",IDC_SLIDER_RS_ROTATE_X,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,11,88,20
     RTEXT           "Скорость по Y",IDC_STATIC,7,39,53,15
-    CONTROL         "",IDC_SLIDER_RS_ROTATE_Y,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,32,88,20
+    CONTROL         "",IDC_SLIDER_RS_ROTATE_Y,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,32,88,20
     RTEXT           "Скорость по Z",IDC_STATIC,7,60,53,15
-    CONTROL         "",IDC_SLIDER_RS_ROTATE_Z,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,56,88,20
+    CONTROL         "",IDC_SLIDER_RS_ROTATE_Z,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,96,56,88,20
     GROUPBOX        "Масштабирование",IDC_STATIC,3,90,189,137
-    CONTROL         "Простое",IDC_RADIO_RS_SIMPLE,"Button",
-                    BS_AUTORADIOBUTTON,10,105,169,13
-    CONTROL         "Периодическое",IDC_RADIO_PERIODIC,"Button",
-                    BS_AUTORADIOBUTTON,10,194,169,12
+    CONTROL         "Простое",IDC_RADIO_RS_SIMPLE,"Button",BS_AUTORADIOBUTTON,10,105,169,13
+    CONTROL         "Периодическое",IDC_RADIO_PERIODIC,"Button",BS_AUTORADIOBUTTON,10,194,169,12
     RTEXT           "По  X",IDC_STATIC,7,124,29,15
-    CONTROL         "",IDC_SLIDER_RS_SCALE_X,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,70,118,114,20
+    CONTROL         "",IDC_SLIDER_RS_SCALE_X,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,70,118,114,20
     RTEXT           "По Y",IDC_STATIC,7,146,29,15
-    CONTROL         "",IDC_SLIDER_RS_SCALE_Y,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,70,139,114,20
+    CONTROL         "",IDC_SLIDER_RS_SCALE_Y,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,70,139,114,20
     RTEXT           "По Z",IDC_STATIC,7,169,29,15
     CONTROL         "",IDC_SLIDER_RS_SCALE_Z,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,70,162,114,20
     EDITTEXT        IDC_EDIT_RS_ROTATE_X,70,13,26,14,ES_AUTOHSCROLL | ES_READONLY
@@ -224,6 +195,10 @@ BEGIN
         HORZGUIDE, 228
         HORZGUIDE, 234
         HORZGUIDE, 255
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
     END
 
     IDD_PP_ROTATE_SCALE, DIALOG
@@ -320,6 +295,7 @@ BEGIN
     BEGIN
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Property Window",             ID_VIEW_PROPERTYWINDOW
     END
     POPUP "&Help"
     BEGIN
@@ -405,6 +381,11 @@ END
 //
 
 IDD_PP_GEOMETRY AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
@@ -537,6 +518,11 @@ BEGIN
     IDS_ROTATE_SCALE        "Вращение и масштабирование"
 END
 
+STRINGTABLE
+BEGIN
+    ID_VIEW_PROPERTYWINDOW  "Show or hide the propery\nToggle ProperyWindow"
+END
+
 #endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -554,7 +540,7 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
-#pragma code_page(1252)
+#pragma code_page(65001)
 #include "res\Render.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
 #include "afxprint.rc"       // printing/print preview resources

@@ -2,6 +2,7 @@
 
 #include "../../math/Face.h"
 #include "../texture/ITextureSource.h"
+#include "../IDeviceContext.h"
 
 using TextureIndex = unsigned int;
 constexpr TextureIndex NO_TEXTURE = 0;
@@ -39,7 +40,7 @@ using ColorMesh_t = std::vector<ColorFace>;
 class IRasterizer
 {	
 protected:
-	static CPoint Trans2Viewport( WORD w, WORD h, const Vector& v )
+	static CPoint Trans2Viewport(unsigned int w, unsigned int h, const Vector& v )
 	{
 		return CPoint( int(w/2 + w/2 * v.x), int(h/2 - h/2 * v.y ) );
 	}
@@ -58,7 +59,7 @@ protected:
 		std::sort(mesh.begin(), mesh.end(), CompareFaces() );
 	}
 public:
-	virtual void Rasterize( CDC* pDC, ColorMesh_t& Mesh, WORD w, WORD h ) = 0;
+	virtual void Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h ) = 0;
 	virtual void SetTexture(TextureIndex index, const ITextureSourcePtr& texture) = 0;
 	virtual ~IRasterizer() = default;
 };
