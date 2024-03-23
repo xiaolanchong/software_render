@@ -5,7 +5,6 @@
 #include "../../Render.h"
 #include "RotateScalePage.h"
 #include "SliderToText.h"
-#include "../IPropertyMap.h"
 
 // CRotateScale dialog
 

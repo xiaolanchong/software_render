@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pipeline/IDeviceContext.h"
+#include "RenderLib/IDeviceContext.h"
 
 class GdiDeviceContext : public IDeviceContext
 {
@@ -10,12 +10,13 @@ public:
       : m_dc(dc)
    {}
    
-   bool GradientFill(const TRIVERTEX* pVertex, size_t nVertex, const void* pMesh, size_t nMesh) override;
-   bool DrawEmptyTriangles(const CPoint* lpPoints, size_t nTriangleCount) override;
+   bool DrawGradientTriangles(const PointAndColor* pVertex, size_t nVertex) override;
+   bool DrawEmptyTriangles(const Point* lpPoints, size_t nTriangleCount) override;
    bool BitBlt(unsigned int w, unsigned int h, const void* image) override;
 
 private:
    CDC& m_dc;
+   std::vector<CPoint> m_vertices;
    std::vector<int> m_indices;
 };
 

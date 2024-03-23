@@ -57,4 +57,3 @@
 
 #include <assert.h>
 
-#include "math/MathUtils.h"

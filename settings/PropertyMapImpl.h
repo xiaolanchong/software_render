@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IPropertyMap.h"
+#include "../RenderLib/IPropertyMap.h"
 
 class PropertyMapImpl: public IPropertyMap
 {

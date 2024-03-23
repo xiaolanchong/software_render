@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "scene/SceneRender.h"
+#include "RenderLib/ISceneRender.h"
 #include "settings/PropertyMapImpl.h"
 
 // CRenderView window
@@ -36,6 +36,6 @@ private:
 	std::unique_ptr<CPropertySheet>		m_pSheet;
 	std::vector<CPropertyPagePtr>			m_Pages;
 	PropertyMapImpl m_propMap;
-	SceneRender m_sr;
+	ISceneRenderPtr m_sr;
 };
 

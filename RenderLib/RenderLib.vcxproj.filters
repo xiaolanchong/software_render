@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{69fe901a-51ca-49d9-9c5b-1b84a4d98339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{0aa59766-7ea0-4947-a14d-6728ed98617a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pipeline">
+      <UniqueIdentifier>{1a2a320a-9694-4086-a71e-3f0cc169e619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pipeline\light">
+      <UniqueIdentifier>{1c30257c-8e34-4076-b8cb-72bd710d6f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pipeline\rasterizer">
+      <UniqueIdentifier>{ddb6a5df-1310-4c48-be2e-813c3af4d843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pipeline\texture">
+      <UniqueIdentifier>{4f5a57fb-60c3-4173-b9e9-a971b681ec4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{8a6490f2-2d25-4bb3-892f-a10ed63438a0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\SolidTorus.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\SolidSphere.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\SolidDodecahedron.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\SolidCylinder.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\IGeoSolid.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MatrixUtil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathUtils.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Face.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\light\PhongLight.h">
+      <Filter>pipeline\light</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\light\LambertLight.h">
+      <Filter>pipeline\light</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\light\ILightEngine.h">
+      <Filter>pipeline\light</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\light\ILightDirection.h">
+      <Filter>pipeline\light</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\light\GouraudLight.h">
+      <Filter>pipeline\light</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\WireFrameRasterizer.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\PixelRasterizer.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\IRasterizer.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\InterpolationRender.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\GradientRasterizer.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\rasterizer\DrawTriangle.h">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\texture\TextureFileSource.h">
+      <Filter>pipeline\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\texture\ITextureSource.h">
+      <Filter>pipeline\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\texture\Array2D.h">
+      <Filter>pipeline\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\RenderEngine.h">
+      <Filter>pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\IDeviceContext.h">
+      <Filter>pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IPropertyMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDeviceContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneSolid.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneRender.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RenderLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\SolidTorus.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\SolidSphere.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\SolidDodecahedron.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\SolidCylinder.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\MatrixUtil.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\light\PhongLight.cpp">
+      <Filter>pipeline\light</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\light\LambertLight.cpp">
+      <Filter>pipeline\light</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\light\GouraudLight.cpp">
+      <Filter>pipeline\light</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rasterizer\WireFrameRasterizer.cpp">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rasterizer\PixelRasterizer.cpp">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rasterizer\InterpolationRender.cpp">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rasterizer\GradientRasterizer.cpp">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rasterizer\DrawTriangle.cpp">
+      <Filter>pipeline\rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\texture\TextureFileSource.cpp">
+      <Filter>pipeline\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\RenderEngine.cpp">
+      <Filter>pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneSolid.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneRender.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

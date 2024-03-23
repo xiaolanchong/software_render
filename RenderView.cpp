@@ -7,10 +7,11 @@
 #include "MemDC.h"
 #include "GdiDeviceContext.h"
 #include "RenderView.h"
+#include "RenderLib/RenderLib.h"
 
-#include "settings\proppage\GeometryPage.h"
-#include "settings\proppage\LightPage.h"
-#include "settings\proppage\RotateScalePage.h"
+#include "settings/proppage/GeometryPage.h"
+#include "settings/proppage/LightPage.h"
+#include "settings/proppage/RotateScalePage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -53,7 +54,7 @@ void CRenderView::OnPaint()
 	CRect rc;
 	GetClientRect(&rc);
 	GdiDeviceContext devCon(memDC);
-	m_sr.Render(devCon, static_cast<unsigned int>(rc.Width()), static_cast<unsigned int>(rc.Height()), m_propMap);
+	m_sr->Render(devCon, static_cast<unsigned int>(rc.Width()), static_cast<unsigned int>(rc.Height()), m_propMap);
 }
 
 BOOL CRenderView::OnEraseBkgnd(CDC* /*pDC*/)
@@ -67,7 +68,7 @@ const UINT	 c_transformPeriodMSec	= 1000 / c_fps;
 
 void CRenderView::OnTimer( UINT_PTR /*nIDEvent*/)
 {
-	m_sr.Tick(m_propMap);
+	m_sr->Tick(m_propMap);
 	InvalidateRect(nullptr);
 }
 
@@ -76,6 +77,7 @@ int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+	m_sr = CreateRender();
 	CreatePropertyWindow(true);
 	SetTimer(c_transformEvent, c_transformPeriodMSec, NULL);
 	return 0;
