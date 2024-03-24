@@ -7,7 +7,7 @@
 #include "MemDC.h"
 #include "GdiDeviceContext.h"
 #include "RenderView.h"
-#include "RenderLib/RenderLib.h"
+#include "../RenderLib/RenderLib.h"
 
 #include "settings/proppage/GeometryPage.h"
 #include "settings/proppage/LightPage.h"
@@ -77,15 +77,25 @@ int CRenderView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	m_sr = CreateRender();
-	CreatePropertyWindow(true);
+	try
+	{
+		m_sr = CreateRender();
+		CreatePropertyWindow(true);
+	}
+	catch (const std::exception& ex)
+	{
+		::AfxMessageBox(CA2CT(ex.what()), MB_OK | MB_ICONERROR);
+		return -1;
+	}
+
 	SetTimer(c_transformEvent, c_transformPeriodMSec, NULL);
 	return 0;
 }
 
 void CRenderView::OnDestroy()
 {
-	m_pSheet->DestroyWindow();
+	if(m_pSheet)
+		m_pSheet->DestroyWindow();
 	CWnd::OnDestroy();
 
 	m_Pages.clear();

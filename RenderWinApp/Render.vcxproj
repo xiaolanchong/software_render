@@ -227,7 +227,7 @@
     <None Include="res\Render.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="RenderLib\RenderLib.vcxproj">
+    <ProjectReference Include="..\RenderLib\RenderLib.vcxproj">
       <Project>{1f55b637-8144-4be2-ad3d-39575aa1850e}</Project>
     </ProjectReference>
   </ItemGroup>

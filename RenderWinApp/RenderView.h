@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "RenderLib/ISceneRender.h"
+#include "../RenderLib/ISceneRender.h"
 #include "settings/PropertyMapImpl.h"
 
 // CRenderView window

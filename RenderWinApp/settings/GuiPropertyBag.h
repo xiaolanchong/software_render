@@ -1,7 +1,7 @@
 #ifndef _GUI_PROPERTY_BAG_1272553053832792_
 #define _GUI_PROPERTY_BAG_1272553053832792_
 
-#include "../RenderLib/IPropertyMap.h"
+#include "../../RenderLib/IPropertyMap.h"
 
 class GuiPropertyBag;
 using GuiPropertyBagPtr = std::shared_ptr<GuiPropertyBag>;

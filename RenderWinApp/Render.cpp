@@ -94,9 +94,10 @@ BOOL CRenderApp::InitInstance()
 		return FALSE;
 	m_pMainWnd = pFrame;
 	// create and load the frame with its resources
-	pFrame->LoadFrame(IDR_MAINFRAME,
+	if (!pFrame->LoadFrame(IDR_MAINFRAME,
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr,
-		nullptr);
+		nullptr))
+		return FALSE;
 
 	// The one and only window has been initialized, so show and update it
 	pFrame->ShowWindow(SW_SHOW);

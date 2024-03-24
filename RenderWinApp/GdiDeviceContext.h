@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RenderLib/IDeviceContext.h"
+#include "../RenderLib/IDeviceContext.h"
 
 class GdiDeviceContext : public IDeviceContext
 {

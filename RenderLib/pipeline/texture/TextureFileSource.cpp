@@ -111,7 +111,7 @@ void TextureFileSource::loadFromFile(const std::string& fileName)
 	std::ifstream f(fileName, std::ios::binary);
 	if (!f.is_open())
 	{
-		throw std::runtime_error("Can't open file");
+		throw std::runtime_error("Can't open file " + fileName);
 	}
 
 	BitmapFileHeader fileHeader{};
