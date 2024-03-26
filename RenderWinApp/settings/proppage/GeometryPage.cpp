@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNAMIC(CGeometryPage, CPropertyPage)
 
-CGeometryPage::CGeometryPage(IPropertyMap& propMap)
+CGeometryPage::CGeometryPage(IComposePropertyMap& propMap)
 	: CPropertyPage(CGeometryPage::IDD, IDS_GEOMETRY)
 	, m_propBag(GuiPropertyBag::Create(propMap))
 {

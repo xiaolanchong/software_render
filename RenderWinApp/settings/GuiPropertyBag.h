@@ -6,7 +6,7 @@
 class GuiPropertyBag;
 using GuiPropertyBagPtr = std::shared_ptr<GuiPropertyBag>;
 
-class GuiPropertyBag : public IPropertyMap::IPropertyHandler
+class GuiPropertyBag : public IComposePropertyMap::IPropertyHandler
 {
 public:
 	class ControlHandler
@@ -25,7 +25,7 @@ public:
 		virtual std::string		GetStringProperty() = 0;
 	};
 
-	static GuiPropertyBagPtr Create(IPropertyMap& propMap);
+	static GuiPropertyBagPtr Create(IComposePropertyMap& propMap);
 private:
 	using ControlHandlerPtr = std::unique_ptr<ControlHandler>;
 	std::map< PropertyId, ControlHandlerPtr > m_Controls;

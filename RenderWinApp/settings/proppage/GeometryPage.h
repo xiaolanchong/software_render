@@ -10,7 +10,7 @@ class CGeometryPage: public CPropertyPage
 	DECLARE_DYNAMIC(CGeometryPage)
 
 public:
-	CGeometryPage(IPropertyMap& propMap);   // standard constructor
+	explicit CGeometryPage(IComposePropertyMap& propMap);
 
 // Dialog Data
 	enum { IDD = IDD_PP_GEOMETRY };

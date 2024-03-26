@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../math/face.h"
+#include "../../math/Face.h"
 #include "ILightDirection.h"
 
 //! Интерфейс для расчета освещения грани
@@ -44,9 +44,9 @@ protected:
 					const Vector& clDiffuse,
 					const Vector& clAmbient) :
 		BasicLightEngine(std::move(dir)),
-		m_clAmbient(clAmbient) ,
-		m_clDiffuse(clDiffuse),
-		m_clLight(clLight)
+		m_clLight(clLight),
+		m_clAmbient(clAmbient),
+		m_clDiffuse(clDiffuse)
 	{
 
 	}

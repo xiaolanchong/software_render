@@ -104,6 +104,7 @@ void CRenderView::OnDestroy()
 
 void CRenderView::CreatePropertyWindow(bool visible)
 {
+#ifdef PROPERTY_WINDOW
 	m_Pages.clear();
 	m_pSheet	= std::make_unique<CPropertySheet>(IDS_SETTINGS );
 
@@ -144,6 +145,7 @@ void CRenderView::CreatePropertyWindow(bool visible)
 	CRect rc;
 	pWnd->GetWindowRect( &rc );
 	m_pSheet->SetWindowPos( 0, rc.right , rc.top, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
+#endif
 }
 
 void CRenderView::OnUpdateTogglePropertyWindow(CCmdUI* pCmdUI)

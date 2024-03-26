@@ -4,8 +4,14 @@
 
 #pragma once
 
+#define PROPERTY_WINDOW
+
 #include "../RenderLib/ISceneRender.h"
+#ifdef PROPERTY_WINDOW
 #include "settings/PropertyMapImpl.h"
+#else
+#include "../RenderLinux/PropertyMapImpl.h"
+#endif
 
 // CRenderView window
 

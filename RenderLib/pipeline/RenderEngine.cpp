@@ -9,8 +9,8 @@
 
 RenderEngine::RenderEngine():
 	m_bEnableCull(true),
-	m_pRasterizer(std::make_unique<GradientRasterizer>()),
-	m_mode(Mode::Fill)
+	m_mode(Mode::Fill),
+	m_pRasterizer(std::make_unique<GradientRasterizer>())
 {
 	m_RasterizeCache.reserve( 2048 );
 }

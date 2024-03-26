@@ -1,9 +1,8 @@
-﻿#ifndef _RENDER_ENGINE_6898470234012872_
-#define _RENDER_ENGINE_6898470234012872_
+﻿#pragma once
 
-#include "../math/vector.h"
-#include "../math/matrix.h"
-#include "../math/face.h"
+#include "../math/Vector.h"
+#include "../math/Matrix.h"
+#include "../math/Face.h"
 #include "../geometry/IGeoSolid.h"
 #include "light/ILightEngine.h"
 #include "rasterizer/IRasterizer.h"
@@ -57,5 +56,3 @@ private:
 	std::unique_ptr<IRasterizer>		m_pRasterizer;
 	ColorMesh_t								m_RasterizeCache;
 };
-
-#endif // _RENDER_ENGINE_6898470234012872_

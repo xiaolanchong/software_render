@@ -41,7 +41,7 @@ int toIntZ(float z)
 void PixelRasterizer::Rasterize( IDeviceContext& dc, ColorMesh_t& Mesh, unsigned int w, unsigned int h )
 {
 	m_screenBuffer.resize(w, h, w);
-	std::fill(m_screenBuffer.begin(), m_screenBuffer.end(), 0xffffffff);  // BGR
+	std::fill(m_screenBuffer.begin(), m_screenBuffer.end(), 0xffffffff);  // BGRx
 	BufferContext buffer(m_screenBuffer);
 
 	using Plotter = DCTextureAndColorPlotter<BufferContext>;

@@ -7,7 +7,7 @@ class CRotateScalePage :	public CPropertyPage
 	DECLARE_DYNAMIC(CRotateScalePage)
 
 public:
-	CRotateScalePage(IPropertyMap& propMap);
+	explicit CRotateScalePage(IComposePropertyMap& propMap);
 
 // Dialog Data
 	enum { IDD = IDD_PP_ROTATE_SCALE };

@@ -1,7 +1,6 @@
 #pragma once
 
-//struct _TRIVERTEX;
-//class CPoint;
+#include <cstdint>
 
 class IDeviceContext
 {
@@ -20,11 +19,13 @@ public:
 
    virtual ~IDeviceContext() = default;
 
-#if 0
-   virtual bool GradientFill(const _TRIVERTEX* pVertex, size_t nVertex, const void* pMesh, size_t nMesh) = 0;
-#else
-   virtual bool DrawGradientTriangles(const PointAndColor* pVertex, size_t nVertex) = 0;
-#endif
+   /// <summary>
+   /// Draws a series of triangles whose color is interpolated between the vertices
+   /// </summary>
+   /// <param name="pVertex">Pointer to array of vertices, the size is 3 * nTriangleCount</param>
+   /// <param name="nTriangleCount">number of the triangles in <c>pVertex</c></param>
+   /// <returns>true - succeeded, false - failed</returns>
+   virtual bool DrawGradientTriangles(const PointAndColor* pVertex, size_t nTriangleCount) = 0;
 
    /// <summary>
    /// Draws a series of transparent triangles
@@ -39,7 +40,8 @@ public:
    /// </summary>
    /// <param name="w">width of the image</param>
    /// <param name="h">height of the image</param>
-   /// <param name="image">array of 4 bytes pixels, 8 bytes of GBR, the size is 4 * w * h, from top left to bottom right</param>
+   /// <param name="image">array of 4 bytes pixels, BGR order, 8 bytes per channel, the msb is ignored,
+   ///   the size is 4 * w * h, from top left to bottom right</param>
    /// <returns>true - succeeded, false - failed</returns>
    virtual bool BitBlt(unsigned int w, unsigned int h, const void* image) = 0;
 };

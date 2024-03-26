@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../math/vector.h"
+#include "../../math/Vector.h"
 #include "../texture/ITextureSource.h"
 
 namespace
@@ -38,10 +38,10 @@ public:
 	};
 
 	DCTextureAndColorPlotter(DeviceContext* pDC, ITextureSourcePtr pTex, int width, int height)
-		: m_pDC(pDC)
-		, m_width(width)
+		: m_width(width)
 		, m_height(height)
 		, m_pTex(std::move(pTex))
+		, m_pDC(pDC)
 	{}
 
 	InterpolatedValue	Interpolate(int v1, int v, int v2,

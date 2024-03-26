@@ -25,7 +25,14 @@ SceneRender::SceneRender() :
 
 	m_eng = std::make_unique<RenderEngine>();
 
-	m_texture = std::make_shared< TextureFileSource>("earth.bmp");
+	const char* const pathName =
+#ifdef _MSC_VER
+		"earth.bmp"
+#else
+		"/home/developer/earth.bmp"
+#endif
+		;
+	m_texture = std::make_shared< TextureFileSource>(pathName);
 }
 
 SceneRender::~SceneRender()

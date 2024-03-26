@@ -11,7 +11,7 @@ class CLightPage : public CPropertyPage
 
 	void	SetTextValue( int nStaticID, CSliderCtrl* pSlider, double MinValue, double MaxValue );
 public:
-	explicit CLightPage(IPropertyMap& propMap);
+	explicit CLightPage(IComposePropertyMap& propMap);
 
 // Dialog Data
 	enum { IDD = IDD_PP_LIGHT };

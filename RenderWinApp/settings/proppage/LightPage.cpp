@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNAMIC(CLightPage, CPropertyPage)
 
-CLightPage::CLightPage(IPropertyMap& propMap)
+CLightPage::CLightPage(IComposePropertyMap& propMap)
 	: CPropertyPage(CLightPage::IDD, IDS_LIGHT )
 	, m_propBag(GuiPropertyBag::Create(propMap))
 {

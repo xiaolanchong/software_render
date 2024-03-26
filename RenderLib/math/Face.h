@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector.h"
+#include "Vector.h"
 
 struct Face
 {
@@ -22,7 +22,7 @@ struct Face
 
 	Face(	const Vector& v1, const Vector& v2, const Vector& v3,
 			const Vector& n1, const Vector& n2, const Vector& n3,
-			const Vector2D& t1 = Vector2D(0.0f), 
+			const Vector2D& t1 = Vector2D(0.0f),
 			const Vector2D& t2 = Vector2D(0.0f), 
 			const Vector2D& t3 = Vector2D(0.0f))
 	{

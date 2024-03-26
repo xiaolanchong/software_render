@@ -19,6 +19,9 @@
     <Filter Include="settings\proppage">
       <UniqueIdentifier>{cd68d952-60f6-4c22-afa3-93ed72cdd59b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="settings\staticprop">
+      <UniqueIdentifier>{7dd5a4aa-9654-4bd5-9950-dbc69d57e016}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="GdIDeviceContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\RenderLinux\PropertyMapImpl.cpp">
+      <Filter>settings\staticprop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -77,9 +83,6 @@
     <ClInclude Include="settings\GuiPropertyBag.h">
       <Filter>settings</Filter>
     </ClInclude>
-    <ClInclude Include="settings\IPropertyMap.h">
-      <Filter>settings</Filter>
-    </ClInclude>
     <ClInclude Include="settings\proppage\GeometryPage.h">
       <Filter>settings\proppage</Filter>
     </ClInclude>
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="GdiDeviceContext.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\RenderLinux\PropertyMapImpl.h">
+      <Filter>settings\staticprop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

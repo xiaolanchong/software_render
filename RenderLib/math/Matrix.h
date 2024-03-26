@@ -7,7 +7,7 @@ class Matrix
 public:
 	float x [4][4];
 
-	Matrix () {};
+	Matrix() = default;
 	Matrix ( float );
 
 	Matrix& operator += ( const Matrix& );

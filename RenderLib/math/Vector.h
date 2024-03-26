@@ -11,9 +11,9 @@ class	Vector
 public:
 	float	x, y, z;
 
-	Vector () {};
+	Vector() = default;
 	Vector ( float v ) { x = y = z = v; };
-	Vector ( const Vector& v ) { x = v.x; y = v.y; z = v.z; };
+	Vector(const Vector& v) = default;
 	Vector ( float vx, float vy, float vz ) { x = vx; y = vy; z = vz; };
 
 	Vector&	operator = ( const Vector& v ) { x = v.x; y = v.y; z = v.z; return *this; };
@@ -46,9 +46,9 @@ struct Vector2D
 {
 	float	x, y;
 
-	Vector2D () {};
+	Vector2D() = default;
 	Vector2D ( float v ) { x = y = v; };
-	Vector2D ( const Vector2D& v ) { x = v.x; y = v.y; };
+	Vector2D(const Vector2D& v) = default;
 	Vector2D ( float vx, float vy ) { x = vx; y = vy; };
 
 };

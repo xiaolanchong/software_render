@@ -2,7 +2,8 @@
 
 #include "../../RenderLib/IPropertyMap.h"
 
-class PropertyMapImpl: public IPropertyMap
+class PropertyMapImpl: public IComposePropertyMap
+                     , public IPropertyMap
 {
 public:
 	virtual float   GetNumericProperty(PropertyId Id) override;

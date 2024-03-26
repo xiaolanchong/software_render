@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNAMIC(CRotateScalePage, CPropertyPage)
 
-CRotateScalePage::CRotateScalePage(IPropertyMap& propMap)
+CRotateScalePage::CRotateScalePage(IComposePropertyMap& propMap)
 	: CPropertyPage(CRotateScalePage::IDD, IDS_ROTATE_SCALE)
 	, m_propBag(GuiPropertyBag::Create(propMap))
 {

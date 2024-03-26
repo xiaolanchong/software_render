@@ -28,7 +28,7 @@
 
 #include "math/MathUtils.h"
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(DEBUG)
 #define verify(x) assert(x)
 #else
 #define verify(x)  (x)

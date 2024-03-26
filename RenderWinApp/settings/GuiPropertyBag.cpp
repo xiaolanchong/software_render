@@ -117,7 +117,7 @@ GuiPropertyBag::GuiPropertyBag()
 {
 }
 
-GuiPropertyBagPtr GuiPropertyBag::Create(IPropertyMap& propMap)
+GuiPropertyBagPtr GuiPropertyBag::Create(IComposePropertyMap& propMap)
 {
 	GuiPropertyBagPtr newBag(new GuiPropertyBag);
 	propMap.AddHandler(newBag);
